@@ -1,0 +1,3 @@
+| Title                                                             | Publisher / Author        | Publication Date  | Link                                          | Accessed      | Summary of Relevance          |
+| ----------------------------------------------------------------- | ------------------------- | ----------------- | --------------------------------------------- | ------------- | ----------------------------- |
+| Batteries aren't the only way to store energy. Here's another.    | Technology Connections    | 2021-07-20        | https://www.youtube.com/watch?v=0f9GpMWdvWI   | 2021-11-21    | Project inspiration           |
