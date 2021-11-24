@@ -1,3 +1,9 @@
 | Title                                                             | Publisher / Author        | Publication Date  | Link                                          | Accessed      | Summary of Relevance          |
 | ----------------------------------------------------------------- | ------------------------- | ----------------- | --------------------------------------------- | ------------- | ----------------------------- |
 | Batteries aren't the only way to store energy. Here's another.    | Technology Connections    | 2021-07-20        | https://www.youtube.com/watch?v=0f9GpMWdvWI   | 2021-11-21    | Project inspiration           |
+| AccuWeather APIs - Packages                                       | AccuWeather               | 2021              | https://developer.accuweather.com/packages    | 2021-11-24    | Weather Forecast API          |
+| Weather API - Meteomatics                                         | Meteomatics               | 2021              | https://www.meteomatics.com/en/weather-api/   | 2021-11-24    | Weather Forecast API          |
+| Weather API - Global and Regional Hyperlocal Weather              | Ambee                     | 2021              | https://www.getambee.com/api/weather          | 2021-11-24    | Weather Forecast API          |
+| Free Weather API - Visual Crossing                                | Visual Crossing           | 2021              | https://www.visualcrossing.com/weather-api    | 2021-11-24    | Weather Forecast API          |
+| Weather API - OpenWeatherMap                                      | Open Weather Map          | 2021              | https://openweathermap.org/api                | 2021-11-24    | Weather Forecast API          |
+| Free Weather API - WeatherAPI.com                                 | WeatherAPI.com            | 2021              | https://www.weatherapi.com/                   | 2021-11-24    | Weather Forecast API          |
