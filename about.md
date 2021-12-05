@@ -14,7 +14,7 @@
 
 **The end product I will deliver** will be a thermal management model, recommendation algorithm and presentation website. This system should fetch its data from APIs and a site survey.
 
-**I could extend the scope** by integrating with a thermostat API, graphing the expected room temperatures, guiding the estimation of server room thermal properties, bundling for deployment as an IoT device, and extending the model to domestic and commercial use.
+**I could extend the scope** by integrating with a thermostat API, graphing the expected room temperatures, guiding the estimation of server room thermal properties, bundling for deployment as an IoT device, improving the thermal model, and extending the model to domestic and commercial use.
 
 # Inputs
 
@@ -23,17 +23,76 @@
 * Parts of this are potentially very difficult to survey and estimate.
     * **Minimising the complexity of this input is of utmost priority.**
     * Understanding how to calculate this will be an early priority.
-    * The power of the cooler and the heat output of the servers ought to be achievable.
+    * The power of the cooler and the heat output of the servers ought to be directly readable.
     * The thermal mass of the room and the passive cooling will require research.
         * Passive cooling might be calculated from the duty cycle of the air conditioner when the interior and exterior temperatures differ.
         * Thermal mass might be calculated by adjusting the thermostat and timing the reaction.
     * Can this be calculated using only the control mechanisms available to a thermostat?
+        * Leave it alone, what is the duty cycle of the air conditioner?
         * Turn the thermostat down, how long does the temperature take to come down?
         * Leave it alone, what is the duty cycle of the air conditioner?
         * Turn the thermostat back up, how long does the temperature take to rise?
         * Leave it alone, what is the duty cycle of the air conditioner?
     * Providing an example will be a significant part of early work.
     * Providing a guided survey will radically improve the utility of this project.
+    * Simplifying assumptions currently applied:
+        * The server room is equipment racks, well-circulated air, air conditioning and thermal mass.
+            * All electricity consumed by the server hardware is converted to heat.
+            * The server hardware generates a steady heat output.
+            * The air conditioning performs equivalently in all temperatures.
+            * The insulation within this space is insignicant.
+            * The propogation of heat through this space is instantaneous.
+        * The server room is surrounded by an insulating layer.
+            * The thermal mass of this layer is insignificant.
+            * Radiative heating and cooling effects are insignificant.
+        * Outside the insulating layer is an ambient environment.
+            * This ambient environment is a constant temperature.
+            * There is exactly one ambient environment.
+            * The server room does not affect the ambient environment.
+            * Early work will apply temperature forecasts to this ambient environment, to remove some of these simplifications.
+        * Thermal units, such as coefficient of production and joules of thermal energy, can probably be eliminated from the model.
+            1. Passive observations measure the duty cycle required to maintain temperature differences.
+            1. Active observations measure the duty time required to enact temperature changes.
+            1. These are directly proportional to the resource cost required, without needing thermal units.
+            1. The basic units become `duty`, `celsius` and `second`.
+                * eg. Passive cooling reduces the duty cycle of the air conditioning by 3% per celsius drop.
+                * eg. To change the temperature of the server room requires 3600 duty seconds per celsius.
+                * eg. Running the air conditioning uses 1 ton of CO2 per 3600 duty seconds.
+    * Calculating passive cooling, given a single period of observation and power consumption of server hardware:
+        1. Assume the ambient temperature is constant across the period of measurement.
+        1. Assume the internal temperature is constant across the period of measurement.
+        1. Note the cooling capability of the air conditioner in watts.
+        1. Record the duty cycle of the air conditioning as a fraction.
+        1. Record the power used by the server hardware in watts.
+        1. Any heat not removed by the air conditioning must have been removed by passive cooling.
+        1. Heat removed by air conditioner = Air conditioner cooling rate * Air conditioner duty cycle.
+        1. Heat removed by passive cooling = Server hardware power - Heat removed by air conditioner.
+        1. Temperature difference = Internal temperature - Ambient temperature.
+        1. Passive cooling = Heat removed by passive cooling / Temperature difference
+    * Calculating passive cooling, given two periods of observation at different ambient temperatures.
+        1. Assume the ambient temperature is constant across each period of measurement.
+        1. Assume the internal temperature is constant across each period of measurement.
+        1. Note the cooling capacity of the air conditioner in watts.
+        1. Record the duty cycle of the air conditioning as a fraction.
+        1. Record the power used by the server hardware in watts.
+        1. Air conditioner work = Air conditioner cooling capacity * Air conditioner duty cycle.
+        1. Calculate the difference in work performed by the air conditioner.
+        1. Passive cooling = Difference in work / Difference in temperature.
+    * Getting as much information as possible from passive observations.
+        1. Record in as many ambient conditions as possible.
+        1. Best fit these on a graph of watts of cooling delivered by the air conditioner vs temperature difference with ambient.
+        1. The gradient of this graph is the rate of passive cooling in watts per celsius.
+        1. The y-intercept of this graph is the heat output of the servers, using the zero difference in temperature.
+        1. It is impossible to estimate the thermal mass of the server room in this manner since the temperature is constant.
+    * Notes on active observations
+        * This will change the temperature on the thermostat and record the temperature at various times after this change.
+        * This is intended to calculate how quickly the server room responds to temperature changes.
+        * This property cannot be derived from a passive thermostat setting since the temperature of the room does not change.
+        * This property is essential for this model as it determines how much "cold" can be stored in the material of the room.
+        * Some calculus will be required to account for the difference in passive cooling as the temperature difference changes.
+            * This will require some best fitting.
+            * This should be an exponential since this is proportional decay.
+        * Active observations can be used to fabricate temperature differences, to accelerate passive observation opportunities.
 
 ## Weather or climate
 
