@@ -16,6 +16,21 @@
 
 **I could extend the scope** by integrating with a thermostat API, graphing the expected room temperatures, guiding the estimation of server room thermal properties, bundling for deployment as an IoT device, improving the thermal model, and extending the model to domestic and commercial use.
 
+# Architecture
+
+## Observations
+
+* This does not require multiple device data persistence or sharing.
+* All information is coming from third party APIs or primary sources.
+* The mathematical calculations are not intensive.
+* There is value to this being usable without installation.
+* There is value in a firm type system, to assist with data consistency.
+
+## Decision
+
+* This shall be deployed as a website that uses client-side data storage and processing.
+* This shall be developed using typescript and compiled to javascript for deployment.
+
 # Inputs
 
 ## Server room thermal properties
