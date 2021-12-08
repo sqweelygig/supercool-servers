@@ -42,6 +42,12 @@
             * The air conditioning performs equivalently in all temperatures.
             * The insulation within this space is insignicant.
             * The propogation of heat through this space is instantaneous.
+        * Passive cooling is insignificant (citation needed)
+            * This can be confirmed by observing the duty cycle during different temperature differences.
+            * This allows creating and interacting with a very basic model before improving the model.
+            * This eliminates integration with a weather forecast from the MVP.
+            * This assumption masks "The server room is surrounded by an insulating layer" and "Outside the insulating layer is an ambient environment".
+            * Early mathematical work will be conducted to eliminate this assumption.
         * The server room is surrounded by an insulating layer.
             * The thermal mass of this layer is insignificant.
             * Radiative heating and cooling effects are insignificant.
