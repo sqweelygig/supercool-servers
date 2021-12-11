@@ -1,4 +1,6 @@
-# Brief
+# Modelling and guiding the resource savings available by proactively over-cooling a server room.
+
+## Brief
 
 **The problem is** to model and present the resource savings possible by setting a server room's time-programmable thermostat to a cooler temperature during hours when the electrical supply tariff is off-peak.
 
@@ -16,9 +18,9 @@
 
 **I could extend the scope** by integrating with a thermostat API, graphing the expected room temperatures, guiding the estimation of server room thermal properties, bundling for deployment as an IoT device, improving the thermal model, and extending the model to domestic and commercial use.
 
-# Development process
+## Development process
 
-## Observations
+### Observations
 
 * There exists a small, well-bounded and useful product.
     * Simple data gathering comprised of a guided set of thermostat adjustments with duty cycle, temperature and ambient observations.
@@ -32,7 +34,7 @@
     * The most arduous part of updating this product would be data migration.
     * See architecture, below.
 
-## Decision
+### Decision
 
 * This should be developed in an agile manner. (Kanban?)
     * User story cards. Backlog, priority, imagine, minimise, develop, deploy, review.
@@ -41,9 +43,9 @@
     * This will collect active observations of the room and observations of the ambient environment.
     * A normal agile process would aim for a minimal product that is viable, but by delivering this as early as possible it allows the project to collect wider seasonal variance.
 
-# Architecture
+## Architecture
 
-## Observations
+### Observations
 
 * This does not require multiple device data persistence or sharing.
 * All information is coming from third party APIs or primary sources.
@@ -51,14 +53,14 @@
 * There is value to this being usable without installation.
 * There is value in a firm type system, to assist with data consistency.
 
-## Decision
+### Decision
 
 * This shall be deployed as a website that uses client-side data storage and processing.
 * This shall be developed using typescript and compiled to javascript for deployment.
 
-# Inputs
+## Inputs
 
-## Server room thermal properties
+### Server room thermal properties
 
 * Parts of this are potentially very difficult to survey and estimate.
     * **Minimising the complexity of this input is of utmost priority.**
@@ -140,9 +142,7 @@
             * This should be an exponential since this is proportional decay.
         * Active observations can be used to fabricate temperature differences, to accelerate passive observation opportunities.
 
-## Weather or climate
-
-### Criteria
+### Weather or climate
 
 * To automate a thermostat would require a forecast horizon that covers from the time when electricity is cheapest until the time when the day is hottest.
     * An initial estimate puts this at about midnight to noon, but further research is required.
@@ -155,19 +155,15 @@
     * A manual system is likely to be loaded several times (estimated about 4 times).
     * Each data import is likely to require 2-3 API requests.
 
-### Examples
-
 | Company       | Link                                          | Hourly forecast horizon   | Climate data available    | Quantity of locations in SE UK    | API throttle  |
 | ------------- | --------------------------------------------- | ------------------------- | ------------------------- | --------------------------------- | ------------- |
 
-## Electricity prices
+### Electricity prices
 
 * An electricity price API would allow most effective automation of this system.
 * Night/Day tariff information would be enough to model the benefits for many users.
     * These could be pre-populated from examples.
     * These are also not difficult for a user to input.
-
-### Exmaples
 
 | Company   | Link  |
 | --------- | ----- |
