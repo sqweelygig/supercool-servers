@@ -16,6 +16,31 @@
 
 **I could extend the scope** by integrating with a thermostat API, graphing the expected room temperatures, guiding the estimation of server room thermal properties, bundling for deployment as an IoT device, improving the thermal model, and extending the model to domestic and commercial use.
 
+# Development process
+
+## Observations
+
+* There exists a small, well-bounded and useful product.
+    * Simple data gathering comprised of a guided set of thermostat adjustments with duty cycle, temperature and ambient observations.
+    * Simple thermal model comprised of fixed thermal load and only active cooling.
+    * Simple recommendation algorithm, yet to be engineered.
+    * Simple presentation website of a graph of anticipated costs, temperatures and duty cycles and a bottom line of savings.
+* There exists a large pluripotential scope for development.
+    * Any of the functional requirements expressed above can be improved.
+    * Several possibilities for new functional requirements exist.
+* The deployment journey is not fundamentally arduous.
+    * The most arduous part of updating this product would be data migration.
+    * See architecture, below.
+
+## Decision
+
+* This should be developed in an agile manner. (Kanban?)
+    * User story cards. Backlog, priority, imagine, minimise, develop, deploy, review.
+    * CI/CD is very well suited to web development projects.
+* The initial delivery will be a guided data gathering process.
+    * This will collect active observations of the room and observations of the ambient environment.
+    * A normal agile process would aim for a minimal product that is viable, but by delivering this as early as possible it allows the project to collect wider seasonal variance.
+
 # Architecture
 
 ## Observations
