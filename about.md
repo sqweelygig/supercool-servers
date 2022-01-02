@@ -8,7 +8,7 @@
 
 **I will find out more** by investigating available weather forecasts, utility tiers and server rooms in the local area. I will also study the critical thermal modelling characteristics and related calculus.
 
-**The skills I will be using from level 3** will be delivering a software engineering project in an agile fashion (TM354).
+**The skills I will be using from level 3** will be delivering a software engineering project in an organised fashion (TM354).
 
 **The professional skills I will be using** will be web development and data science.
 
@@ -20,13 +20,13 @@
 
 ## Development process
 
-### Observations
+### Observations on agile vs plan-based development
 
 * There exists a small, well-bounded and useful product.
     * Simple data gathering comprised of a guided set of thermostat adjustments with duty cycle, temperature and ambient observations.
-    * Simple thermal model comprised of fixed thermal load and only active cooling.
-    * Simple recommendation algorithm, yet to be engineered.
-    * Simple presentation website of a graph of anticipated costs, temperatures and duty cycles and a bottom line of savings.
+    * Simple thermal model comprised of fixed thermal load and active cooling without any passive cooling.
+    * Simple recommendation algorithm, yet to be outlined.
+    * Simple presentation website of a graph of anticipated costs, temperatures and duty cycles and a bottom-line summary of savings.
 * There exists a large pluripotential scope for development.
     * Any of the functional requirements expressed above can be improved.
     * Several possibilities for new functional requirements exist.
@@ -34,14 +34,33 @@
     * The most arduous part of updating this product would be data migration.
     * See architecture, below.
 
-### Decision
+### Decision on agile vs plan-based development
 
-* This should be developed in an agile manner. (Kanban?)
-    * User story cards. Backlog, priority, imagine, minimise, develop, deploy, review.
-    * CI/CD is very well suited to web development projects.
+* This should be developed in an agile manner. *citation needed*
 * The initial delivery will be a guided data gathering process.
-    * This will collect active observations of the room and observations of the ambient environment.
-    * A normal agile process would aim for a minimal product that is viable, but by delivering this as early as possible it allows the project to collect wider seasonal variance.
+    * This will guide active observations of the room and observations of the ambient environment.
+    * By delivering this as early as possible it allows the project to collect wider seasonal variance.
+
+### Observations on specific agile model
+
+* CI/CD is very well suited to web development projects.
+* The project team is a single developer.
+    * There is no benefit from specific roles in this context.
+    * There is no benefit from cycle based synchronisation in this context.
+
+### Decision on specific agile model
+
+* Kanban. *citation needed* (kanplan?) (scrumban?) (why not UP?)
+    * Each card should be at least a stakeholder story and can accumulate additional details such as designs, considerations, prerequisite cards and models.
+    * The columns will be backlog, priority, design, develop and review.
+        * The backlog column will be the starting column for all ideas. There shall be no barrier to entry upon this column. A card will progress from this column into priority when it is in the most important 16%. A card may move from this column directly into the archive if it is deemed to be detrimental to the project.
+        * The priority column will be for cards that are important. A card may regress from this column into backlog if more important cards displace it. A card may progress from this column into design when a team member takes ownership of it.
+        * The main actions for cards in the design column will be imagination, specification, decomposition and minimisation. A card may progress from this column into develop when actionable understanding has been reached. A card is likely to generate new cards as a consequence of the decomposition and minimisation processes, which are generally assumed to be priorities.
+        * While implementing a stakeholder story, its card should be in the develop column. A card may progress from this column to review when the developer believes it to be complete. A card may move from this column into design if scrutiny reveals that more clarification is required.
+        * During review a development arc is reviewed for correctness and utility and then deployed. This will also include a reflection on whether the card's journey revealed issues with the system itself. Once a card progresses from this column it is archived. A card may regress from this column to design if developmnet revealed the need for better guidance. Cards should not regress from this column to develop. For a card to be in this category the developer believes the development meets the design, if this is false then further design clarification is required.
+    * The final submission should include cards in the backlog and priority columns.
+        * The scope for the product is much larger than the scope for the project, but agile development processes incorporate this well.
+        * It is expected that cards in design, develop and review are receiving active effort and so should not be part of a delivered project milestone. 
 
 ## Architecture
 
