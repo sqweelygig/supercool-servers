@@ -1,6 +1,6 @@
 # A website to inform proactive cooling of server rooms with the intent of reducing resource consumption
 
-Inspired by "Batteries aren't the only way to store power. Here's another." from Technology Connections.
+Inspired by ["Batteries aren't the only way to store power. Here's another."](https://www.youtube.com/watch?v=0f9GpMWdvWI) from Technology Connections.
 
 Demand-side energy management is useful for opportunistic electricity grids. As humanity seeks to manage its impact on Earth, electricity generation from low-carbon sources such as wind and solar will increase. However, weather drives wind and solar power generation and is intermittent. There are various techniques to account for this intermittency, such as battery storage, usage shaping and alternative baselines. This project will focus on demand-side usage offsetting.
 
