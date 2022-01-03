@@ -1,8 +1,18 @@
-# Modelling and guiding the resource savings available by proactively over-cooling a server room.
+# A website to inform proactive cooling of server rooms with the intent of reducing resource consumption
 
-## Brief
+Inspired by "Batteries aren't the only way to store power. Here's another." from Technology Connections.
 
-**The problem is** to model and present the resource savings possible by setting a server room's time-programmable thermostat to a cooler temperature during hours when the electrical supply tariff is off-peak.
+Demand-side energy management is useful for opportunistic electricity grids. As humanity seeks to manage its impact on Earth, electricity generation from low-carbon sources such as wind and solar will increase. However, weather drives wind and solar power generation and is intermittent. There are various techniques to account for this intermittency, such as battery storage, usage shaping and alternative baselines. This project will focus on demand-side usage offsetting.
+
+The equipment within the server rooms studied generate enough heat that the room needs active cooling and does not require other heat sources. These thermal properties are typical of server rooms within a temperate environment. Cooling these rooms increases the operating expenses of a server room, whether measured in terms of currency or greenhouse gas emissions. By reducing these expenses, operators may achieve a more efficient server room without significant capital expense or reduction in quality.
+
+Thermal mass reduces the rate at which temperature changes occur and, in this context, can be used as energy storage. For example, when electricity is less expensive, a schedule may set the target temperature on an air-conditioner thermostat to a cooler temperature. As a result, the air-conditioner will draw more heat energy from the room than routine operations require, and the thermal mass will cool. Conversely, a schedule may set the target temperature to a warmer temperature when electricity is more expensive. The thermal mass, being colder than the target temperature and the rest temperature of the room, will absorb some heat energy and slow the room's warming. This offsetting of operation is equivalent to storing energy when power is cheap and using it when power is expensive.
+
+This project will create a website that can guide a technical user through gathering the data required, model the thermal characteristics of the room, compute an optimised thermostat schedule and present the forecast savings. The project assumes that its audience is at a technical level consistent with having some responsibility for a server room's environmental controls.
+
+## Initial Q&A
+
+**The problem is** to model, guide and present the resource savings possible by setting a server room's time-programmable thermostat to a cooler temperature during hours when the electrical supply tariff is off-peak.
 
 **The users are** server room operators in general and work colleagues who maintain the environment of two server rooms.
 
@@ -25,18 +35,18 @@
 * There exists a small, well-bounded and useful product.
     * Simple data gathering comprised of a guided set of thermostat adjustments with duty cycle, temperature and ambient observations.
     * Simple thermal model comprised of fixed thermal load and active cooling without any passive cooling.
-    * Simple recommendation algorithm, yet to be outlined.
+    * Simple recommendation algorithm, *yet to be outlined*.
     * Simple presentation website of a graph of anticipated costs, temperatures and duty cycles and a bottom-line summary of savings.
 * There exists a large pluripotential scope for development.
     * Any of the functional requirements expressed above can be improved.
     * Several possibilities for new functional requirements exist.
-* The deployment journey is not fundamentally arduous.
+* The deployment pipeline is not fundamentally arduous.
     * The most arduous part of updating this product would be data migration.
     * See architecture, below.
 
 ### Decision on agile vs plan-based development
 
-* This should be developed in an agile manner. *citation needed*
+* This should be developed in an agile manner (*citation needed*).
 * The initial delivery will be a guided data gathering process.
     * This will guide active observations of the room and observations of the ambient environment.
     * By delivering this as early as possible it allows the project to collect wider seasonal variance.
@@ -50,7 +60,7 @@
 
 ### Decision on specific agile model
 
-* Kanban. *citation needed* (kanplan?) (scrumban?) (why not UP?)
+* Kanban. (*citation needed*) (kanplan?) (scrumban?) (why not UP?)
     * Each card should be at least a stakeholder story and can accumulate additional details such as designs, considerations, prerequisite cards and models.
     * The columns will be backlog, priority, design, develop and review.
         * The backlog column will be the starting column for all ideas. There shall be no barrier to entry upon this column. A card will progress from this column into priority when it is in the most important 16%. A card may move from this column directly into the archive if it is deemed to be detrimental to the project.
