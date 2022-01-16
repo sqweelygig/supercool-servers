@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Server Room Air Conditioner Optimiser</title>
+        <link rel="stylesheet" href="resources/fontawesome-free-5.15.4-web/css/all.min.css" />
+        <link rel="icon" href="resources/fontawesome-free-5.15.4-web/svgs/solid/leaf.svg" />
+        <style>
+            /**
+             * Box layout
+            **/
+            body {
+                margin: 0;
+                padding: 0.4rem;
+            }
+            /* Extra selector to gain priority over font awesome's .fas class */
+            body>flow-indicator.fas,
+            body>flow-indicator {
+                display: block;
+                margin: 0.4rem;
+            }
+            body>process-stage {
+                display: grid;
+                gap: 0.4rem;
+                grid-template-columns: 3rem 1fr;
+                grid-template-rows: 3rem;
+                grid-template-areas:
+                    "icon heading"
+                ;
+                margin: 0.4rem;
+                padding: 0.4rem;
+            }
+            body>process-stage>stage-heading {
+                grid-area: heading;
+            }
+            body>process-stage>stage-icon {
+                grid-area: icon;
+            }
+            body>process-stage>about-text {
+                grid-column: 1 / span 2;
+            }
+            body>process-stage>action-list {
+                grid-column: 1 / span 2;
+                display: grid;
+                gap: 0.4rem;
+                grid-auto-flow: row;
+            }
+            body>process-stage>action-list>button {
+                padding: 0.4rem;
+            }
+        </style>
+        <style>
+            /**
+             * Content styling
+            **/
+            html {
+                font-family: sans-serif;
+            }
+            /* Extra selector to gain priority over font awesome's .fas class */
+            body>flow-indicator.fas,
+            body>flow-indicator {
+                font-size: 200%;
+                text-align: center;
+            }
+            body>process-stage {
+                align-items: center;
+                border-radius: 0.4rem;
+            }
+            body>process-stage>stage-heading {
+                font-weight: bold;
+                text-transform: capitalize;
+            }
+            body>process-stage>stage-icon {
+                font-size: 180%;
+                text-align: center;
+            }
+            body>process-stage>about-text {
+                text-align: justify;
+            }
+            body>process-stage>action-list>button {
+                align-items: center;
+                justify-content: center;
+                border-radius: 0.4rem;
+                border: 0;
+                cursor: pointer;
+                text-align: center;
+            }
+            body>process-stage.disabled>action-list>button,
+            body>process-stage>action-list>button:disabled {
+                cursor: not-allowed;
+            }
+        </style>
+        <style>
+            /**
+             * Colour scheme
+            **/
+            html {
+                background-color: black;
+            }
+            body {
+                background-color: silver;
+            }
+            body>process-stage {
+                background-color: white;
+            }
+            body>process-stage.error>stage-icon {
+                color: red;
+            }
+            body>process-stage.active>stage-icon {
+                color: blue;
+            }
+            body>process-stage.success>stage-icon {
+                color: green;
+            }
+            body>process-stage.disabled>stage-icon {
+                color: silver;
+            }
+            body>process-stage>action-list>button {
+                background-color: lightblue;
+            }
+            body>process-stage.disabled>action-list>button,
+            body>process-stage>action-list>button:disabled {
+                background-color: silver;
+                color: inherit;
+            }
+
+            /**
+             * Resolution adjustments to box layout
+            **/
+            body>process-stage>action-list {
+                grid-template-columns: 1fr 1fr;
+            }
+            @media (min-width: 400px) {
+                body>process-stage>action-list {
+                    grid-template-columns: 1fr 1fr 1fr;
+                }
+            }
+            @media (min-width: 600px) {
+                body>process-stage>action-list {
+                    grid-template-columns: 1fr 1fr 1fr 1fr;
+                }
+            }
+            @media (min-width: 800px) {
+                body>process-stage>action-list {
+                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+                }
+            }
+            @media (min-width: 1000px) {
+                html {
+                    margin: 0.4rem;
+                    padding: 0.4rem
+                }
+                body {
+                    max-width: 1000px;
+                    margin: 0 auto;
+                }
+                body>process-stage>action-list {
+                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <process-stage class="success">
+            <stage-heading>Server room pre-cooling</stage-heading>
+            <stage-icon class="fas fa-leaf" style="font-size:180%;"></stage-icon>
+            <about-text>
+                Estimate and present the savings possible by setting a
+                server room's thermostat to a cooler temperature during
+                off-peak electrical tariffs.
+            </about-text>
+        </process-stage>
+        <flow-indicator class="fas fa-chevron-down">
+        </flow-indicator>
+        <process-stage class="active">
+            <stage-heading>Thermal data</stage-heading>
+            <stage-icon class="fas fa-thermometer-three-quarters" style="font-size:230%;"></stage-icon>
+            <action-list>
+                <button>New</button>
+                <button>Amend</button>
+                <button disabled>Upload</button>
+                <button disabled>Download</button>
+                <button disabled>Sideload</button>
+                <button>Done</button>
+            </action-list>
+        </process-stage>
+        <flow-indicator class="fas fa-chevron-down"></flow-indicator>
+        <process-stage class="error">
+            <stage-heading>Weather data</stage-heading>
+            <stage-icon class="fas fa-cloud-sun" style="font-size:180%;"></stage-icon>
+            <action-list>
+                <button>New</button>
+                <button disabled>Amend</button>
+                <button disabled>Upload</button>
+                <button disabled>Download</button>
+                <button disabled>Sideload</button>
+                <button disabled>Hotlink</button>
+                <button disabled>Done</button>
+            </action-list>
+        </process-stage>
+        <flow-indicator class="fas fa-chevron-down"></flow-indicator>
+        <process-stage>
+            <stage-heading>Tariff data</stage-heading>
+            <stage-icon class="fas fa-money-bill-alt" style="font-size:160%;"></stage-icon>
+        </process-stage>
+        <flow-indicator class="fas fa-chevron-down"></flow-indicator>
+        <process-stage>
+            <stage-heading>Baseline A/C settings</stage-heading>
+            <stage-icon class="fas fa-snowflake" style="font-size:170%;"></stage-icon>
+        </process-stage>
+        <flow-indicator class="fas fa-chevron-down"></flow-indicator>
+        <process-stage>
+            <stage-heading>Improved A/C settings</stage-heading>
+            <stage-icon class="fas fa-cogs" style="font-size:160%;"></stage-icon>
+        </process-stage>
+        <flow-indicator class="fas fa-chevron-down"></flow-indicator>
+        <process-stage class="disabled">
+            <stage-heading>Report</stage-heading>
+            <stage-icon class="fas fa-paper-plane" style="font-size:160%;"></stage-icon>
+        </process-stage>
+    </body>
+</html>
