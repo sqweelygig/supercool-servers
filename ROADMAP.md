@@ -21,8 +21,6 @@ Each card must have a stakeholder story as the title. This story must be in the 
 * A technician must be able to generate a business-oriented report.
 * A technician must be able to gather thermal observations of a server room.
 
-## Design
-
 ## Develop
 
 ## Review

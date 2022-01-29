@@ -1,4 +1,4 @@
-# A website to help inform the proactive cooling of server rooms with the intent of reducing resource consumption
+# An application to help inform the proactive cooling of server rooms
 
 Inspired by ["Batteries aren't the only way to store power. Here's another."](https://www.youtube.com/watch?v=0f9GpMWdvWI) from Technology Connections.
 
@@ -23,7 +23,7 @@ This offsetting of operation through time is equivalent to storing energy when p
 
 ## Deliverables
 
-This project will create a website that can gather the data required via a survey, model the thermal characteristics of the room, compute an optimised thermostat schedule and present the forecast savings.
+This project will create an application that can gather the data required via a survey, model the thermal characteristics of the room, compute an optimised thermostat schedule and present the forecast savings.
 The project assumes that its audience is technical, consistent with having some responsibility for a server room's thermal controls.
 
 The system cannot assume that the server room has a smart thermostat since its purposes include justifying such an expense.
@@ -39,15 +39,18 @@ Client-side storage, communication and processing should fulfil all the project 
 ## Lifecycle
 
 This project has a firm time budget, which must be respected when considering scope and quality.
-The 20-week lifecycle budgets 7.5 hours to project work per week.
-This budget resolves to about four full-time equivalent weeks.
+The 32-week lifecycle budgets 7.5 hours to project work per week.
+This budget resolves to about six full-time equivalent weeks.
 
 In choosing the software development model, the first consideration is positioning on the spectrum from waterfall to agile.
 This project has a small, well-bounded and useful product within a sizeable pluripotential scope for development.
-For example, the minimum viable product could consist of a data-gathering flow, a thermal model with no passive cooling, a simple schedule optimisation algorithm and a brief final report.
-The scope for improving this offering includes improving any of these functional requirements, adding integration with APIs, bundling for IoT, and modelling passive cooling effects.
+For example, the MVP could consist of a data-gathering flow, a thermal model with no passive cooling, a simple schedule optimisation algorithm and a brief final report.
+The scope for improving this offering includes improving any of these functional requirements, adding integration with APIs, IoT, and modelling passive cooling effects.
 It is also worth noting that it is not a critical system and the project commissioners require several milestones.
 Therefore, this project organisation will be agile.
+
+![Illustration visualising and recapping the MVP boundary](mvp.png)
+Figure n.n - Initial project outline, showing boundaries of MVP.
 
 There are several models for agile software development with varying suitability for project contexts.
 For example, this project team is a single developer, so there is little value in specific roles and coordination events.
@@ -61,6 +64,49 @@ This use case is selected because the project runs from February to September, s
 At the other end of the project lifecycle, the final submission should include options for future development, captured as backlog cards.
 The product potential exceeds the project budget, but there is still value in recording these options.
 
+## Architecture
+
+![Overview of gathering data, optimising schedule and presenting report](overview_diagram.png)
+Figure n.n - Activity diagram showing data flow for optimising a schedule and presenting a report.
+
+In deciding the deployment artefacts, there are several pertinent aspects.
+First, all the data driving this model is from the primary observations of the technician or third party APIs.
+Second, the modelling expected is not intensive, so calculation performance is a minor factor.
+Third, there is value to data communication and sharing, but this is not an essential feature.
+Finally, this should be available without installation as a significant proportion of users are likely to be single-use.
+These requirements suit deployment as a stand-alone website using client-side data retention and processing.
+
+Due to the project time constraints, the language and framework must be familiar to the developer.
+In addition, the project is quite data-centric, so it favours a strong type system.
+Alongside this, the immediate context for deployment is the web, so the language choice must support this.
+Finally, there is also potential for IoT and mobile deployments, which should steer consideration.
+Within these criteria, TypeScript seems the best choice for language.
+It has a modern type system, is compilable to ECMAScript for web deployment, can be executed in Node.js for IoT deployment and is familiar to the developer.
+One concern is its deployability into mobile contexts, but the *-native projects should accommodate this.
+
+The selection of a framework is more balanced than language, with close competition between the React and Vue.js frameworks.
+Server-side rendering of the DOM adds unnecessary components, specifically server-side processing, so it is undesirable.
+Direct DOM manipulation is not sustainable or manageable.
+As tie-breaker considerations, the Vue.js experience was more developer-friendly, and it has a higher quantity of GitHub stars.
+In conclusion, this project will use Vue.js, especially single file components, but this was a close decision.
+
+| Language      | Types     | Deployability | Familiarity   |
+| ------------- | --------- | ------------- | ------------- |
+| Java          | Strong    | N/A           | Low           |
+| ECMAScript    | None      | Web, IoT      | High          |
+| TypeScript    | Strong    | Web, IoT      | High          |
+| Python        | Weak      | IoT           | Medium        |
+| Dart          | Strong    | Web, Mobile   | Low           |
+
+| HTML Framework    | Familiarity   | Suitability   | GitHub Stars  |
+| ----------------- | ------------- | ------------- | ------------- |
+| Server-side       | Medium        | Low           |               |
+| Direct DOM        | Medium        | Low           |               |
+| React             | Low           | High          |               |
+| Vue               | Low           | High          |               |
+
+Figure n.n - Feature comparison matrix of language options.
+
 ## Glossary
 
 | Term          | Definition                                                                    |
@@ -69,150 +115,13 @@ The product potential exceeds the project budget, but there is still value in re
 
 ## Bibliography
 
-| Title                                                             | Publisher / Author        | Publication Date  | Link                                                                      | Accessed      | Summary of Relevance  |
+| Title                                                             | Publisher                 | Publication Date  | Link                                                                      | Accessed      | Summary of Relevance  |
 | ----------------------------------------------------------------- | ------------------------- | ----------------- | ------------------------------------------------------------------------- | ------------- | --------------------- |
-| Batteries aren't the only way to store energy. Here's another.    | Technology Connections    | 2021-07-20        | <https://www.youtube.com/watch?v=0f9GpMWdvWI>                             | 2021-11-21    | Project inspiration   |
-| Kanban vs Scrum                                                   | Atlassian                 | 2019              | <https://www.atlassian.com/agile/kanban/kanban-vs-scrum>                  | 2021-12-11    | Development process   |
-| What is Kanban?                                                   | Kanbanize                 | ????              | <https://kanbanize.com/kanban-resources/getting-started/what-is-kanban>   | 2022-01-02    | Development process   |
-| The Scrum Guide                                                   | Scrum Guides              | 2020              | <https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-US.pdf>   | 2022-01-02    | Development process   |
-| Manifesto for Agile Software Development                          |                           | 2001              | <https://agilemanifesto.org>                                              | 2022-01-02    | Development process   |
-
----
-
-## Development process
-
-### Decision on specific agile model
-
-* Kanban. (*citation needed*) (kanplan?) (scrumban?) (why not UP?)
-    * The columns will be backlog, priority, design, develop and review.
-        * The backlog column will be the starting column for all ideas. There shall be no barrier to entry upon this column. A card will progress from this column into priority when it is in the most important 16%. A card may move from this column directly into the archive if it is deemed to be detrimental to the project.
-        * The priority column will be for cards that are important. A card may regress from this column into backlog if more important cards displace it. A card may progress from this column into design when a team member takes ownership of it.
-        * The main actions for cards in the design column will be imagination, specification, decomposition and minimisation. A card may progress from this column into develop when actionable understanding has been reached. A card is likely to generate new cards as a consequence of the decomposition and minimisation processes, which are generally assumed to be priorities.
-        * While implementing a stakeholder story, its card should be in the develop column. A card may progress from this column to review when the developer believes it to be complete. A card may move from this column into design if scrutiny reveals that more clarification is required.
-        * During review a development arc is reviewed for correctness and utility and then deployed. This will also include a reflection on whether the card's journey revealed issues with the system itself. Once a card progresses from this column it is archived. A card may regress from this column to design if developmnet revealed the need for better guidance. Cards should not regress from this column to develop. For a card to be in this category the developer believes the development meets the design, if this is false then further design clarification is required.
-
-## Architecture
-
-### Observations
-
-* This does not require multiple device data persistence or sharing.
-* All information is coming from third party APIs or primary sources.
-* The mathematical calculations are not intensive.
-* There is value to this being usable without installation.
-* There is value in a firm type system, to assist with data consistency.
-* There is value to integrating aspects of this development onto an IoT device
-
-### Decision
-
-* This shall be deployed as a website that uses client-side data storage and processing.
-* This shall be developed using typescript and compiled to javascript for deployment.
-
-## Inputs
-
-### Server room thermal properties
-
-* Parts of this are potentially very difficult to survey and estimate.
-    * **Minimising the complexity of this input is of utmost priority.**
-    * Understanding how to calculate this will be an early priority.
-    * The power of the cooler and the heat output of the servers ought to be directly readable.
-    * The thermal mass of the room and the passive cooling will require research.
-        * Passive cooling might be calculated from the duty cycle of the air conditioner when the interior and exterior temperatures differ.
-        * Thermal mass might be calculated by adjusting the thermostat and timing the reaction.
-    * Can this be calculated using only the control mechanisms available to a thermostat?
-        * Leave it alone, what is the duty cycle of the air conditioner?
-        * Turn the thermostat down, how long does the temperature take to come down?
-        * Leave it alone, what is the duty cycle of the air conditioner?
-        * Turn the thermostat back up, how long does the temperature take to rise?
-        * Leave it alone, what is the duty cycle of the air conditioner?
-    * Providing an example will be a significant part of early work.
-    * Providing a guided survey will radically improve the utility of this project.
-    * Simplifying assumptions currently applied:
-        * The server room is equipment racks, well-circulated air, air conditioning and thermal mass.
-            * All electricity consumed by the server hardware is converted to heat.
-            * The server hardware generates a steady heat output.
-            * The air conditioning performs equivalently in all temperatures.
-            * The insulation within this space is insignicant.
-            * The propogation of heat through this space is instantaneous.
-        * Passive cooling is insignificant (citation needed)
-            * This can be confirmed by observing the duty cycle during different temperature differences.
-            * This allows creating and interacting with a very basic model before improving the model.
-            * This eliminates integration with a weather forecast from the MVP.
-            * This assumption masks "The server room is surrounded by an insulating layer" and "Outside the insulating layer is an ambient environment".
-            * Early mathematical work will be conducted to eliminate this assumption.
-        * The server room is surrounded by an insulating layer.
-            * The thermal mass of this layer is insignificant.
-            * Radiative heating and cooling effects are insignificant.
-        * Outside the insulating layer is an ambient environment.
-            * This ambient environment is a constant temperature.
-            * There is exactly one ambient environment.
-            * The server room does not affect the ambient environment.
-            * Early work will apply temperature forecasts to this ambient environment, to remove some of these simplifications.
-        * Thermal units, such as coefficient of production and joules of thermal energy, can probably be eliminated from the model.
-            1. Passive observations measure the duty cycle required to maintain temperature differences.
-            1. Active observations measure the duty time required to enact temperature changes.
-            1. These are directly proportional to the resource cost required, without needing thermal units.
-            1. The basic units become `duty`, `celsius` and `second`.
-                * eg. Passive cooling reduces the duty cycle of the air conditioning by 3% per celsius drop.
-                * eg. To change the temperature of the server room requires 3600 duty seconds per celsius.
-                * eg. Running the air conditioning uses 1 ton of CO2 per 3600 duty seconds.
-    * Calculating passive cooling, given a single period of observation and power consumption of server hardware:
-        1. Assume the ambient temperature is constant across the period of measurement.
-        1. Assume the internal temperature is constant across the period of measurement.
-        1. Note the cooling capability of the air conditioner in watts.
-        1. Record the duty cycle of the air conditioning as a fraction.
-        1. Record the power used by the server hardware in watts.
-        1. Any heat not removed by the air conditioning must have been removed by passive cooling.
-        1. Heat removed by air conditioner = Air conditioner cooling rate * Air conditioner duty cycle.
-        1. Heat removed by passive cooling = Server hardware power - Heat removed by air conditioner.
-        1. Temperature difference = Internal temperature - Ambient temperature.
-        1. Passive cooling = Heat removed by passive cooling / Temperature difference
-    * Calculating passive cooling, given two periods of observation at different ambient temperatures.
-        1. Assume the ambient temperature is constant across each period of measurement.
-        1. Assume the internal temperature is constant across each period of measurement.
-        1. Note the cooling capacity of the air conditioner in watts.
-        1. Record the duty cycle of the air conditioning as a fraction.
-        1. Record the power used by the server hardware in watts.
-        1. Air conditioner work = Air conditioner cooling capacity * Air conditioner duty cycle.
-        1. Calculate the difference in work performed by the air conditioner.
-        1. Passive cooling = Difference in work / Difference in temperature.
-    * Getting as much information as possible from passive observations.
-        1. Record in as many ambient conditions as possible.
-        1. Best fit these on a graph of watts of cooling delivered by the air conditioner vs temperature difference with ambient.
-        1. The gradient of this graph is the rate of passive cooling in watts per celsius.
-        1. The y-intercept of this graph is the heat output of the servers, using the zero difference in temperature.
-        1. It is impossible to estimate the thermal mass of the server room in this manner since the temperature is constant.
-    * Notes on active observations
-        * This will change the temperature on the thermostat and record the temperature at various times after this change.
-        * This is intended to calculate how quickly the server room responds to temperature changes.
-        * This property cannot be derived from a passive thermostat setting since the temperature of the room does not change.
-        * This property is essential for this model as it determines how much "cold" can be stored in the material of the room.
-        * Some calculus will be required to account for the difference in passive cooling as the temperature difference changes.
-            * This will require some best fitting.
-            * This should be an exponential since this is proportional decay.
-        * Active observations can be used to fabricate temperature differences, to accelerate passive observation opportunities.
-
-### Weather or climate
-
-* To automate a thermostat would require a forecast horizon that covers from the time when electricity is cheapest until the time when the day is hottest.
-    * An initial estimate puts this at about midnight to noon, but further research is required.
-* To manually program a thermostat would require climate information about a typical day in that location and season.
-    * This could be pre-populated with sets of example data.
-* To be useful an API must cover the intended location.
-    * The intended initial coverage is the counties of Surrey, West Sussex, East Sussex and Kent.
-* To be useful an API must allow at least 36 requests per day.
-    * An automatic system is likely to update its data every few hours (estimated about 12 times a day).
-    * A manual system is likely to be loaded several times (estimated about 4 times).
-    * Each data import is likely to require 2-3 API requests.
-
-| Company       | Link                                          | Hourly forecast horizon   | Climate data available    | Quantity of locations in SE UK    | API throttle  |
-| ------------- | --------------------------------------------- | ------------------------- | ------------------------- | --------------------------------- | ------------- |
-
-### Electricity prices
-
-* An electricity price API would allow most effective automation of this system.
-* Night/Day tariff information would be enough to model the benefits for many users.
-    * These could be pre-populated from examples.
-    * These are also not difficult for a user to input.
-
-| Company   | Link  |
-| --------- | ----- |
+| Batteries aren't the only way to store energy. Here's another.    | Technology Connections    | 2021-07           | <https://www.youtube.com/watch?v=0f9GpMWdvWI>                             | 2021-11-21    | Project inspiration   |
+| Kanban vs Scrum                                                   | Atlassian                 | 2018-08           | <https://www.atlassian.com/agile/kanban/kanban-vs-scrum>                  | 2021-12-11    | Development process   |
+| What is Kanban?                                                   | Kanbanize                 | 2017-06           | <https://kanbanize.com/kanban-resources/getting-started/what-is-kanban>   | 2022-01-02    | Development process   |
+| The Scrum Guide                                                   | Scrum Guides              | 2020-11           | <https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-US.pdf>   | 2022-01-02    | Development process   |
+| Manifesto for Agile Software Development                          | Agile Alliance            | 2001-02           | <https://agilemanifesto.org>                                              | 2022-01-02    | Development process   |
+| What is a Web Framework, and Why Should I use one?                | We Learn Code             | 2020-04           | <https://welearncode.com/what-are-frontend-frameworks>                    | 2022-01-29    | Language choice       |
+| vuejs/vue: Vue.js is a progressive, incrementally-adoptable ...   | You, E                    | 2021-06           | <https://github.com/vuejs/vue>                                            | 2022-01-29    | Language choice       |
+| facebook/react: A declarative, efficient, and flexible ...        | Facebook                  | 2021-03           | <https://github.com/facebook/react>                                       | 2022-01-29    | Language choice       |
