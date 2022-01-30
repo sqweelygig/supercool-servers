@@ -1,4 +1,4 @@
 import { createApp } from "vue";
-import App from "./App.vue";
+import SuperCoolServers from "./SuperCoolServers.vue";
 
-createApp(App).mount("#app");
+createApp(SuperCoolServers).mount("#app");
