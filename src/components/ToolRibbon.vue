@@ -82,6 +82,8 @@ export default defineComponent({
 					this.onUpload(event.target.result);
 				}
 			});
+			// TODO Swallow error on cancel
+			// TODO Allow same named file to be uploaded twice
 			reader.readAsText(file);
 		},
 	},

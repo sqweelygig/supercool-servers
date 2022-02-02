@@ -5,19 +5,27 @@
 		v-bind:on-upload="this.uploadData"
 		v-bind:download="this.downloadData"
 	/>
+	<error-message v-if="this.hasError" v-bind:error="error" />
 	<page-header text="Normal operation" />
 	<number-slider
 		label="Current"
-		maximum="30"
-		minimum="10"
+		v-bind:maximum="30"
+		v-bind:minimum="10"
 		question="What is the thermostat set to?"
 		units="°C"
 		v-model.number="normalThermostat"
 	/>
 </template>
 
+<style scoped lang="scss">
+* {
+	margin: 1rem;
+}
+</style>
+
 <script lang="ts">
 import { defineComponent } from "vue";
+import ErrorMessage from "./ErrorMessage.vue";
 import NumberSlider from "./NumberSlider.vue";
 import PageHeader from "./PageHeader.vue";
 import ToolRibbon from "./ToolRibbon.vue";
@@ -51,11 +59,35 @@ interface ThermalObservations {
 	minimumThermostat: number;
 	normalThermostat: number;
 	observations: Array<ThermalInterval>;
-	phase: "intro" | "normal" | "cooler" | "warmer" | "reset" | "complete";
+	phase: string; // TODO This should eventually be an enum
 	version: number;
 }
 
+type ThermalObservationsState = ThermalObservations & { error?: string };
+
 class DataParseError extends Error {}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isThermalObservations(data: any): data is ThermalObservations {
+	const phases = ["intro", "normal", "warmer", "cooler", "reset", "complete"];
+	return (
+		typeof data === "object" &&
+		data !== null &&
+		typeof data.maximumThermostat === "number" &&
+		data.maximumThermostat >= 10 &&
+		data.maximumThermostat <= 30 &&
+		typeof data.minimumThermostat === "number" &&
+		data.minimumThermostat >= 10 &&
+		data.minimumThermostat <= 30 &&
+		typeof data.normalThermostat === "number" &&
+		data.normalThermostat >= 10 &&
+		data.normalThermostat <= 30 &&
+		data.minimumThermostat <= data.normalThermostat <= data.maximumThermostat &&
+		Array.isArray(data.observations) &&
+		phases.includes(data.phase) &&
+		data.version === 1
+	);
+}
 
 export default defineComponent({
 	created(): void {
@@ -65,13 +97,22 @@ export default defineComponent({
 	},
 	computed: {
 		downloadData: function (): string {
-			return JSON.stringify(this.$data);
+			return this.stringifyData(this.$data);
+		},
+		hasError: function (): boolean {
+			return this.$data.error !== undefined;
 		},
 	},
-	components: { ToolRibbon, PageHeader, NumberSlider },
-	data(): ThermalObservations {
+	components: { ErrorMessage, NumberSlider, PageHeader, ToolRibbon },
+	data(): ThermalObservationsState {
 		if (localStorage.thermalData) {
-			return this.parseData(localStorage.thermalData);
+			try {
+				return this.parseData(localStorage.thermalData);
+			} catch (error) {
+				return this.defaultData({
+					error: "Could not load previous state.",
+				});
+			}
 		} else {
 			return this.defaultData();
 		}
@@ -80,8 +121,11 @@ export default defineComponent({
 		clearData: function (): void {
 			delete localStorage.thermalData;
 			Object.assign(this, this.defaultData());
+			delete this.$data.error;
 		},
-		defaultData: function (): ThermalObservations {
+		defaultData: function (
+			data?: Partial<ThermalObservationsState>
+		): ThermalObservationsState {
 			return {
 				maximumThermostat: 20,
 				minimumThermostat: 14,
@@ -89,61 +133,35 @@ export default defineComponent({
 				observations: [],
 				phase: "normal",
 				version: 1,
+				...data,
 			};
 		},
 		nextPhase: function (): void {
 			this.phase = "normal";
 		},
 		parseData: function (data: string): ThermalObservations {
-			// TODO Add error feedback to template
-			const parsedData = JSON.parse(data);
+			const parsedData: unknown = JSON.parse(data);
 			// Step the data up the versions (currently 1, so nothing here)
-			// Validate the data according to the current standards
-			if (
-				typeof parsedData.maximumThermostat !== "number" ||
-				parsedData.maximumThermostat < 10 ||
-				parsedData.maximumThermostat > 30
-			) {
-				throw new DataParseError("Invalid value for maximum thermostat.");
-			}
-			if (
-				typeof parsedData.minimumThermostat !== "number" ||
-				parsedData.minimumThermostat < 10 ||
-				parsedData.minimumThermostat > 30
-			) {
-				throw new DataParseError("Invalid value for minimum thermostat.");
-			}
-			if (
-				typeof parsedData.normalThermostat !== "number" ||
-				parsedData.normalThermostat < 10 ||
-				parsedData.normalThermostat > 30
-			) {
-				throw new DataParseError("Invalid value for normal thermostat.");
-			}
-			if (!Array.isArray(parsedData.observations)) {
-				throw new DataParseError("Invalid value for observations.");
-			}
-			const phases = [
-				"intro",
-				"normal",
-				"warmer",
-				"cooler",
-				"reset",
-				"complete",
-			];
-			if (!phases.includes(parsedData.phase)) {
-				throw new DataParseError("Invalid value for phase.");
-			}
-			if (parsedData.version !== 1) {
-				throw new DataParseError("Invalid value for version.");
+			if (!isThermalObservations(parsedData)) {
+				throw new DataParseError("Data not valid.");
 			}
 			return parsedData;
 		},
 		saveData: function (): void {
-			localStorage.thermalData = JSON.stringify(this.$data);
+			localStorage.thermalData = this.stringifyData(this.$data);
+		},
+		stringifyData: function (data: ThermalObservationsState): string {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const { error, ...returnValue } = data; // Omit error property
+			return JSON.stringify(returnValue);
 		},
 		uploadData: function (data: string): void {
-			Object.assign(this, this.parseData(data));
+			try {
+				Object.assign(this, this.parseData(data));
+				delete this.$data.error;
+			} catch (error) {
+				this.$data.error = "Data upload failed.";
+			}
 		},
 	},
 	name: "Thermal Survey",

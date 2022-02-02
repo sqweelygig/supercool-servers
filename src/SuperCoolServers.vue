@@ -13,10 +13,3 @@ export default defineComponent({
 	},
 });
 </script>
-
-<style lang="scss">
-// TODO Work out how to replace #app with this components selector and possibly add display: block
-#app > * {
-	margin: 1rem;
-}
-</style>
