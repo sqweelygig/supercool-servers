@@ -8,6 +8,20 @@
 		<link rel="alternate icon" href="<%= BASE_URL %>favicon.ico">
 		<title>SuperCool Servers</title>
 		<style>
+			/* CSS Reboot */
+			html,
+			body,
+			* {
+				border: 0;
+				box-sizing: border-box;
+				font-family: sans-serif;
+				margin: 0;
+				overflow: hidden;
+				padding: 0;
+				text-align: justify;
+				text-align-last: center;
+			}
+
 			/* Palette */
 			:root {
 				--black: hsl(240, 0%, 0%);
@@ -33,21 +47,12 @@
 				color: var(--black);
 			}
 
-			/* CSS Reboot */
-			html,
-			body,
-			* {
-				border: 0;
-				box-sizing: border-box;
-				font-family: sans-serif;
-				margin: 0;
-				overflow: hidden;
-				padding: 0;
-				text-align: justify;
-				text-align-last: center;
+			/* Top-level containers */
+			body {
+				margin: 0 auto;
+				max-width: 40rem;
 			}
 
-			/* Top-level containers */
 			body > * {
 				border-radius: 1rem;
 				margin: 1rem;
