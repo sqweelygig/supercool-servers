@@ -8,6 +8,7 @@
 	<error-message v-if="this.hasError" v-bind:error="error" />
 	<page-header text="Normal operation" />
 	<number-slider
+		id="current-slider"
 		label="Current"
 		v-bind:maximum="30"
 		v-bind:minimum="10"

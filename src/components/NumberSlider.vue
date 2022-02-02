@@ -1,16 +1,16 @@
 <template>
 	<div class="number-slider">
-		<!-- TODO Sort out for id -->
-		<label v-if="question">
+		<label v-if="question" v-bind:for="id">
 			{{ question }}
 		</label>
-		<label>
+		<label v-bind:for="id">
 			{{ label }}:
-			<output>{{ modelValue }}{{ units }}</output>
+			<output v-bind:for="id">{{ modelValue }}{{ units }}</output>
 		</label>
 		<input
 			step="1"
 			type="range"
+			v-bind:id="id"
 			v-bind:max="maximum"
 			v-bind:min="minimum"
 			v-bind:value="modelValue"
@@ -35,6 +35,9 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
 	props: {
+		id: {
+			type: String,
+		},
 		label: {
 			type: String,
 		},
