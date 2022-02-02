@@ -14,7 +14,6 @@
 	<page-header text="Normal operation" />
 	<number-slider
 		id="current-slider"
-		label="Current"
 		v-bind:maximum="30"
 		v-bind:minimum="10"
 		question="What is the thermostat set to?"
