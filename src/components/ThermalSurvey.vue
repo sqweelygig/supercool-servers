@@ -34,30 +34,7 @@ import ErrorMessage from "./ErrorMessage.vue";
 import NumberSlider from "./NumberSlider.vue";
 import PageHeader from "./PageHeader.vue";
 import ToolRibbon from "./ToolRibbon.vue";
-
-interface Interval {
-	endTime: number;
-	startTime: number;
-}
-
-interface ThermostatInterval extends Interval {
-	thermostatSetting: number;
-}
-
-interface ThermalInterval extends ThermostatInterval {
-	startTemperature: number;
-	endTemperature: number;
-	dutyCycle: number;
-}
-
-export interface ThermalProperties {
-	baseloadDutyCycle: number;
-	temperatureChangeVelocity: number;
-	maximumThermostat: number;
-	minimumThermostat: number;
-	normalThermostat: number;
-	version: number;
-}
+import { ThermalInterval, DataSet } from "../types";
 
 enum ObservationPhases {
 	Intro = "intro",
@@ -68,16 +45,17 @@ enum ObservationPhases {
 	Complete = "complete",
 }
 
-interface ThermalObservations {
+interface ThermalObservations extends DataSet {
 	maximumThermostat: number;
 	minimumThermostat: number;
 	normalThermostat: number;
 	observations: Array<ThermalInterval>;
 	phase: ObservationPhases;
-	version: number;
 }
 
-type ThermalObservationsState = ThermalObservations & { error?: string };
+interface ThermalObservationsState extends ThermalObservations {
+	error?: string;
+}
 
 class DataParseError extends Error {}
 
