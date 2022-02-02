@@ -1,5 +1,5 @@
 <template>
-	<div id="tool-ribbon">
+	<div class="tool-ribbon">
 		<button v-if="this.onBack" type="button" v-on:click.prevent="this.onBack">
 			<font-awesome-icon icon="chevron-left" />
 		</button>
@@ -29,7 +29,7 @@
 </template>
 
 <style scoped lang="scss">
-#tool-ribbon {
+.tool-ribbon {
 	display: grid;
 	gap: 1rem;
 	grid-auto-columns: 3rem;
@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { library as IconLibrary } from "@fortawesome/fontawesome-svg-core";
 import {
 	faChevronLeft,
 	faChevronRight,
@@ -64,7 +64,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faChevronLeft, faChevronRight, faUpload, faDownload, faTrash);
+IconLibrary.add(faChevronLeft, faChevronRight, faUpload, faDownload, faTrash);
 
 export default defineComponent({
 	components: { FontAwesomeIcon },
