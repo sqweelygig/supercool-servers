@@ -10,12 +10,13 @@
 	background: var(--contrast-light);
 	border-radius: 0.5rem;
 	cursor: pointer;
-	display: flex;
+	display: grid;
+	gap: 0.5rem;
+	grid-auto-flow: column;
+	grid-template-columns: 1fr;
+	grid-auto-columns: auto;
 	padding: 0.5rem;
 	text-align: center;
-	> span {
-		flex-grow: 1;
-	}
 }
 </style>
 
