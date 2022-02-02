@@ -1,11 +1,16 @@
 <template>
+	<error-message
+		v-if="this.hasError"
+		v-bind:error="error"
+		v-bind:on-clear="this.clearError"
+	/>
 	<tool-ribbon
+		v-else
 		v-bind:on-clear="this.clearData"
 		v-bind:on-next="this.nextPhase"
 		v-bind:on-upload="this.uploadData"
 		v-bind:download="this.downloadData"
 	/>
-	<error-message v-if="this.hasError" v-bind:error="error" />
 	<page-header text="Normal operation" />
 	<number-slider
 		id="current-slider"
@@ -130,6 +135,9 @@ export default defineComponent({
 		clearData: function (): void {
 			delete localStorage.thermalData;
 			Object.assign(this, this.defaultData());
+			delete this.$data.error;
+		},
+		clearError: function (): void {
 			delete this.$data.error;
 		},
 		defaultData: function (
