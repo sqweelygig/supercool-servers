@@ -17,7 +17,7 @@
 			v-if="this.onUpload"
 			id="file-upload"
 			type="file"
-			v-on:change="uploadData($event.target.files[0])"
+			v-on:change="uploadData"
 		/>
 		<button v-if="this.onClear" type="button" v-on:click.prevent="this.onClear">
 			<font-awesome-icon icon="trash" />
@@ -75,16 +75,26 @@ export default defineComponent({
 		},
 	},
 	methods: {
-		uploadData: function (file: File): void {
-			const reader = new FileReader();
-			reader.addEventListener("load", (event) => {
-				if (typeof event?.target?.result === "string" && this.onUpload) {
-					this.onUpload(event.target.result);
+		uploadData: function (uploadEvent: Event): void {
+			if (this.onUpload && uploadEvent.target) {
+				const uploadTarget = uploadEvent.target as HTMLInputElement;
+				if (uploadTarget.files) {
+					const file = uploadTarget.files[0];
+					if (file) {
+						const reader = new FileReader();
+						reader.addEventListener("load", (loadEvent) => {
+							if (
+								this.onUpload &&
+								typeof loadEvent?.target?.result === "string"
+							) {
+								this.onUpload(loadEvent.target.result);
+							}
+							uploadTarget.value = "";
+						});
+						reader.readAsText(file);
+					}
 				}
-			});
-			// TODO Swallow error on cancel
-			// TODO Allow same named file to be uploaded twice
-			reader.readAsText(file);
+			}
 		},
 	},
 	props: {
