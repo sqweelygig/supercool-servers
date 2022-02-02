@@ -54,12 +54,21 @@ export interface ThermalProperties {
 	version: number;
 }
 
+enum ObservationPhases {
+	Intro = "intro",
+	Normal = "normal",
+	Warmer = "warmer",
+	Cooler = "cooler",
+	Reset = "reset",
+	Complete = "complete",
+}
+
 interface ThermalObservations {
 	maximumThermostat: number;
 	minimumThermostat: number;
 	normalThermostat: number;
 	observations: Array<ThermalInterval>;
-	phase: string; // TODO This should eventually be an enum
+	phase: ObservationPhases;
 	version: number;
 }
 
@@ -69,7 +78,6 @@ class DataParseError extends Error {}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isThermalObservations(data: any): data is ThermalObservations {
-	const phases = ["intro", "normal", "warmer", "cooler", "reset", "complete"];
 	return (
 		typeof data === "object" &&
 		data !== null &&
@@ -84,7 +92,7 @@ function isThermalObservations(data: any): data is ThermalObservations {
 		data.normalThermostat <= 30 &&
 		data.minimumThermostat <= data.normalThermostat <= data.maximumThermostat &&
 		Array.isArray(data.observations) &&
-		phases.includes(data.phase) &&
+		Object.values(ObservationPhases).includes(data.phase) &&
 		data.version === 1
 	);
 }
@@ -131,17 +139,16 @@ export default defineComponent({
 				minimumThermostat: 14,
 				normalThermostat: 18,
 				observations: [],
-				phase: "normal",
+				phase: ObservationPhases.Normal,
 				version: 1,
 				...data,
 			};
 		},
 		nextPhase: function (): void {
-			this.phase = "normal";
+			this.phase = ObservationPhases.Normal;
 		},
 		parseData: function (data: string): ThermalObservations {
 			const parsedData: unknown = JSON.parse(data);
-			// Step the data up the versions (currently 1, so nothing here)
 			if (!isThermalObservations(parsedData)) {
 				throw new DataParseError("Data not valid.");
 			}
