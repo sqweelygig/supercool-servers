@@ -1,6 +1,6 @@
 <template>
 	<div class="error-message" v-on:click.prevent="this.onClear">
-		<span>{{ error }}</span>
+		<span>{{ error.message }}</span>
 		<font-awesome-icon icon="times" />
 	</div>
 </template>
@@ -32,7 +32,7 @@ export default defineComponent({
 	components: { FontAwesomeIcon },
 	props: {
 		error: {
-			type: String,
+			type: Error,
 		},
 		onClear: {
 			type: Function,

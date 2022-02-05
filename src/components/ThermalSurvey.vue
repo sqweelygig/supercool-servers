@@ -54,7 +54,7 @@ interface ThermalObservations extends DataSet {
 }
 
 interface ThermalObservationsState extends ThermalObservations {
-	error?: string;
+	error?: Error;
 }
 
 class DataParseError extends Error {}
@@ -101,7 +101,7 @@ export default defineComponent({
 				return this.parseData(localStorage.thermalData);
 			} catch (error) {
 				return this.defaultData({
-					error: "Could not load previous state.",
+					error: new Error("Could not load previous state."),
 				});
 			}
 		} else {
@@ -153,7 +153,7 @@ export default defineComponent({
 				Object.assign(this, this.parseData(data));
 				delete this.$data.error;
 			} catch (error) {
-				this.$data.error = "Data upload failed.";
+				this.$data.error = new Error("Data upload failed.");
 			}
 		},
 	},
