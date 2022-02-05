@@ -1,4 +1,4 @@
-# An application to help inform the proactive cooling of server rooms
+# An application to steer the proactive cooling of server rooms
 
 Inspired by ["Batteries aren't the only way to store power. Here's another."](https://www.youtube.com/watch?v=0f9GpMWdvWI) from Technology Connections.
 
@@ -23,18 +23,19 @@ This offsetting of operation through time is equivalent to storing energy when p
 
 ## Deliverables
 
-This project will create an application that can gather the data required via a survey, model the thermal characteristics of the room, compute an optimised thermostat schedule and present the forecast savings.
-The project assumes that its audience is technical, consistent with having some responsibility for a server room's thermal controls.
+This project will create an application to steer an operator towards more efficient scheduling.
+It will gather the data required via a survey, model the thermal characteristics of the room, compute an optimised thermostat schedule and present the forecast savings.
+The project assumes that its audience is technical, consistent with having some responsibility for a server room's environmental controls.
 
 The system cannot assume that the server room has a smart thermostat since its purposes include justifying such an expense.
-Therefore, to gather the dataset, a technician might observe aspects of the server room.
+Therefore, to gather the dataset, a technician might observe the thermal properties of the server room.
 The dataset required to compute the desired report is not trivial, so a guided survey will improve accuracy, reliability and uptake.
 Furthermore, this survey is likely to be conducted on a portable device, so interface development should support small screen sizes.
 
 The system will mathematically model the thermal properties of the server room through time in different configurations.
 This modelling will allow the comparison of configurations in a printable, business-oriented report.
 One of these configurations will be computed algorithmically, with this algorithm being developed and implemented during the project.
-Client-side storage, communication and processing should fulfil all the project requirements; therefore the server-side infrastructure need not expand beyond content delivery.
+Client-side storage, communication and processing should fulfil all the project requirements; therefore, the server-side infrastructure need not expand beyond content delivery.
 
 ## Lifecycle
 
@@ -45,11 +46,12 @@ This budget resolves to about six full-time equivalent weeks.
 In choosing the software development model, the first consideration is positioning on the spectrum from waterfall to agile.
 This project has a small, well-bounded and useful product within a sizeable pluripotential scope for development.
 For example, the MVP could consist of a data-gathering flow, a thermal model with no passive cooling, a simple schedule optimisation algorithm and a brief final report.
-The scope for improving this offering includes improving any of these functional requirements, adding integration with APIs, IoT, and modelling passive cooling effects.
+Alongside architecture and toolchain initialisation, this MVP should require 2-3 weeks of the project budget.
+The scope for improving this offering includes iteratively improving any of these functional requirements, adding integration with APIs, the internet of things, and modelling passive cooling effects.
 It is also worth noting that it is not a critical system and the project commissioners require several milestones.
-Therefore, this project organisation will be agile.
+In conclusion, this project will be organised in an agile fashion, prompted mainly by the relative scale of MVP and potential.
+The MVP development will be a series of small increments, with further development being incremental or iterative as required.
 
-![Illustration visualising and recapping the MVP boundary](mvp.png)
 Figure n.n - Initial project outline, showing boundaries of MVP.
 
 There are several models for agile software development with varying suitability for project contexts.
@@ -58,7 +60,6 @@ During the lifecycle of this project, the product will be a website, which would
 In contrast, if the product develops beyond this project, there is value to targetting an IoT context.
 This context would suggest a more discrete deployment model, but a continuous pipeline can easily adopt pinned releases.
 Based on these observations and the principle of only adding processes when they add value, the initial development model will be Kanban.
-
 The first delivered use case will be an assisted survey of a site's thermal properties.
 This use case is selected because the project runs from February to September, so collecting data as early as possible will cover a more significant seasonal variance.
 At the other end of the project lifecycle, the final submission should include options for future development, captured as backlog cards.
