@@ -9,7 +9,7 @@
 		v-bind:on-clear="this.clearData"
 		v-bind:on-next="this.nextPhase"
 		v-bind:on-upload="this.uploadData"
-		v-bind:download="this.downloadData"
+		v-bind:download="this.stringifiedData"
 	/>
 	<page-header text="Normal operation" />
 	<number-slider
@@ -87,8 +87,8 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		downloadData: function (): string {
-			return this.stringifyData(this.$data);
+		stringifiedData: function (): string {
+			return JSON.stringify(this.cleanseData(this.$data));
 		},
 		hasError: function (): boolean {
 			return this.$data.error !== undefined;
@@ -109,10 +109,18 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		cleanseData: function (data: ThermalObservationsState) : ThermalObservations {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const { error, ...cleansedData } = data; // Omit error property
+			if (!isThermalObservations(data)) {
+				throw new DataParseError("Data not valid.");
+			}
+			return cleansedData;
+		},
 		clearData: function (): void {
 			delete localStorage.thermalData;
+			this.clearError();
 			Object.assign(this, this.defaultData());
-			delete this.$data.error;
 		},
 		clearError: function (): void {
 			delete this.$data.error;
@@ -133,25 +141,13 @@ export default defineComponent({
 		nextPhase: function (): void {
 			this.phase = ObservationPhases.Normal;
 		},
-		parseData: function (data: string): ThermalObservations {
-			const parsedData: unknown = JSON.parse(data);
-			if (!isThermalObservations(parsedData)) {
-				throw new DataParseError("Data not valid.");
-			}
-			return parsedData;
-		},
 		saveData: function (): void {
-			localStorage.thermalData = this.stringifyData(this.$data);
-		},
-		stringifyData: function (data: ThermalObservationsState): string {
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			const { error, ...returnValue } = data; // Omit error property
-			return JSON.stringify(returnValue);
+			localStorage.thermalData = this.stringifiedData;
 		},
 		uploadData: function (data: string): void {
 			try {
-				Object.assign(this, this.parseData(data));
-				delete this.$data.error;
+				this.clearError();
+				Object.assign(this, this.cleanseData(JSON.parse(data)));
 			} catch (error) {
 				this.$data.error = new Error("Data upload failed.");
 			}
