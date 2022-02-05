@@ -52,6 +52,7 @@ It is also worth noting that it is not a critical system and the project commiss
 In conclusion, this project will be organised in an agile fashion, prompted mainly by the relative scale of MVP and potential.
 The MVP development will be a series of small increments, with further development being incremental or iterative as required.
 
+![Graphical summary of the MVP from the paragraph above](mvp.png)
 Figure n.n - Initial project outline, showing boundaries of MVP.
 
 There are several models for agile software development with varying suitability for project contexts.
@@ -101,10 +102,10 @@ In conclusion, this project will use Vue.js, especially single file components, 
 
 | HTML Framework    | Familiarity   | Suitability   | GitHub Stars  |
 | ----------------- | ------------- | ------------- | ------------- |
-| Server-side       | Medium        | Low           |               |
-| Direct DOM        | Medium        | Low           |               |
-| React             | Low           | High          |               |
-| Vue               | Low           | High          |               |
+| Server-side       | Medium        | Low           | N/A           |
+| Direct DOM        | Medium        | Low           | N/A           |
+| React             | Low           | High          | 182k          |
+| Vue               | Low           | High          | 193k          |
 
 Figure n.n - Feature comparison matrix of language options.
 
@@ -126,5 +127,5 @@ Figure n.n - Feature comparison matrix of language options.
 | What is a Web Framework, and Why Should I use one?              | We Learn Code           | 2020-04           | <https://welearncode.com/what-are-frontend-frameworks>                                    | 2022-01-29  | Language choice       |
 | vuejs/vue: Vue.js is a progressive, incrementally-adoptable ... | You, E                  | 2021-06           | <https://github.com/vuejs/vue>                                                            | 2022-01-29  | Language choice       |
 | facebook/react: A declarative, efficient, and flexible ...      | Facebook                | 2021-03           | <https://github.com/facebook/react>                                                       | 2022-01-29  | Language choice       |
-| How To Use TypeScript with Vue Single File Components           | DigitalOcean            | ??                | <https://www.digitalocean.com/community/tutorials/vuejs-using-typescript-with-vue>        | 2022-01-30  | Technical guide       |
+| How To Use TypeScript with Vue Single File Components           | DigitalOcean            | 2020-09           | <https://www.digitalocean.com/community/tutorials/vuejs-using-typescript-with-vue>        | 2022-01-30  | Technical guide       |
 | Creating A Custom Range Input That Looks Consistent Across ...  | Smashing Magazine       | 2021-12           | <https://www.smashingmagazine.com/2021/12/create-custom-range-input-consistent-browsers>  | 2022-02-02  | Technical guide       |
