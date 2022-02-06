@@ -1,6 +1,6 @@
 <template>
 	<div class="number-slider">
-		<label v-if="question" v-bind:for="id">
+		<label v-if="question" v-bind:for="id" class="section-header">
 			{{ question }}
 		</label>
 		<output v-bind:for="id">{{ modelValue }}{{ units }}</output>

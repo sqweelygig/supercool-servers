@@ -36,6 +36,9 @@
 		margin: 0.5rem 0;
 		width: 100%;
 	}
+	> .section-header {
+		font-size: 1.2em;
+	}
 	> *:first-child {
 		margin-top: 0;
 	}

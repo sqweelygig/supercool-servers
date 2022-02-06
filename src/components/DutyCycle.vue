@@ -1,6 +1,6 @@
 <template>
 	<div class="duty-cycle">
-		<div>How hard is the air conditioner working?</div>
+		<div class="section-header">How hard is the A/C working?</div>
 		<div>
 			Please observe a few complete duty cycles including both on and off
 			transitions.
