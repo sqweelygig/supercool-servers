@@ -98,21 +98,11 @@ export default defineComponent({
 		},
 	},
 	props: {
-		download: {
-			type: String || null,
-		},
-		onBack: {
-			type: Function || null,
-		},
-		onClear: {
-			type: Function || null,
-		},
-		onNext: {
-			type: Function || null,
-		},
-		onUpload: {
-			type: Function || null,
-		},
+		download: String,
+		onBack: Function,
+		onClear: Function,
+		onNext: Function,
+		onUpload: Function,
 	},
 });
 </script>

@@ -34,7 +34,12 @@ import ErrorMessage from "./ErrorMessage.vue";
 import NumberSlider from "./NumberSlider.vue";
 import PageHeader from "./PageHeader.vue";
 import ToolRibbon from "./ToolRibbon.vue";
-import { ThermalInterval, DataSet } from "../types";
+import {
+	DataSet,
+	isDataSet,
+	ThermalInterval,
+	isThermalInterval,
+} from "../types";
 
 enum ObservationPhases {
 	Intro = "intro",
@@ -75,8 +80,9 @@ function isThermalObservations(data: any): data is ThermalObservations {
 		data.normalThermostat <= 30 &&
 		data.minimumThermostat <= data.normalThermostat <= data.maximumThermostat &&
 		Array.isArray(data.observations) &&
+		data.observations.every(isThermalInterval) &&
 		Object.values(ObservationPhases).includes(data.phase) &&
-		data.version === 1
+		isDataSet(data)
 	);
 }
 
@@ -98,8 +104,9 @@ export default defineComponent({
 	data(): ThermalObservationsState {
 		if (localStorage.thermalData) {
 			try {
-				return this.parseData(localStorage.thermalData);
+				return this.cleanseData(JSON.parse(localStorage.thermalData));
 			} catch (error) {
+				console.error(error);
 				return this.defaultData({
 					error: new Error("Could not load previous state."),
 				});
@@ -109,7 +116,9 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		cleanseData: function (data: ThermalObservationsState) : ThermalObservations {
+		cleanseData: function (
+			data: ThermalObservationsState
+		): ThermalObservations {
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { error, ...cleansedData } = data; // Omit error property
 			if (!isThermalObservations(data)) {
@@ -149,6 +158,7 @@ export default defineComponent({
 				this.clearError();
 				Object.assign(this, this.cleanseData(JSON.parse(data)));
 			} catch (error) {
+				console.error(error);
 				this.$data.error = new Error("Data upload failed.");
 			}
 		},
