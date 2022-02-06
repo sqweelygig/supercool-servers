@@ -92,19 +92,13 @@ function isThermalObservations(data: any): data is ThermalObservations {
 		typeof data === "object" &&
 		data !== null &&
 		typeof data.maximumThermostat === "number" &&
-		data.maximumThermostat >= 10 &&
-		data.maximumThermostat <= 30 &&
 		typeof data.minimumThermostat === "number" &&
-		data.minimumThermostat >= 10 &&
-		data.minimumThermostat <= 30 &&
 		typeof data.normalThermostat === "number" &&
-		data.normalThermostat >= 10 &&
-		data.normalThermostat <= 30 &&
-		data.minimumThermostat <= data.normalThermostat <= data.maximumThermostat &&
 		Array.isArray(data.observations) &&
 		data.observations.every(isThermalInterval) &&
 		Object.values(ObservationPhases).includes(data.phase) &&
-		isDataSet(data)
+		isDataSet(data) &&
+		data.version === 1
 	);
 }
 
