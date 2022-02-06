@@ -18,17 +18,6 @@
 
 <style scoped lang="scss">
 .number-slider {
-	> * {
-		display: block;
-		margin: 0.5rem 0;
-		width: 100%;
-	}
-	> *:first-child {
-		margin-top: 0;
-	}
-	> *:last-child {
-		margin-bottom: 0;
-	}
 	// Many thanks to https://www.smashingmagazine.com/2021/12/create-custom-range-input-consistent-browsers/
 	input[type="range"] {
 		background: transparent;
@@ -69,24 +58,12 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
 	props: {
-		id: {
-			type: String,
-		},
-		maximum: {
-			type: Number,
-		},
-		minimum: {
-			type: Number,
-		},
-		modelValue: {
-			type: Number,
-		},
-		question: {
-			type: String || null,
-		},
-		units: {
-			type: String,
-		},
+		id: String,
+		maximum: Number,
+		minimum: Number,
+		modelValue: Number,
+		question: String,
+		units: String,
 	},
 });
 </script>

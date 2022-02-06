@@ -4,10 +4,9 @@
 		v-bind:error="error"
 		v-bind:on-clear="this.clearError"
 	/>
-	<tool-ribbon
+	<tool-bar
 		v-else
 		v-bind:on-clear="this.clearData"
-		v-bind:on-next="this.nextPhase"
 		v-bind:on-upload="this.uploadData"
 		v-bind:download="this.stringifiedData"
 	/>
@@ -20,20 +19,39 @@
 		units="°C"
 		v-model.number="normalThermostat"
 	/>
+	<duty-cycle
+		v-bind:clear="this.clearObservation"
+		v-bind:initial-observation="currentObservation.initialObservation"
+		v-bind:observations="observations"
+		v-bind:observe="this.observe"
+		v-bind:transition-time="currentObservation.transitionTime"
+	/>
 </template>
 
 <style scoped lang="scss">
-* {
+:deep() {
 	margin: 1rem;
+	> * {
+		display: block;
+		margin: 0.5rem 0;
+		width: 100%;
+	}
+	> *:first-child {
+		margin-top: 0;
+	}
+	> *:last-child {
+		margin-bottom: 0;
+	}
 }
 </style>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import DutyCycle, { CurrentObservation } from "./DutyCycle.vue";
 import ErrorMessage from "./ErrorMessage.vue";
 import NumberSlider from "./NumberSlider.vue";
 import PageHeader from "./PageHeader.vue";
-import ToolRibbon from "./ToolRibbon.vue";
+import ToolBar from "./ToolBar.vue";
 import {
 	DataSet,
 	isDataSet,
@@ -59,6 +77,7 @@ interface ThermalObservations extends DataSet {
 }
 
 interface ThermalObservationsState extends ThermalObservations {
+	currentObservation: CurrentObservation;
 	error?: Error;
 }
 
@@ -89,7 +108,7 @@ function isThermalObservations(data: any): data is ThermalObservations {
 export default defineComponent({
 	created(): void {
 		for (const key in this.$data) {
-			this.$watch(key, this.saveData);
+			this.$watch(key, this.saveData, { deep: true });
 		}
 	},
 	computed: {
@@ -100,11 +119,12 @@ export default defineComponent({
 			return this.$data.error !== undefined;
 		},
 	},
-	components: { ErrorMessage, NumberSlider, PageHeader, ToolRibbon },
+	components: { DutyCycle, ErrorMessage, NumberSlider, PageHeader, ToolBar },
 	data(): ThermalObservationsState {
 		if (localStorage.thermalData) {
 			try {
-				return this.cleanseData(JSON.parse(localStorage.thermalData));
+				const rawData = JSON.parse(localStorage.thermalData);
+				return this.defaultData(this.cleanseData(rawData));
 			} catch (error) {
 				console.error(error);
 				return this.defaultData({
@@ -119,8 +139,9 @@ export default defineComponent({
 		cleanseData: function (
 			data: ThermalObservationsState
 		): ThermalObservations {
+			// Drop transient properties
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			const { error, ...cleansedData } = data; // Omit error property
+			const { error, currentObservation, ...cleansedData } = data;
 			if (!isThermalObservations(data)) {
 				throw new DataParseError("Data not valid.");
 			}
@@ -131,6 +152,11 @@ export default defineComponent({
 			this.clearError();
 			Object.assign(this, this.defaultData());
 		},
+		clearObservation: function (): void {
+			this.$data.currentObservation.initialObservation = undefined;
+			this.$data.currentObservation.startTime = undefined;
+			this.$data.currentObservation.transitionTime = undefined;
+		},
 		clearError: function (): void {
 			delete this.$data.error;
 		},
@@ -138,6 +164,11 @@ export default defineComponent({
 			data?: Partial<ThermalObservationsState>
 		): ThermalObservationsState {
 			return {
+				currentObservation: {
+					initialObservation: undefined,
+					startTime: undefined,
+					transitionTime: undefined,
+				},
 				maximumThermostat: 20,
 				minimumThermostat: 14,
 				normalThermostat: 18,
@@ -147,8 +178,33 @@ export default defineComponent({
 				...data,
 			};
 		},
-		nextPhase: function (): void {
-			this.phase = ObservationPhases.Normal;
+		observe(isRisingEdge: boolean): void {
+			const rightNow = Date.now();
+			const observation = this.$data.currentObservation;
+			if (observation.startTime === undefined) {
+				observation.startTime = rightNow;
+				observation.initialObservation = isRisingEdge;
+			} else if (observation.transitionTime === undefined) {
+				observation.transitionTime = rightNow;
+			} else {
+				const initialTime = observation.transitionTime - observation.startTime;
+				const totalTime = rightNow - observation.startTime;
+				const initialProportion = initialTime / totalTime;
+				const dutyCycle = observation.initialObservation
+					? initialProportion
+					: 1 - initialProportion;
+				this.$data.observations.push({
+					dutyCycle,
+					endTemperature: this.normalThermostat,
+					endTime: rightNow,
+					startTemperature: this.normalThermostat,
+					startTime: observation.startTime,
+					thermostatSetting: this.normalThermostat,
+				});
+				observation.initialObservation = isRisingEdge;
+				observation.startTime = rightNow;
+				observation.transitionTime = undefined;
+			}
 		},
 		saveData: function (): void {
 			localStorage.thermalData = this.stringifiedData;
@@ -156,7 +212,9 @@ export default defineComponent({
 		uploadData: function (data: string): void {
 			try {
 				this.clearError();
-				Object.assign(this, this.cleanseData(JSON.parse(data)));
+				const rawData = JSON.parse(data);
+				const cleanedData = this.defaultData(this.cleanseData(rawData));
+				Object.assign(this, cleanedData);
 			} catch (error) {
 				console.error(error);
 				this.$data.error = new Error("Data upload failed.");
