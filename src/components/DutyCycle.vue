@@ -32,14 +32,14 @@ export default defineComponent({
 	components: { ToolBar },
 	computed: {
 		disabled: function () {
-			if (this.initialObservation === true) {
-				if (this.transitionTime === undefined) {
+			if (this.observation.initialObservation === true) {
+				if (this.observation.transitionTime === undefined) {
 					return [this.onRise];
 				} else {
 					return [this.onFall];
 				}
-			} else if (this.initialObservation === false) {
-				if (this.transitionTime === undefined) {
+			} else if (this.observation.initialObservation === false) {
+				if (this.observation.transitionTime === undefined) {
 					return [this.onFall];
 				} else {
 					return [this.onRise];
@@ -60,11 +60,13 @@ export default defineComponent({
 	props: {
 		clear: Function,
 		explanation: String,
-		initialObservation: Boolean,
 		observe: Function,
+		observation: {
+			required: true,
+			type: Object,
+		},
 		observations: Array,
 		question: String,
-		transitionTime: Number,
 	},
 });
 </script>

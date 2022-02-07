@@ -25,15 +25,14 @@
 		<duty-cycle
 			explanation="Please observe a few complete duty cycles including both on and off transitions."
 			question="How hard is the A/C working?"
-			v-bind:clear="this.clearObservation"
-			v-bind:initial-observation="currentObservation.initialObservation"
-			v-bind:observations="observations"
+			v-bind:clear="this.clearNormal"
+			v-bind:observation="normalObservation"
+			v-bind:observations="normalObservations"
 			v-bind:observe="this.observeNormal"
-			v-bind:transition-time="currentObservation.transitionTime"
 		/>
 	</div>
 	<div>
-		<page-header text="Cooler" />
+		<page-header text="SuperCool" />
 		<number-slider
 			id="cooler-slider"
 			v-bind:maximum="30"
@@ -41,6 +40,14 @@
 			question="What is the coldest permitted?"
 			units="°C"
 			v-model.number="minimumThermostat"
+		/>
+		<duty-cycle
+			explanation="Please observe a few complete duty cycles including both on and off transitions."
+			question="How hard is the A/C working?"
+			v-bind:clear="this.clearCooler"
+			v-bind:observation="coolerObservation"
+			v-bind:observations="coolerObservations"
+			v-bind:observe="this.observeCooler"
 		/>
 	</div>
 	<div>
@@ -98,16 +105,18 @@ enum ObservationPhases {
 }
 
 interface ThermalObservations extends DataSet {
+	coolerObservations: Array<ThermalInterval>;
 	maximumThermostat: number;
 	minimumThermostat: number;
 	normalThermostat: number;
-	observations: Array<ThermalInterval>;
+	normalObservations: Array<ThermalInterval>;
 	phase: ObservationPhases;
 }
 
 interface ThermalObservationsState extends ThermalObservations {
-	currentObservation: CurrentObservation;
+	coolerObservation: CurrentObservation;
 	error?: Error;
+	normalObservation: CurrentObservation;
 }
 
 class DataParseError extends Error {}
@@ -120,11 +129,13 @@ function isThermalObservations(data: any): data is ThermalObservations {
 		typeof data.maximumThermostat === "number" &&
 		typeof data.minimumThermostat === "number" &&
 		typeof data.normalThermostat === "number" &&
-		Array.isArray(data.observations) &&
-		data.observations.every(isThermalInterval) &&
+		Array.isArray(data.normalObservations) &&
+		data.normalObservations.every(isThermalInterval) &&
+		Array.isArray(data.coolerObservations) &&
+		data.coolerObservations.every(isThermalInterval) &&
 		Object.values(ObservationPhases).includes(data.phase) &&
 		isDataSet(data) &&
-		data.version === 1
+		data.version === 0
 	);
 }
 
@@ -164,7 +175,7 @@ export default defineComponent({
 		): ThermalObservations {
 			// Drop transient properties
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			const { error, currentObservation, ...cleansedData } = data;
+			const { coolerObservation, error, normalObservation, ...cleansedData } = data;
 			if (!isThermalObservations(data)) {
 				throw new DataParseError("Data not valid.");
 			}
@@ -175,10 +186,17 @@ export default defineComponent({
 			this.clearError();
 			Object.assign(this, this.defaultData());
 		},
-		clearObservation: function (): void {
-			this.$data.currentObservation.initialObservation = undefined;
-			this.$data.currentObservation.startTime = undefined;
-			this.$data.currentObservation.transitionTime = undefined;
+		clearCooler: function (): void {
+			this.clearObservation(this.$data.coolerObservation);
+		},
+		clearNormal: function (): void {
+			this.clearObservation(this.$data.normalObservation);
+		},
+		clearObservation: function (observation: CurrentObservation): void {
+			observation.endTime = undefined;
+			observation.initialObservation = undefined;
+			observation.startTime = undefined;
+			observation.transitionTime = undefined;
 		},
 		clearError: function (): void {
 			delete this.$data.error;
@@ -187,23 +205,29 @@ export default defineComponent({
 			data?: Partial<ThermalObservationsState>
 		): ThermalObservationsState {
 			return {
-				currentObservation: {
+				coolerObservation: {
 					initialObservation: undefined,
 					startTime: undefined,
 					transitionTime: undefined,
 				},
+				coolerObservations: [],
 				maximumThermostat: 20,
 				minimumThermostat: 14,
 				normalThermostat: 18,
-				observations: [],
+				normalObservation: {
+					initialObservation: undefined,
+					startTime: undefined,
+					transitionTime: undefined,
+				},
+				normalObservations: [],
 				phase: ObservationPhases.Normal,
-				version: 1,
+				version: 0,
 				...data,
 			};
 		},
-		observeNormal(isRisingEdge: boolean): void {
+		// TODO This *must* be in DutyCycle according to seperation of concerns and composition
+		observe(isRisingEdge: boolean, observation: CurrentObservation, output: Array<ThermalInterval>, thermostat: number): void {
 			const rightNow = Date.now();
-			const observation = this.$data.currentObservation;
 			if (observation.startTime === undefined) {
 				observation.startTime = rightNow;
 				observation.initialObservation = isRisingEdge;
@@ -216,18 +240,24 @@ export default defineComponent({
 				const dutyCycle = observation.initialObservation
 					? initialProportion
 					: 1 - initialProportion;
-				this.$data.observations.push({
+				output.push({
 					dutyCycle,
-					endTemperature: this.normalThermostat,
+					endTemperature: thermostat,
 					endTime: rightNow,
-					startTemperature: this.normalThermostat,
+					startTemperature: thermostat,
 					startTime: observation.startTime,
-					thermostatSetting: this.normalThermostat,
+					thermostatSetting: thermostat,
 				});
 				observation.initialObservation = isRisingEdge;
 				observation.startTime = rightNow;
 				observation.transitionTime = undefined;
 			}
+		},
+		observeCooler(isRisingEdge: boolean): void {
+			this.observe(isRisingEdge, this.coolerObservation, this.coolerObservations, this.minimumThermostat);
+		},
+		observeNormal(isRisingEdge: boolean): void {
+			this.observe(isRisingEdge, this.normalObservation, this.normalObservations, this.normalThermostat);
 		},
 		saveData: function (): void {
 			localStorage.thermalData = this.stringifiedData;
