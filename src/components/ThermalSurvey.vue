@@ -203,6 +203,5 @@ export default defineComponent({
 			}
 		},
 	},
-	name: "Thermal Survey",
 });
 </script>
