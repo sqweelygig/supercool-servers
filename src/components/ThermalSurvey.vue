@@ -1,40 +1,66 @@
 <template>
-	<error-message
-		v-if="this.hasError"
-		v-bind:error="error"
-		v-bind:on-clear="this.clearError"
-	/>
-	<tool-bar
-		v-else
-		v-bind:on-clear="this.clearData"
-		v-bind:on-upload="this.uploadData"
-		v-bind:download="this.stringifiedData"
-	/>
-	<page-header text="Normal operation" />
-	<number-slider
-		id="current-slider"
-		v-bind:maximum="30"
-		v-bind:minimum="10"
-		question="What is the thermostat set to?"
-		units="°C"
-		v-model.number="normalThermostat"
-	/>
-	<duty-cycle
-		v-bind:clear="this.clearObservation"
-		v-bind:initial-observation="currentObservation.initialObservation"
-		v-bind:observations="observations"
-		v-bind:observe="this.observe"
-		v-bind:transition-time="currentObservation.transitionTime"
-	/>
+	<div>
+		<error-message
+			v-if="this.hasError"
+			v-bind:error="error"
+			v-bind:on-clear="this.clearError"
+		/>
+		<tool-bar
+			v-else
+			v-bind:on-clear="this.clearData"
+			v-bind:on-upload="this.uploadData"
+			v-bind:download="this.stringifiedData"
+		/>
+	</div>
+	<div>
+		<page-header text="Normal" />
+		<number-slider
+			id="current-slider"
+			v-bind:maximum="30"
+			v-bind:minimum="10"
+			question="What is the thermostat set to?"
+			units="°C"
+			v-model.number="normalThermostat"
+		/>
+		<duty-cycle
+			explanation="Please observe a few complete duty cycles including both on and off transitions."
+			question="How hard is the A/C working?"
+			v-bind:clear="this.clearObservation"
+			v-bind:initial-observation="currentObservation.initialObservation"
+			v-bind:observations="observations"
+			v-bind:observe="this.observeNormal"
+			v-bind:transition-time="currentObservation.transitionTime"
+		/>
+	</div>
+	<div>
+		<page-header text="Cooler" />
+		<number-slider
+			id="cooler-slider"
+			v-bind:maximum="30"
+			v-bind:minimum="10"
+			question="What is the coldest permitted?"
+			units="°C"
+			v-model.number="minimumThermostat"
+		/>
+	</div>
+	<div>
+		<page-header text="Finish" />
+		<div>Please reset the thermostat to {{ normalThermostat }}°C.</div>
+		<div>You may also wish to download a copy of the data gathered today.</div>
+		<tool-bar v-bind:download="this.stringifiedData" />
+	</div>
 </template>
 
 <style scoped lang="scss">
 :deep() {
-	margin: 1rem;
+	margin: 1.2rem;
 	> * {
 		display: block;
-		margin: 0.5rem 0;
+		margin: 0.6rem 0;
 		width: 100%;
+		> * {
+			margin: 0.2rem 0;
+		}
 	}
 	> .section-header {
 		font-size: 1.2em;
@@ -175,7 +201,7 @@ export default defineComponent({
 				...data,
 			};
 		},
-		observe(isRisingEdge: boolean): void {
+		observeNormal(isRisingEdge: boolean): void {
 			const rightNow = Date.now();
 			const observation = this.$data.currentObservation;
 			if (observation.startTime === undefined) {

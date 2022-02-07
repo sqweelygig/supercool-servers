@@ -8,14 +8,14 @@
 <style scoped lang="scss">
 .error-message {
 	background: var(--contrast-light);
-	border-radius: 0.5rem;
+	border-radius: 0.6rem;
 	cursor: pointer;
 	display: grid;
-	gap: 0.5rem;
+	gap: 0.6rem;
 	grid-auto-flow: column;
 	grid-template-columns: 1fr;
 	grid-auto-columns: auto;
-	padding: 0.5rem;
+	padding: 0.6rem;
 	text-align: center;
 	> * {
 		margin: 0;

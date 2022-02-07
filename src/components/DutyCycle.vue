@@ -1,10 +1,7 @@
 <template>
 	<div class="duty-cycle">
-		<div class="section-header">How hard is the A/C working?</div>
-		<div>
-			Please observe a few complete duty cycles including both on and off
-			transitions.
-		</div>
+		<div class="section-header">{{ question }}</div>
+		<div>{{ explanation }}</div>
 		<div v-bind:key="observation.startTime" v-for="observation in observations">
 			{{ new Date(observation.startTime).toLocaleTimeString() }}
 			-
@@ -62,9 +59,11 @@ export default defineComponent({
 	},
 	props: {
 		clear: Function,
+		explanation: String,
 		initialObservation: Boolean,
 		observe: Function,
 		observations: Array,
+		question: String,
 		transitionTime: Number,
 	},
 });

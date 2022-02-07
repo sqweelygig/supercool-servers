@@ -68,22 +68,25 @@
 <style scoped lang="scss">
 .tool-bar {
 	display: grid;
-	gap: 1rem;
+	gap: 0.6rem;
 	grid-auto-columns: 1fr;
 	grid-auto-flow: column;
 	justify-content: center;
 	> * {
 		background: var(--light);
 		border: 0;
-		border-radius: 0.5rem;
+		border-radius: 0.6rem;
 		box-sizing: border-box;
 		color: var(--black);
 		cursor: pointer;
 		font-size: 100%;
 		margin: 0;
-		padding: 0.5rem;
+		padding: 0.6rem;
 		text-align: center;
 		text-decoration: none;
+		> * {
+			margin: 0;
+		}
 	}
 	> input[type="file"] {
 		display: none;
