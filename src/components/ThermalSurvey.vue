@@ -25,10 +25,8 @@
 		<duty-cycle
 			explanation="Please observe a few complete duty cycles including both on and off transitions."
 			question="How hard is the A/C working?"
-			v-bind:clear="this.clearNormal"
-			v-bind:observation="normalObservation"
-			v-bind:observations="normalObservations"
-			v-bind:observe="this.observeNormal"
+			v-bind:thermostat="this.normalThermostat"
+			v-model="this.normalObservations"
 		/>
 	</div>
 	<div>
@@ -44,10 +42,8 @@
 		<duty-cycle
 			explanation="Please observe a few complete duty cycles including both on and off transitions."
 			question="How hard is the A/C working?"
-			v-bind:clear="this.clearCooler"
-			v-bind:observation="coolerObservation"
-			v-bind:observations="coolerObservations"
-			v-bind:observe="this.observeCooler"
+			v-bind:thermostat="this.minimumThermostat"
+			v-model="this.coolerObservations"
 		/>
 	</div>
 	<div>
@@ -62,7 +58,6 @@
 :deep() {
 	margin: 1.2rem;
 	> * {
-		display: block;
 		margin: 0.6rem 0;
 		width: 100%;
 		> * {
@@ -83,17 +78,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import DutyCycle, { CurrentObservation } from "./DutyCycle.vue";
+import DutyCycle, { ThermostaticObservation } from "./DutyCycle.vue";
 import ErrorMessage from "./ErrorMessage.vue";
 import NumberSlider from "./NumberSlider.vue";
 import PageHeader from "./PageHeader.vue";
 import ToolBar from "./ToolBar.vue";
-import {
-	DataSet,
-	isDataSet,
-	ThermalInterval,
-	isThermalInterval,
-} from "../types";
+import { DataSet, isDataSet } from "../types";
 
 enum ObservationPhases {
 	Intro = "intro",
@@ -105,18 +95,16 @@ enum ObservationPhases {
 }
 
 interface ThermalObservations extends DataSet {
-	coolerObservations: Array<ThermalInterval>;
+	coolerObservations: Array<Partial<ThermostaticObservation>>;
 	maximumThermostat: number;
 	minimumThermostat: number;
 	normalThermostat: number;
-	normalObservations: Array<ThermalInterval>;
+	normalObservations: Array<Partial<ThermostaticObservation>>;
 	phase: ObservationPhases;
 }
 
 interface ThermalObservationsState extends ThermalObservations {
-	coolerObservation: CurrentObservation;
 	error?: Error;
-	normalObservation: CurrentObservation;
 }
 
 class DataParseError extends Error {}
@@ -130,9 +118,7 @@ function isThermalObservations(data: any): data is ThermalObservations {
 		typeof data.minimumThermostat === "number" &&
 		typeof data.normalThermostat === "number" &&
 		Array.isArray(data.normalObservations) &&
-		data.normalObservations.every(isThermalInterval) &&
 		Array.isArray(data.coolerObservations) &&
-		data.coolerObservations.every(isThermalInterval) &&
 		Object.values(ObservationPhases).includes(data.phase) &&
 		isDataSet(data) &&
 		data.version === 0
@@ -146,11 +132,11 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		stringifiedData(): string {
-			return JSON.stringify(this.cleanseData(this.$data));
-		},
 		hasError(): boolean {
 			return this.$data.error !== undefined;
+		},
+		stringifiedData(): string {
+			return JSON.stringify(this.cleanseData(this.$data));
 		},
 	},
 	components: { DutyCycle, ErrorMessage, NumberSlider, PageHeader, ToolBar },
@@ -173,8 +159,7 @@ export default defineComponent({
 		cleanseData(data: ThermalObservationsState): ThermalObservations {
 			// Drop transient properties
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			const { coolerObservation, error, normalObservation, ...cleansedData } =
-				data;
+			const { error, ...cleansedData } = data;
 			if (!isThermalObservations(data)) {
 				throw new DataParseError("Data not valid.");
 			}
@@ -185,18 +170,6 @@ export default defineComponent({
 			this.clearError();
 			Object.assign(this, this.defaultData());
 		},
-		clearCooler(): void {
-			this.clearObservation(this.$data.coolerObservation);
-		},
-		clearNormal(): void {
-			this.clearObservation(this.$data.normalObservation);
-		},
-		clearObservation(observation: CurrentObservation): void {
-			observation.endTime = undefined;
-			observation.initialObservation = undefined;
-			observation.startTime = undefined;
-			observation.transitionTime = undefined;
-		},
 		clearError(): void {
 			delete this.$data.error;
 		},
@@ -204,74 +177,15 @@ export default defineComponent({
 			data?: Partial<ThermalObservationsState>
 		): ThermalObservationsState {
 			return {
-				coolerObservation: {
-					initialObservation: undefined,
-					startTime: undefined,
-					transitionTime: undefined,
-				},
 				coolerObservations: [],
 				maximumThermostat: 20,
 				minimumThermostat: 14,
 				normalThermostat: 18,
-				normalObservation: {
-					initialObservation: undefined,
-					startTime: undefined,
-					transitionTime: undefined,
-				},
 				normalObservations: [],
 				phase: ObservationPhases.Normal,
 				version: 0,
 				...data,
 			};
-		},
-		// TODO This *must* be in DutyCycle according to seperation of concerns and composition
-		observe(
-			isRisingEdge: boolean,
-			observation: CurrentObservation,
-			output: Array<ThermalInterval>,
-			thermostat: number
-		): void {
-			const rightNow = Date.now();
-			if (observation.startTime === undefined) {
-				observation.startTime = rightNow;
-				observation.initialObservation = isRisingEdge;
-			} else if (observation.transitionTime === undefined) {
-				observation.transitionTime = rightNow;
-			} else {
-				const initialTime = observation.transitionTime - observation.startTime;
-				const totalTime = rightNow - observation.startTime;
-				const initialProportion = initialTime / totalTime;
-				const dutyCycle = observation.initialObservation
-					? initialProportion
-					: 1 - initialProportion;
-				output.push({
-					dutyCycle,
-					endTemperature: thermostat,
-					endTime: rightNow,
-					startTemperature: thermostat,
-					startTime: observation.startTime,
-					thermostatSetting: thermostat,
-				});
-				observation.initialObservation = isRisingEdge;
-				observation.startTime = rightNow;
-				observation.transitionTime = undefined;
-			}
-		},
-		observeCooler(isRisingEdge: boolean): void {
-			this.observe(
-				isRisingEdge,
-				this.coolerObservation,
-				this.coolerObservations,
-				this.minimumThermostat
-			);
-		},
-		observeNormal(isRisingEdge: boolean): void {
-			this.observe(
-				isRisingEdge,
-				this.normalObservation,
-				this.normalObservations,
-				this.normalThermostat
-			);
 		},
 		saveData(): void {
 			localStorage.thermalData = this.stringifiedData;

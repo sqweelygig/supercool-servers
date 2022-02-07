@@ -18,6 +18,9 @@
 
 <style scoped lang="scss">
 .number-slider {
+	> * {
+		display: block;
+	}
 	// Many thanks to https://www.smashingmagazine.com/2021/12/create-custom-range-input-consistent-browsers/
 	input[type="range"] {
 		background: transparent;
