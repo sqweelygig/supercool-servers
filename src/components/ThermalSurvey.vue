@@ -182,6 +182,7 @@ export default defineComponent({
 	methods: {
 		cleanseData(data: ThermalObservationsState): ThermalObservations {
 			// Drop transient properties
+			// TODO Should also remove partial observations
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { error, ...cleansedData } = data;
 			if (!isThermalObservations(data)) {
@@ -195,6 +196,7 @@ export default defineComponent({
 			Object.assign(this, this.defaultData());
 		},
 		clearError(): void {
+			// TODO Top-level delete should only remove data this is on-screen
 			delete this.$data.error;
 		},
 		defaultData(
