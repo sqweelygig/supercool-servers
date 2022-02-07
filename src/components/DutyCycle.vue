@@ -2,7 +2,7 @@
 	<div class="duty-cycle">
 		<div class="section-header">{{ question }}</div>
 		<div>{{ explanation }}</div>
-		<div v-bind:key="observation.startTime" v-for="observation in observations">
+		<div v-bind:key="index" v-for="(observation, index) in observations">
 			{{ new Date(observation.startTime).toLocaleTimeString() }}
 			-
 			{{ new Date(observation.endTime).toLocaleTimeString() }}
@@ -31,7 +31,7 @@ export interface CurrentObservation extends Partial<Interval> {
 export default defineComponent({
 	components: { ToolBar },
 	computed: {
-		disabled: function () {
+		disabled() {
 			if (this.observation.initialObservation === true) {
 				if (this.observation.transitionTime === undefined) {
 					return [this.onRise];
@@ -50,10 +50,10 @@ export default defineComponent({
 		},
 	},
 	methods: {
-		onFall: function () {
+		onFall() {
 			if (this.observe) this.observe(false);
 		},
-		onRise: function () {
+		onRise() {
 			if (this.observe) this.observe(true);
 		},
 	},

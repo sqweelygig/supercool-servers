@@ -146,10 +146,10 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		stringifiedData: function (): string {
+		stringifiedData(): string {
 			return JSON.stringify(this.cleanseData(this.$data));
 		},
-		hasError: function (): boolean {
+		hasError(): boolean {
 			return this.$data.error !== undefined;
 		},
 	},
@@ -170,38 +170,37 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		cleanseData: function (
-			data: ThermalObservationsState
-		): ThermalObservations {
+		cleanseData(data: ThermalObservationsState): ThermalObservations {
 			// Drop transient properties
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			const { coolerObservation, error, normalObservation, ...cleansedData } = data;
+			const { coolerObservation, error, normalObservation, ...cleansedData } =
+				data;
 			if (!isThermalObservations(data)) {
 				throw new DataParseError("Data not valid.");
 			}
 			return cleansedData;
 		},
-		clearData: function (): void {
+		clearData(): void {
 			delete localStorage.thermalData;
 			this.clearError();
 			Object.assign(this, this.defaultData());
 		},
-		clearCooler: function (): void {
+		clearCooler(): void {
 			this.clearObservation(this.$data.coolerObservation);
 		},
-		clearNormal: function (): void {
+		clearNormal(): void {
 			this.clearObservation(this.$data.normalObservation);
 		},
-		clearObservation: function (observation: CurrentObservation): void {
+		clearObservation(observation: CurrentObservation): void {
 			observation.endTime = undefined;
 			observation.initialObservation = undefined;
 			observation.startTime = undefined;
 			observation.transitionTime = undefined;
 		},
-		clearError: function (): void {
+		clearError(): void {
 			delete this.$data.error;
 		},
-		defaultData: function (
+		defaultData(
 			data?: Partial<ThermalObservationsState>
 		): ThermalObservationsState {
 			return {
@@ -226,7 +225,12 @@ export default defineComponent({
 			};
 		},
 		// TODO This *must* be in DutyCycle according to seperation of concerns and composition
-		observe(isRisingEdge: boolean, observation: CurrentObservation, output: Array<ThermalInterval>, thermostat: number): void {
+		observe(
+			isRisingEdge: boolean,
+			observation: CurrentObservation,
+			output: Array<ThermalInterval>,
+			thermostat: number
+		): void {
 			const rightNow = Date.now();
 			if (observation.startTime === undefined) {
 				observation.startTime = rightNow;
@@ -254,15 +258,25 @@ export default defineComponent({
 			}
 		},
 		observeCooler(isRisingEdge: boolean): void {
-			this.observe(isRisingEdge, this.coolerObservation, this.coolerObservations, this.minimumThermostat);
+			this.observe(
+				isRisingEdge,
+				this.coolerObservation,
+				this.coolerObservations,
+				this.minimumThermostat
+			);
 		},
 		observeNormal(isRisingEdge: boolean): void {
-			this.observe(isRisingEdge, this.normalObservation, this.normalObservations, this.normalThermostat);
+			this.observe(
+				isRisingEdge,
+				this.normalObservation,
+				this.normalObservations,
+				this.normalThermostat
+			);
 		},
-		saveData: function (): void {
+		saveData(): void {
 			localStorage.thermalData = this.stringifiedData;
 		},
-		uploadData: function (data: string): void {
+		uploadData(data: string): void {
 			try {
 				this.clearError();
 				const rawData = JSON.parse(data);

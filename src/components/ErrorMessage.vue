@@ -34,12 +34,8 @@ IconLibrary.add(faTimes);
 export default defineComponent({
 	components: { FontAwesomeIcon },
 	props: {
-		error: {
-			type: Error,
-		},
-		onClear: {
-			type: Function,
-		},
+		error: Error,
+		onClear: Function,
 	},
 });
 </script>

@@ -114,13 +114,13 @@ IconLibrary.add(faChevronLeft, faChevronRight, faUpload, faDownload, faTrash);
 export default defineComponent({
 	components: { FontAwesomeIcon },
 	computed: {
-		downloadData: function (): string {
+		downloadData(): string {
 			const preamble = "data:application/json;charset=utf-8,";
 			return preamble + this.download;
 		},
 	},
 	methods: {
-		uploadData: function (uploadEvent: Event): void {
+		uploadData(uploadEvent: Event): void {
 			if (this.onUpload && uploadEvent.target) {
 				const uploadTarget = uploadEvent.target as HTMLInputElement;
 				if (uploadTarget.files) {
