@@ -6,12 +6,26 @@
 		/>
 		<tool-bar
 			v-else
+			v-bind:on-back="this.previousPhase"
 			v-bind:on-clear="this.clearData"
+			v-bind:on-next="this.nextPhase"
 			v-bind:on-upload="this.uploadData"
 			v-bind:download="this.stringifiedData"
 		/>
 	</div>
-	<div>
+	<div v-if="this.phase === 'intro'">
+		<page-header text="Thermal Observations" />
+		<div>
+			During this stage we will gather data on how hard the air conditoner works
+			to maintain a steady environment, what the limits are on acceptable
+			thermostat settings and how quickly the room temperature changes.
+		</div>
+		<tool-bar
+			v-bind:on-next="this.nextPhase"
+			v-bind:on-back="this.previousPhase"
+		/>
+	</div>
+	<div v-else-if="this.phase === 'normal'">
 		<page-header text="Normal" />
 		<number-slider
 			id="current-slider"
@@ -27,12 +41,16 @@
 			v-bind:thermostat="this.normalThermostat"
 			v-model="this.normalObservations"
 		/>
+		<tool-bar
+			v-bind:on-next="this.nextPhase"
+			v-bind:on-back="this.previousPhase"
+		/>
 	</div>
-	<div>
-		<page-header text="SuperCool" />
+	<div v-else-if="this.phase === 'cooler'">
+		<page-header text="Cooling" />
 		<number-slider
 			id="cooler-slider"
-			v-bind:maximum="30"
+			v-bind:maximum="this.normalThermostat"
 			v-bind:minimum="10"
 			question="What is the coldest permitted?"
 			units="°C"
@@ -44,12 +62,20 @@
 			v-bind:thermostat="this.minimumThermostat"
 			v-model="this.coolerObservations"
 		/>
+		<tool-bar
+			v-bind:on-next="this.nextPhase"
+			v-bind:on-back="this.previousPhase"
+		/>
 	</div>
-	<div>
+	<div v-else-if="this.phase === 'complete'">
 		<page-header text="Finish" />
 		<div>Please reset the thermostat to {{ normalThermostat }}°C.</div>
 		<div>You may also wish to download a copy of the data gathered today.</div>
-		<tool-bar v-bind:download="this.stringifiedData" />
+		<tool-bar
+			v-bind:on-back="this.previousPhase"
+			v-bind:download="this.stringifiedData"
+			v-bind:on-next="this.nextPhase"
+		/>
 	</div>
 </template>
 
@@ -87,9 +113,7 @@ import { DataSet, isDataSet } from "../types";
 enum ObservationPhases {
 	Intro = "intro",
 	Normal = "normal",
-	Warmer = "warmer",
 	Cooler = "cooler",
-	Reset = "reset",
 	Complete = "complete",
 }
 
@@ -183,10 +207,28 @@ export default defineComponent({
 				minimumThermostat: 14,
 				normalThermostat: 18,
 				normalObservations: [],
-				phase: ObservationPhases.Normal,
+				phase: ObservationPhases.Intro,
 				version: 0,
 				...data,
 			};
+		},
+		nextPhase(): void {
+			if (this.$data.phase === ObservationPhases.Intro) {
+				this.$data.phase = ObservationPhases.Normal;
+			} else if (this.$data.phase === ObservationPhases.Normal) {
+				this.$data.phase = ObservationPhases.Cooler;
+			} else if (this.$data.phase === ObservationPhases.Cooler) {
+				this.$data.phase = ObservationPhases.Complete;
+			}
+		},
+		previousPhase(): void {
+			if (this.$data.phase === ObservationPhases.Complete) {
+				this.$data.phase = ObservationPhases.Cooler;
+			} else if (this.$data.phase === ObservationPhases.Cooler) {
+				this.$data.phase = ObservationPhases.Normal;
+			} else if (this.$data.phase === ObservationPhases.Normal) {
+				this.$data.phase = ObservationPhases.Intro;
+			}
 		},
 		saveData(): void {
 			localStorage.thermalData = this.stringifiedData;
