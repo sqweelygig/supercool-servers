@@ -1,8 +1,7 @@
 <template>
 	<div>
 		<error-message
-			v-if="this.hasError"
-			v-bind:error="error"
+			v-if="this.error !== undefined"
 			v-bind:on-clear="this.clearError"
 		/>
 		<tool-bar
@@ -104,7 +103,7 @@ interface ThermalObservations extends DataSet {
 }
 
 interface ThermalObservationsState extends ThermalObservations {
-	error?: Error;
+	error?: unknown;
 }
 
 class DataParseError extends Error {}
@@ -132,9 +131,6 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		hasError(): boolean {
-			return this.$data.error !== undefined;
-		},
 		stringifiedData(): string {
 			return JSON.stringify(this.cleanseData(this.$data));
 		},
@@ -146,14 +142,18 @@ export default defineComponent({
 				const rawData = JSON.parse(localStorage.thermalData);
 				return this.defaultData(this.cleanseData(rawData));
 			} catch (error) {
+				localStorage.clear();
 				console.error(error);
-				return this.defaultData({
-					error: new Error("Could not load previous state."),
-				});
+				return this.defaultData({ error });
 			}
 		} else {
 			return this.defaultData();
 		}
+	},
+	errorCaptured(error, component, info) {
+		console.error(error, component, info);
+		this.error = error;
+		return false;
 	},
 	methods: {
 		cleanseData(data: ThermalObservationsState): ThermalObservations {
@@ -178,6 +178,7 @@ export default defineComponent({
 		): ThermalObservationsState {
 			return {
 				coolerObservations: [],
+				error: undefined,
 				maximumThermostat: 20,
 				minimumThermostat: 14,
 				normalThermostat: 18,
@@ -198,7 +199,7 @@ export default defineComponent({
 				Object.assign(this, cleanedData);
 			} catch (error) {
 				console.error(error);
-				this.$data.error = new Error("Data upload failed.");
+				this.$data.error = error;
 			}
 		},
 	},
