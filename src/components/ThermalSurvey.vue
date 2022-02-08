@@ -40,11 +40,11 @@
 				units="°C"
 				v-model.number="normalThermostat"
 			/>
-			<duty-cycle
+			<thermostatic-observation
 				explanation="Please observe a few complete duty cycles including both on and off transitions."
 				question="How hard is the A/C working?"
-				v-bind:thermostat="this.normalThermostat"
-				v-model="this.normalObservations"
+				v-bind:temperature="this.normalThermostat"
+				v-model="this.observations"
 			/>
 			<tool-bar
 				v-bind:on-next="this.nextPhase"
@@ -60,17 +60,25 @@
 				units="°C"
 				v-model.number="minimumThermostat"
 			/>
+			<thermodynamic-observation
+				explanation="Please wait until the A/C has turned off, turn the thermostat down and time how long it takes to cool the room."
+				question="How quickly does the room cool?"
+				v-bind:disabled="this.minimumThermostat >= this.normalThermostat"
+				v-bind:end-temperature="this.minimumThermostat"
+				v-bind:start-temperature="this.normalThermostat"
+				v-model="this.observations"
+			/>
 			<tool-bar
 				v-bind:on-next="this.nextPhase"
 				v-bind:on-back="this.previousPhase"
 			/>
 		</template>
 		<template v-else-if="this.phase === 'cooler'">
-			<duty-cycle
+			<thermostatic-observation
 				explanation="Please observe a few complete duty cycles including both on and off transitions."
 				question="How hard is the A/C working?"
-				v-bind:thermostat="this.minimumThermostat"
-				v-model="this.coolerObservations"
+				v-bind:temperature="this.minimumThermostat"
+				v-model="this.observations"
 			/>
 			<tool-bar
 				v-bind:on-next="this.nextPhase"
@@ -115,7 +123,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import DutyCycle, { ThermostaticObservation } from "./DutyCycle.vue";
+import ThermostaticObservation from "./ThermostaticObservation.vue";
+import ThermodynamicObservation from "./ThermodynamicObservation.vue";
+import { ThermalObservation } from "./DutyTable.vue";
 import ErrorMessage from "./ErrorMessage.vue";
 import NumberSlider from "./NumberSlider.vue";
 import PageHeader from "./PageHeader.vue";
@@ -131,11 +141,10 @@ enum ObservationPhases {
 }
 
 interface ThermalObservations extends DataSet {
-	coolerObservations: Array<Partial<ThermostaticObservation>>;
 	maximumThermostat: number;
 	minimumThermostat: number;
 	normalThermostat: number;
-	normalObservations: Array<Partial<ThermostaticObservation>>;
+	observations: Array<Partial<ThermalObservation>>;
 	phase: ObservationPhases;
 }
 
@@ -153,8 +162,7 @@ function isThermalObservations(data: any): data is ThermalObservations {
 		typeof data.maximumThermostat === "number" &&
 		typeof data.minimumThermostat === "number" &&
 		typeof data.normalThermostat === "number" &&
-		Array.isArray(data.normalObservations) &&
-		Array.isArray(data.coolerObservations) &&
+		Array.isArray(data.observations) &&
 		Object.values(ObservationPhases).includes(data.phase) &&
 		isDataSet(data) &&
 		data.version === 0
@@ -172,7 +180,14 @@ export default defineComponent({
 			return JSON.stringify(this.cleanseData(this.$data));
 		},
 	},
-	components: { DutyCycle, ErrorMessage, NumberSlider, PageHeader, ToolBar },
+	components: {
+		ErrorMessage,
+		NumberSlider,
+		PageHeader,
+		ThermodynamicObservation,
+		ThermostaticObservation,
+		ToolBar,
+	},
 	data(): ThermalObservationsState {
 		if (localStorage.thermalData) {
 			try {
@@ -215,17 +230,17 @@ export default defineComponent({
 			data?: Partial<ThermalObservationsState>
 		): ThermalObservationsState {
 			return {
-				coolerObservations: [],
 				error: undefined,
 				maximumThermostat: 20,
 				minimumThermostat: 14,
 				normalThermostat: 18,
-				normalObservations: [],
+				observations: [],
 				phase: ObservationPhases.About,
 				version: 0,
 				...data,
 			};
 		},
+		// TODO Tidy incomplete observations on phase shift
 		nextPhase(): void {
 			if (this.$data.phase === ObservationPhases.About) {
 				this.$data.phase = ObservationPhases.Normal;

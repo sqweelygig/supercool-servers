@@ -2,28 +2,9 @@
 	<div class="duty-cycle">
 		<div class="section-header">{{ question }}</div>
 		<div>{{ explanation }}</div>
-		<table>
-			<tr v-bind:key="index" v-for="(observation, index) in modelValue">
-				<td v-if="observation.startTime !== undefined">
-					{{ new Date(observation.startTime).toLocaleTimeString() }}
-				</td>
-				<td v-else>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
-				<td v-if="observation.transitionTime !== undefined">
-					{{ new Date(observation.transitionTime).toLocaleTimeString() }}
-				</td>
-				<td v-else>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
-				<td v-if="observation.endTime !== undefined">
-					{{ new Date(observation.endTime).toLocaleTimeString() }}
-				</td>
-				<td v-else>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
-				<td v-if="observation.dutyCycle !== undefined">
-					{{ Math.round(observation.dutyCycle * 100) }}%
-				</td>
-				<td v-else>&nbsp; &nbsp; &nbsp;</td>
-			</tr>
-		</table>
+		<duty-table v-bind:observations="this.modelValue" />
 		<tool-bar
-			v-bind:disabled="this.disabled"
+			v-bind:disabled="this.disabledButtons"
 			v-bind:on-undo="this.clear"
 			v-bind:on-rise="this.onRise"
 			v-bind:on-fall="this.onFall"
@@ -33,20 +14,17 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { ThermalInterval } from "../types";
+import DutyTable, { ThermalObservation } from "./DutyTable.vue";
 import ToolBar from "./ToolBar.vue";
 
-export interface ThermostaticObservation extends ThermalInterval {
-	initialObservation: boolean;
-	transitionTime: number;
-}
-
 export default defineComponent({
-	components: { ToolBar },
+	components: { DutyTable, ToolBar },
 	computed: {
-		disabled() {
+		disabledButtons() {
 			const recent = this.modelValue[this.modelValue.length - 1] || {};
-			if (recent.endTime !== undefined) {
+			if (this.disabled) {
+				return [this.onRise, this.onFall];
+			} else if (recent.endTime !== undefined) {
 				return [];
 			} else if (recent.initialObservation === true) {
 				if (recent.transitionTime === undefined) {
@@ -75,7 +53,7 @@ export default defineComponent({
 			if (recent.startTime === undefined) {
 				const newTail = {
 					initialObservation: isRisingEdge,
-					startTemperature: this.thermostat,
+					startTemperature: this.temperature,
 					startTime: rightNow,
 				};
 				this.$emit(
@@ -98,11 +76,11 @@ export default defineComponent({
 				const newTail = {
 					...recent,
 					dutyCycle,
-					endTemperature: this.thermostat,
+					endTemperature: this.temperature,
 					endTime: rightNow,
 				};
 				const nextTail = {
-					startTemperature: this.thermostat,
+					startTemperature: this.temperature,
 					startTime: rightNow,
 					initialObservation: isRisingEdge,
 				};
@@ -112,7 +90,7 @@ export default defineComponent({
 				);
 			} else {
 				const newTail = {
-					startTemperature: this.thermostat,
+					startTemperature: this.temperature,
 					startTime: rightNow,
 					initialObservation: isRisingEdge,
 				};
@@ -120,22 +98,23 @@ export default defineComponent({
 			}
 		},
 		onFall() {
-			if (this.observe) this.observe(false);
+			this.observe(false);
 		},
 		onRise() {
-			if (this.observe) this.observe(true);
+			this.observe(true);
 		},
 	},
 	props: {
+		disabled: Boolean,
 		explanation: String,
 		modelValue: {
 			default: () => {
 				return [];
 			},
-			type: Array as PropType<Array<Partial<ThermostaticObservation>>>,
+			type: Array as PropType<Array<Partial<ThermalObservation>>>,
 		},
 		question: String,
-		thermostat: {
+		temperature: {
 			required: true,
 			type: Number,
 		},
