@@ -36,7 +36,7 @@
 			v-if="this.onRise"
 			v-on:click.prevent="this.onRise"
 		>
-			On
+			<font-awesome-icon icon="level-up-alt" />
 		</button>
 		<button
 			type="button"
@@ -44,7 +44,15 @@
 			v-if="this.onFall !== undefined"
 			v-on:click.prevent="this.onFall"
 		>
-			Off
+			<font-awesome-icon icon="level-down-alt" />
+		</button>
+		<button
+			type="button"
+			v-bind:disabled="this.disabled && this.disabled.includes(this.onUndo)"
+			v-if="this.onUndo !== undefined"
+			v-on:click.prevent="this.onUndo"
+		>
+			<font-awesome-icon icon="undo-alt" />
 		</button>
 		<button
 			v-if="this.onClear"
@@ -104,12 +112,24 @@ import {
 	faChevronLeft,
 	faChevronRight,
 	faDownload,
-	faUpload,
+	faLevelDownAlt,
+	faLevelUpAlt,
 	faTrash,
+	faUndoAlt,
+	faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-IconLibrary.add(faChevronLeft, faChevronRight, faUpload, faDownload, faTrash);
+IconLibrary.add(
+	faChevronLeft,
+	faChevronRight,
+	faDownload,
+	faLevelDownAlt,
+	faLevelUpAlt,
+	faTrash,
+	faUndoAlt,
+	faUpload
+);
 
 export default defineComponent({
 	components: { FontAwesomeIcon },
@@ -150,6 +170,7 @@ export default defineComponent({
 		onFall: Function,
 		onNext: Function,
 		onRise: Function,
+		onUndo: Function,
 		onUpload: Function,
 	},
 });

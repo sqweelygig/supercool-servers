@@ -24,7 +24,7 @@
 		</table>
 		<tool-bar
 			v-bind:disabled="this.disabled"
-			v-bind:on-clear="this.clear"
+			v-bind:on-undo="this.clear"
 			v-bind:on-rise="this.onRise"
 			v-bind:on-fall="this.onFall"
 		/>
