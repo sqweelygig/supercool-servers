@@ -13,69 +13,81 @@
 			v-bind:download="this.stringifiedData"
 		/>
 	</div>
-	<div v-if="this.phase === 'intro'">
-		<page-header text="Thermal Observations" />
-		<div>
-			During this stage we will gather data on how hard the air conditoner works
-			to maintain a steady environment, what the limits are on acceptable
-			thermostat settings and how quickly the room temperature changes.
-		</div>
-		<tool-bar
-			v-bind:on-next="this.nextPhase"
-			v-bind:on-back="this.previousPhase"
-		/>
-	</div>
-	<div v-else-if="this.phase === 'normal'">
-		<page-header text="Normal" />
-		<number-slider
-			id="current-slider"
-			v-bind:maximum="30"
-			v-bind:minimum="10"
-			question="What is the thermostat set to?"
-			units="°C"
-			v-model.number="normalThermostat"
-		/>
-		<duty-cycle
-			explanation="Please observe a few complete duty cycles including both on and off transitions."
-			question="How hard is the A/C working?"
-			v-bind:thermostat="this.normalThermostat"
-			v-model="this.normalObservations"
-		/>
-		<tool-bar
-			v-bind:on-next="this.nextPhase"
-			v-bind:on-back="this.previousPhase"
-		/>
-	</div>
-	<div v-else-if="this.phase === 'cooler'">
-		<page-header text="Cooling" />
-		<number-slider
-			id="cooler-slider"
-			v-bind:maximum="this.normalThermostat"
-			v-bind:minimum="10"
-			question="What is the coldest permitted?"
-			units="°C"
-			v-model.number="minimumThermostat"
-		/>
-		<duty-cycle
-			explanation="Please observe a few complete duty cycles including both on and off transitions."
-			question="How hard is the A/C working?"
-			v-bind:thermostat="this.minimumThermostat"
-			v-model="this.coolerObservations"
-		/>
-		<tool-bar
-			v-bind:on-next="this.nextPhase"
-			v-bind:on-back="this.previousPhase"
-		/>
-	</div>
-	<div v-else-if="this.phase === 'complete'">
-		<page-header text="Finish" />
-		<div>Please reset the thermostat to {{ normalThermostat }}°C.</div>
-		<div>You may also wish to download a copy of the data gathered today.</div>
-		<tool-bar
-			v-bind:on-back="this.previousPhase"
-			v-bind:download="this.stringifiedData"
-			v-bind:on-next="this.nextPhase"
-		/>
+	<div>
+		<page-header v-bind:text="this.phase" />
+		<template v-if="this.phase === 'about'">
+			<div>
+				During this, the thermal observations stage, we will gather data on how
+				hard the air conditoner works to maintain a steady environment, what the
+				limits are on acceptable thermostat settings and how quickly the room
+				temperature changes.
+			</div>
+			<div>
+				You will need to be able to observe whether the air conditioner is
+				operating and adjust the thermostat settings.
+			</div>
+			<tool-bar
+				v-bind:on-next="this.nextPhase"
+				v-bind:on-back="this.previousPhase"
+			/>
+		</template>
+		<template v-else-if="this.phase === 'normal'">
+			<number-slider
+				id="current-slider"
+				v-bind:maximum="30"
+				v-bind:minimum="10"
+				question="What is the thermostat set to?"
+				units="°C"
+				v-model.number="normalThermostat"
+			/>
+			<duty-cycle
+				explanation="Please observe a few complete duty cycles including both on and off transitions."
+				question="How hard is the A/C working?"
+				v-bind:thermostat="this.normalThermostat"
+				v-model="this.normalObservations"
+			/>
+			<tool-bar
+				v-bind:on-next="this.nextPhase"
+				v-bind:on-back="this.previousPhase"
+			/>
+		</template>
+		<template v-else-if="this.phase === 'cooling'">
+			<number-slider
+				id="cooler-slider"
+				v-bind:maximum="this.normalThermostat"
+				v-bind:minimum="10"
+				question="What is the coldest permitted?"
+				units="°C"
+				v-model.number="minimumThermostat"
+			/>
+			<tool-bar
+				v-bind:on-next="this.nextPhase"
+				v-bind:on-back="this.previousPhase"
+			/>
+		</template>
+		<template v-else-if="this.phase === 'cooler'">
+			<duty-cycle
+				explanation="Please observe a few complete duty cycles including both on and off transitions."
+				question="How hard is the A/C working?"
+				v-bind:thermostat="this.minimumThermostat"
+				v-model="this.coolerObservations"
+			/>
+			<tool-bar
+				v-bind:on-next="this.nextPhase"
+				v-bind:on-back="this.previousPhase"
+			/>
+		</template>
+		<template v-else-if="this.phase === 'finish'">
+			<div>Please reset the thermostat to {{ normalThermostat }}°C.</div>
+			<div>
+				You may also wish to download a copy of the data gathered today.
+			</div>
+			<tool-bar
+				v-bind:on-back="this.previousPhase"
+				v-bind:download="this.stringifiedData"
+				v-bind:on-next="this.nextPhase"
+			/>
+		</template>
 	</div>
 </template>
 
@@ -111,10 +123,11 @@ import ToolBar from "./ToolBar.vue";
 import { DataSet, isDataSet } from "../types";
 
 enum ObservationPhases {
-	Intro = "intro",
+	About = "about",
 	Normal = "normal",
+	Cooling = "cooling",
 	Cooler = "cooler",
-	Complete = "complete",
+	Finish = "finish",
 }
 
 interface ThermalObservations extends DataSet {
@@ -209,27 +222,31 @@ export default defineComponent({
 				minimumThermostat: 14,
 				normalThermostat: 18,
 				normalObservations: [],
-				phase: ObservationPhases.Intro,
+				phase: ObservationPhases.About,
 				version: 0,
 				...data,
 			};
 		},
 		nextPhase(): void {
-			if (this.$data.phase === ObservationPhases.Intro) {
+			if (this.$data.phase === ObservationPhases.About) {
 				this.$data.phase = ObservationPhases.Normal;
 			} else if (this.$data.phase === ObservationPhases.Normal) {
+				this.$data.phase = ObservationPhases.Cooling;
+			} else if (this.$data.phase === ObservationPhases.Cooling) {
 				this.$data.phase = ObservationPhases.Cooler;
 			} else if (this.$data.phase === ObservationPhases.Cooler) {
-				this.$data.phase = ObservationPhases.Complete;
+				this.$data.phase = ObservationPhases.Finish;
 			}
 		},
 		previousPhase(): void {
-			if (this.$data.phase === ObservationPhases.Complete) {
+			if (this.$data.phase === ObservationPhases.Finish) {
 				this.$data.phase = ObservationPhases.Cooler;
 			} else if (this.$data.phase === ObservationPhases.Cooler) {
+				this.$data.phase = ObservationPhases.Cooling;
+			} else if (this.$data.phase === ObservationPhases.Cooling) {
 				this.$data.phase = ObservationPhases.Normal;
 			} else if (this.$data.phase === ObservationPhases.Normal) {
-				this.$data.phase = ObservationPhases.Intro;
+				this.$data.phase = ObservationPhases.About;
 			}
 		},
 		saveData(): void {
