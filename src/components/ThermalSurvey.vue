@@ -56,13 +56,13 @@
 				id="cooler-slider"
 				v-bind:maximum="this.normalThermostat"
 				v-bind:minimum="10"
-				question="What is the coldest permitted?"
+				question="What is the coldest allowed?"
 				units="°C"
 				v-model.number="minimumThermostat"
 			/>
 			<thermodynamic-observation
 				explanation="Please wait until the A/C has turned off, turn the thermostat down and time how long it takes to cool the room."
-				question="How quickly does the room cool?"
+				question="How fast does the room cool?"
 				v-bind:disabled="this.minimumThermostat >= this.normalThermostat"
 				v-bind:end-temperature="this.minimumThermostat"
 				v-bind:start-temperature="this.normalThermostat"
@@ -90,13 +90,13 @@
 				id="cooler-slider"
 				v-bind:maximum="30"
 				v-bind:minimum="this.normalThermostat"
-				question="What is the warmest permitted?"
+				question="What is the warmest allowed?"
 				units="°C"
 				v-model.number="maximumThermostat"
 			/>
 			<thermodynamic-observation
 				explanation="Please wait until the A/C has turned on, turn the thermostat up and time how long it takes the room to warm."
-				question="How quickly does the room warm?"
+				question="How fast does the room warm?"
 				v-bind:disabled="this.maximumThermostat <= this.minimumThermostat"
 				v-bind:end-temperature="this.maximumThermostat"
 				v-bind:start-temperature="this.minimumThermostat"
@@ -135,7 +135,7 @@
 
 <style scoped lang="scss">
 :deep() {
-	margin: 1.2rem;
+	margin: 0.6rem;
 	> * {
 		margin: 0.6rem 0;
 		width: 100%;
