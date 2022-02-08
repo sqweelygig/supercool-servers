@@ -24,23 +24,23 @@ export default defineComponent({
 			const recent = this.modelValue[this.modelValue.length - 1] || {};
 			if (this.disabled) {
 				return [this.onRise, this.onFall];
-			} else if (
-				recent.endTemperature === this.endTemperature &&
-				recent.startTemperature === this.startTemperature
-			) {
+			} else if (recent.endTemperature === this.endTemperature) {
 				return [this.onRise, this.onFall];
-			} else if (recent.initialObservation === undefined) {
+			} else if (
+				recent.endTemperature === undefined &&
+				recent.startTemperature !== undefined
+			) {
+				if (this.startTemperature > this.endTemperature) {
+					return [this.onRise];
+				} else {
+					return [this.onFall];
+				}
+			} else {
 				if (this.startTemperature > this.endTemperature) {
 					return [this.onFall];
 				} else {
 					return [this.onRise];
 				}
-			} else if (recent.initialObservation === true) {
-				return [this.onRise];
-			} else if (recent.initialObservation === false) {
-				return [this.onFall];
-			} else {
-				return [];
 			}
 		},
 	},

@@ -50,7 +50,11 @@ export default defineComponent({
 		observe(isRisingEdge: boolean): void {
 			const rightNow = Date.now();
 			const recent = this.modelValue[this.modelValue.length - 1] || {};
-			if (recent.startTime === undefined) {
+			if (
+				recent.startTime === undefined &&
+				recent.transitionTime === undefined &&
+				recent.endTime === undefined
+			) {
 				const newTail = {
 					initialObservation: isRisingEdge,
 					startTemperature: this.temperature,
@@ -60,13 +64,22 @@ export default defineComponent({
 					"update:modelValue",
 					this.modelValue.slice(0, -1).concat([newTail])
 				);
-			} else if (recent.transitionTime === undefined) {
+			} else if (
+				recent.startTime !== undefined &&
+				recent.transitionTime === undefined &&
+				recent.endTime === undefined
+			) {
 				const newTail = { ...recent, transitionTime: rightNow };
 				this.$emit(
 					"update:modelValue",
 					this.modelValue.slice(0, -1).concat([newTail])
 				);
-			} else if (recent.endTime === undefined) {
+			} else if (
+				// TODO Replace this whole time listing with a list of times
+				recent.startTime !== undefined &&
+				recent.transitionTime !== undefined &&
+				recent.endTime === undefined
+			) {
 				const initialTime = recent.transitionTime - recent.startTime;
 				const totalTime = rightNow - recent.startTime;
 				const initialProportion = initialTime / totalTime;

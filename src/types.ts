@@ -17,7 +17,7 @@ export function isThermostatInterval(data: any): data is ThermostatInterval {
 	return typeof data.thermostatSetting === "number" && isInterval(data);
 }
 
-export interface ThermalInterval extends ThermostatInterval {
+export interface ThermalInterval extends Interval {
 	startTemperature: number;
 	endTemperature: number;
 	dutyCycle: number;
@@ -29,7 +29,7 @@ export function isThermalInterval(data: any): data is ThermalInterval {
 		typeof data.startTemperature === "number" &&
 		typeof data.endTemperature === "number" &&
 		typeof data.dutyCycle === "number" &&
-		isThermostatInterval(data)
+		isInterval(data)
 	);
 }
 

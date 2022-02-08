@@ -42,11 +42,20 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { ThermalInterval } from "../types";
+import { ThermalInterval, isThermalInterval } from "../types";
 
 export interface ThermalObservation extends ThermalInterval {
 	initialObservation: boolean;
-	transitionTime: number;
+	transitionTime?: number;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+export function isThermalObservation(data: any): data is ThermalObservation {
+	return (
+		typeof data.initialObservation === "boolean" &&
+		["undefined", "number"].includes(typeof data.transitionTime) &&
+		isThermalInterval(data)
+	);
 }
 
 export default defineComponent({

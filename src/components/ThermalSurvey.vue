@@ -85,6 +85,40 @@
 				v-bind:on-back="this.previousPhase"
 			/>
 		</template>
+		<template v-else-if="this.phase === 'resting'">
+			<number-slider
+				id="cooler-slider"
+				v-bind:maximum="30"
+				v-bind:minimum="this.normalThermostat"
+				question="What is the warmest permitted?"
+				units="°C"
+				v-model.number="maximumThermostat"
+			/>
+			<thermodynamic-observation
+				explanation="Please wait until the A/C has turned on, turn the thermostat up and time how long it takes the room to warm."
+				question="How quickly does the room warm?"
+				v-bind:disabled="this.maximumThermostat <= this.minimumThermostat"
+				v-bind:end-temperature="this.maximumThermostat"
+				v-bind:start-temperature="this.minimumThermostat"
+				v-model="this.observations"
+			/>
+			<tool-bar
+				v-bind:on-next="this.nextPhase"
+				v-bind:on-back="this.previousPhase"
+			/>
+		</template>
+		<template v-else-if="this.phase === 'warmer'">
+			<thermostatic-observation
+				explanation="Please observe a few complete duty cycles including both on and off transitions."
+				question="How hard is the A/C working?"
+				v-bind:temperature="this.maximumThermostat"
+				v-model="this.observations"
+			/>
+			<tool-bar
+				v-bind:on-next="this.nextPhase"
+				v-bind:on-back="this.previousPhase"
+			/>
+		</template>
 		<template v-else-if="this.phase === 'finish'">
 			<div>Please reset the thermostat to {{ normalThermostat }}°C.</div>
 			<div>
@@ -125,7 +159,7 @@
 import { defineComponent } from "vue";
 import ThermostaticObservation from "./ThermostaticObservation.vue";
 import ThermodynamicObservation from "./ThermodynamicObservation.vue";
-import { ThermalObservation } from "./DutyTable.vue";
+import { ThermalObservation, isThermalObservation } from "./DutyTable.vue";
 import ErrorMessage from "./ErrorMessage.vue";
 import NumberSlider from "./NumberSlider.vue";
 import PageHeader from "./PageHeader.vue";
@@ -137,6 +171,8 @@ enum ObservationPhases {
 	Normal = "normal",
 	Cooling = "cooling",
 	Cooler = "cooler",
+	Resting = "resting",
+	Warmer = "warmer",
 	Finish = "finish",
 }
 
@@ -210,9 +246,10 @@ export default defineComponent({
 	methods: {
 		cleanseData(data: ThermalObservationsState): ThermalObservations {
 			// Drop transient properties
-			// TODO Should also remove partial observations
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { error, ...cleansedData } = data;
+			cleansedData.observations =
+				data.observations.filter(isThermalObservation);
 			if (!isThermalObservations(data)) {
 				throw new DataParseError("Data not valid.");
 			}
@@ -221,7 +258,7 @@ export default defineComponent({
 		clearData(): void {
 			delete localStorage.thermalData;
 			this.clearError();
-			Object.assign(this, this.defaultData());
+			Object.assign(this.$data, this.defaultData());
 		},
 		clearError(): void {
 			delete this.$data.error;
@@ -242,6 +279,7 @@ export default defineComponent({
 		},
 		// TODO Tidy incomplete observations on phase shift
 		nextPhase(): void {
+			Object.assign(this.$data, this.cleanseData(this.$data));
 			if (this.$data.phase === ObservationPhases.About) {
 				this.$data.phase = ObservationPhases.Normal;
 			} else if (this.$data.phase === ObservationPhases.Normal) {
@@ -249,11 +287,20 @@ export default defineComponent({
 			} else if (this.$data.phase === ObservationPhases.Cooling) {
 				this.$data.phase = ObservationPhases.Cooler;
 			} else if (this.$data.phase === ObservationPhases.Cooler) {
+				this.$data.phase = ObservationPhases.Resting;
+			} else if (this.$data.phase === ObservationPhases.Resting) {
+				this.$data.phase = ObservationPhases.Warmer;
+			} else if (this.$data.phase === ObservationPhases.Warmer) {
 				this.$data.phase = ObservationPhases.Finish;
 			}
 		},
 		previousPhase(): void {
+			Object.assign(this.$data, this.cleanseData(this.$data));
 			if (this.$data.phase === ObservationPhases.Finish) {
+				this.$data.phase = ObservationPhases.Warmer;
+			} else if (this.$data.phase === ObservationPhases.Warmer) {
+				this.$data.phase = ObservationPhases.Resting;
+			} else if (this.$data.phase === ObservationPhases.Resting) {
 				this.$data.phase = ObservationPhases.Cooler;
 			} else if (this.$data.phase === ObservationPhases.Cooler) {
 				this.$data.phase = ObservationPhases.Cooling;
@@ -271,7 +318,7 @@ export default defineComponent({
 				this.clearError();
 				const rawData = JSON.parse(data);
 				const cleanedData = this.defaultData(this.cleanseData(rawData));
-				Object.assign(this, cleanedData);
+				Object.assign(this.$data, cleanedData);
 			} catch (error) {
 				console.error(error);
 				this.$data.error = error;
