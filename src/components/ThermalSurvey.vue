@@ -1,150 +1,150 @@
 <template>
-	<div>
-		<error-message
-			v-if="this.error !== undefined"
-			v-bind:on-clear="this.clearError"
-		/>
+	<error-message
+		v-if="this.error !== undefined"
+		v-bind:on-clear="this.clearError"
+	/>
+	<tool-bar
+		v-else
+		v-bind:on-back="this.previousPhase"
+		v-bind:on-clear="this.clearData"
+		v-bind:on-next="this.nextPhase"
+		v-bind:on-upload="this.uploadData"
+		v-bind:download="this.stringifiedData"
+	/>
+	<page-header v-bind:text="this.phase" />
+	<template v-if="this.phase === 'about'">
+		<div>
+			During this, the thermal observations stage, we will gather data on how
+			hard the air conditoner works to maintain a steady environment, what the
+			limits are on acceptable thermostat settings and how quickly the room
+			temperature changes.
+		</div>
+		<div>
+			You will need to be able to observe whether the air conditioner is
+			operating and adjust the thermostat settings.
+		</div>
+		<div class="spacer"></div>
 		<tool-bar
-			v-else
-			v-bind:on-back="this.previousPhase"
-			v-bind:on-clear="this.clearData"
 			v-bind:on-next="this.nextPhase"
-			v-bind:on-upload="this.uploadData"
-			v-bind:download="this.stringifiedData"
+			v-bind:on-back="this.previousPhase"
 		/>
-	</div>
-	<div>
-		<page-header v-bind:text="this.phase" />
-		<template v-if="this.phase === 'about'">
-			<div>
-				During this, the thermal observations stage, we will gather data on how
-				hard the air conditoner works to maintain a steady environment, what the
-				limits are on acceptable thermostat settings and how quickly the room
-				temperature changes.
-			</div>
-			<div>
-				You will need to be able to observe whether the air conditioner is
-				operating and adjust the thermostat settings.
-			</div>
-			<tool-bar
-				v-bind:on-next="this.nextPhase"
-				v-bind:on-back="this.previousPhase"
-			/>
-		</template>
-		<template v-else-if="this.phase === 'normal'">
-			<number-slider
-				id="current-slider"
-				v-bind:maximum="30"
-				v-bind:minimum="10"
-				question="What is the thermostat set to?"
-				units="°C"
-				v-model.number="normalThermostat"
-			/>
-			<thermostatic-observation
-				explanation="Please observe a few complete duty cycles including both on and off transitions."
-				question="How hard is the A/C working?"
-				v-bind:temperature="this.normalThermostat"
-				v-model="this.observations"
-			/>
-			<tool-bar
-				v-bind:on-next="this.nextPhase"
-				v-bind:on-back="this.previousPhase"
-			/>
-		</template>
-		<template v-else-if="this.phase === 'cooling'">
-			<number-slider
-				id="cooler-slider"
-				v-bind:maximum="this.normalThermostat"
-				v-bind:minimum="10"
-				question="What is the coldest allowed?"
-				units="°C"
-				v-model.number="minimumThermostat"
-			/>
-			<thermodynamic-observation
-				explanation="Please wait until the A/C has turned off, turn the thermostat down and time how long it takes to cool the room."
-				question="How fast does the room cool?"
-				v-bind:disabled="this.minimumThermostat >= this.normalThermostat"
-				v-bind:end-temperature="this.minimumThermostat"
-				v-bind:start-temperature="this.normalThermostat"
-				v-model="this.observations"
-			/>
-			<tool-bar
-				v-bind:on-next="this.nextPhase"
-				v-bind:on-back="this.previousPhase"
-			/>
-		</template>
-		<template v-else-if="this.phase === 'cooler'">
-			<thermostatic-observation
-				explanation="Please observe a few complete duty cycles including both on and off transitions."
-				question="How hard is the A/C working?"
-				v-bind:temperature="this.minimumThermostat"
-				v-model="this.observations"
-			/>
-			<tool-bar
-				v-bind:on-next="this.nextPhase"
-				v-bind:on-back="this.previousPhase"
-			/>
-		</template>
-		<template v-else-if="this.phase === 'resting'">
-			<number-slider
-				id="cooler-slider"
-				v-bind:maximum="30"
-				v-bind:minimum="this.normalThermostat"
-				question="What is the warmest allowed?"
-				units="°C"
-				v-model.number="maximumThermostat"
-			/>
-			<thermodynamic-observation
-				explanation="Please wait until the A/C has turned on, turn the thermostat up and time how long it takes the room to warm."
-				question="How fast does the room warm?"
-				v-bind:disabled="this.maximumThermostat <= this.minimumThermostat"
-				v-bind:end-temperature="this.maximumThermostat"
-				v-bind:start-temperature="this.minimumThermostat"
-				v-model="this.observations"
-			/>
-			<tool-bar
-				v-bind:on-next="this.nextPhase"
-				v-bind:on-back="this.previousPhase"
-			/>
-		</template>
-		<template v-else-if="this.phase === 'warmer'">
-			<thermostatic-observation
-				explanation="Please observe a few complete duty cycles including both on and off transitions."
-				question="How hard is the A/C working?"
-				v-bind:temperature="this.maximumThermostat"
-				v-model="this.observations"
-			/>
-			<tool-bar
-				v-bind:on-next="this.nextPhase"
-				v-bind:on-back="this.previousPhase"
-			/>
-		</template>
-		<template v-else-if="this.phase === 'finish'">
-			<div>Please reset the thermostat to {{ normalThermostat }}°C.</div>
-			<div>
-				You may also wish to download a copy of the data gathered today.
-			</div>
-			<tool-bar
-				v-bind:on-back="this.previousPhase"
-				v-bind:download="this.stringifiedData"
-				v-bind:on-next="this.nextPhase"
-			/>
-		</template>
-	</div>
+	</template>
+	<template v-else-if="this.phase === 'normal'">
+		<number-slider
+			id="current-slider"
+			v-bind:maximum="30"
+			v-bind:minimum="10"
+			question="What is the thermostat set to?"
+			units="°C"
+			v-model.number="normalThermostat"
+		/>
+		<thermostatic-observation
+			explanation="Please observe a few complete duty cycles including both on and off transitions."
+			question="How hard is the A/C working?"
+			v-bind:temperature="this.normalThermostat"
+			v-model="this.observations"
+		/>
+		<div class="spacer"></div>
+		<tool-bar
+			v-bind:on-next="this.nextPhase"
+			v-bind:on-back="this.previousPhase"
+		/>
+	</template>
+	<template v-else-if="this.phase === 'cooling'">
+		<number-slider
+			id="cooler-slider"
+			v-bind:maximum="this.normalThermostat"
+			v-bind:minimum="10"
+			question="What is the coldest allowed?"
+			units="°C"
+			v-model.number="minimumThermostat"
+		/>
+		<thermodynamic-observation
+			explanation="Please wait until the A/C has turned off, turn the thermostat down and time how long it takes to cool the room."
+			question="How fast does the room cool?"
+			v-bind:disabled="this.minimumThermostat >= this.normalThermostat"
+			v-bind:end-temperature="this.minimumThermostat"
+			v-bind:start-temperature="this.normalThermostat"
+			v-model="this.observations"
+		/>
+		<div class="spacer"></div>
+		<tool-bar
+			v-bind:on-next="this.nextPhase"
+			v-bind:on-back="this.previousPhase"
+		/>
+	</template>
+	<template v-else-if="this.phase === 'cooler'">
+		<thermostatic-observation
+			explanation="Please observe a few complete duty cycles including both on and off transitions."
+			question="How hard is the A/C working?"
+			v-bind:temperature="this.minimumThermostat"
+			v-model="this.observations"
+		/>
+		<div class="spacer"></div>
+		<tool-bar
+			v-bind:on-next="this.nextPhase"
+			v-bind:on-back="this.previousPhase"
+		/>
+	</template>
+	<template v-else-if="this.phase === 'resting'">
+		<number-slider
+			id="cooler-slider"
+			v-bind:maximum="30"
+			v-bind:minimum="this.normalThermostat"
+			question="What is the warmest allowed?"
+			units="°C"
+			v-model.number="maximumThermostat"
+		/>
+		<thermodynamic-observation
+			explanation="Please wait until the A/C has turned on, turn the thermostat up and time how long it takes the room to warm."
+			question="How fast does the room warm?"
+			v-bind:disabled="this.maximumThermostat <= this.minimumThermostat"
+			v-bind:end-temperature="this.maximumThermostat"
+			v-bind:start-temperature="this.minimumThermostat"
+			v-model="this.observations"
+		/>
+		<div class="spacer"></div>
+		<tool-bar
+			v-bind:on-next="this.nextPhase"
+			v-bind:on-back="this.previousPhase"
+		/>
+	</template>
+	<template v-else-if="this.phase === 'warmer'">
+		<thermostatic-observation
+			explanation="Please observe a few complete duty cycles including both on and off transitions."
+			question="How hard is the A/C working?"
+			v-bind:temperature="this.maximumThermostat"
+			v-model="this.observations"
+		/>
+		<div class="spacer"></div>
+		<tool-bar
+			v-bind:on-next="this.nextPhase"
+			v-bind:on-back="this.previousPhase"
+		/>
+	</template>
+	<template v-else-if="this.phase === 'finish'">
+		<div>Please reset the thermostat to {{ normalThermostat }}°C.</div>
+		<div>You may also wish to download a copy of the data gathered today.</div>
+		<div class="spacer"></div>
+		<tool-bar
+			v-bind:on-back="this.previousPhase"
+			v-bind:download="this.stringifiedData"
+			v-bind:on-next="this.nextPhase"
+		/>
+	</template>
 </template>
 
 <style scoped lang="scss">
 :deep() {
-	margin: 0.6rem;
 	> * {
-		margin: 0.6rem 0;
+		margin: var(--medium-small) 0;
 		width: 100%;
 		> * {
-			margin: 0.2rem 0;
+			margin: var(--small) 0;
 		}
 	}
 	> .section-header {
-		font-size: 1.2em;
+		font-size: var(--medium-large);
 	}
 	> *:first-child {
 		margin-top: 0;

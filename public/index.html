@@ -46,17 +46,37 @@
 				color: var(--black);
 			}
 
-			/* Top-level containers */
-			body {
-				margin: 0 auto;
-				max-width: 40rem;
+			/* Layout */
+			:root {
+				--extra-small: min(1.9vw, 1.1rem);
+				--small: min(2.5vw, 1.5rem);
+				--medium-small: min(3.4vw, 2.0rem);
+				--medium: min(4.5vw, 2.7rem);
+				--medium-large: min(6.0vw, 3.6rem);
+				--large: min(8.1vw, 4.9rem);
+				--extra-large: min(11vw, 6.5rem);
 			}
 
-			body > * {
-				border-radius: 0.6rem;
-				margin: 0.6rem;
-				min-height: calc(100vh - 1.2rem);
+			body {
+				font-size: var(--medium);
+				margin: 0 auto;
+				max-width: 60rem;
+			}
+
+			body > #app {
+				border-radius: var(--medium-small);
+				display: flex;
+				flex-direction: column;
+				gap: var(--medium);
+				justify-content: space-between;
+				margin: var(--medium-small);
+				padding: var(--medium-small);
+				min-height: calc(100vh - 2 * var(--medium-small));
 				overflow: auto;
+			}
+
+			body > #app > .spacer {
+				flex-grow: 1;
 			}
 		</style>
 	</head>

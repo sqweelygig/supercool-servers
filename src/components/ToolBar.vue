@@ -76,20 +76,20 @@
 <style scoped lang="scss">
 .tool-bar {
 	display: grid;
-	gap: 0.6rem;
+	gap: var(--medium-small);
 	grid-auto-columns: 1fr;
 	grid-auto-flow: column;
 	justify-content: center;
 	> * {
 		background: var(--light);
 		border: 0;
-		border-radius: 0.6rem;
+		border-radius: var(--medium-small);
 		box-sizing: border-box;
 		color: var(--black);
 		cursor: pointer;
 		font-size: 100%;
 		margin: 0;
-		padding: 0.6rem;
+		padding: var(--medium-small);
 		text-align: center;
 		text-decoration: none;
 		> * {

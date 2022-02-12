@@ -7,7 +7,7 @@
 <style scoped lang="scss">
 .page-header {
 	color: var(--dark);
-	font-size: 1.5em;
+	font-size: var(--large);
 	text-align: center;
 	text-transform: capitalize;
 }

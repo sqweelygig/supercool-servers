@@ -21,6 +21,9 @@
 	> * {
 		display: block;
 	}
+	> output {
+		font-size: var(--medium-large);
+	}
 	// Many thanks to https://www.smashingmagazine.com/2021/12/create-custom-range-input-consistent-browsers/
 	input[type="range"] {
 		background: transparent;
@@ -29,28 +32,28 @@
 	}
 	input[type="range"]::-webkit-slider-runnable-track {
 		background: var(--light);
-		border-radius: 1rem;
-		height: 2rem;
+		border-radius: var(--medium);
+		height: var(--large);
 	}
 	input[type="range"]::-moz-range-track {
 		background: var(--light);
-		border-radius: 1rem;
-		height: 2rem;
+		border-radius: var(--medium);
+		height: var(--large);
 	}
 	input[type="range"]::-webkit-slider-thumb {
 		background-color: var(--black);
 		border: none;
-		border-radius: 1rem;
-		height: 2rem;
-		width: 2rem;
+		border-radius: var(--medium);
+		height: var(--large);
+		width: var(--large);
 		-webkit-appearance: none;
 	}
 	input[type="range"]::-moz-range-thumb {
 		background-color: var(--black);
 		border: none;
-		border-radius: 1rem;
-		height: 2rem;
-		width: 2rem;
+		border-radius: var(--medium);
+		height: var(--large);
+		width: var(--large);
 		-webkit-appearance: none;
 	}
 }
