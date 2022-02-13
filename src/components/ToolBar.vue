@@ -1,6 +1,7 @@
 <template>
 	<div class="tool-bar">
 		<button
+			aria-label="Back"
 			v-if="this.onBack"
 			type="button"
 			v-on:click.prevent="this.onBack"
@@ -9,6 +10,7 @@
 			<font-awesome-icon icon="chevron-left" />
 		</button>
 		<a
+			aria-label="Download"
 			v-if="this.download"
 			v-bind:disabled="this.disabled && this.disabled.includes(this.download)"
 			download="thermal-data.json"
@@ -16,13 +18,6 @@
 		>
 			<font-awesome-icon icon="download" />
 		</a>
-		<label
-			v-if="this.onUpload"
-			for="file-upload"
-			v-bind:disabled="this.disabled && this.disabled.includes(this.onUpload)"
-		>
-			<font-awesome-icon icon="upload" />
-		</label>
 		<input
 			v-bind:disabled="this.disabled && this.disabled.includes(this.onUpload)"
 			v-if="this.onUpload"
@@ -30,7 +25,16 @@
 			type="file"
 			v-on:change="uploadData"
 		/>
+		<label
+			aria-label="Upload"
+			v-if="this.onUpload"
+			for="file-upload"
+			v-bind:disabled="this.disabled && this.disabled.includes(this.onUpload)"
+		>
+			<font-awesome-icon icon="upload" />
+		</label>
 		<button
+			aria-label="Rising Edge"
 			type="button"
 			v-bind:disabled="this.disabled && this.disabled.includes(this.onRise)"
 			v-if="this.onRise"
@@ -39,6 +43,7 @@
 			<font-awesome-icon icon="level-up-alt" />
 		</button>
 		<button
+			aria-label="Falling Edge"
 			type="button"
 			v-bind:disabled="this.disabled && this.disabled.includes(this.onFall)"
 			v-if="this.onFall !== undefined"
@@ -47,6 +52,7 @@
 			<font-awesome-icon icon="level-down-alt" />
 		</button>
 		<button
+			aria-label="Undo"
 			type="button"
 			v-bind:disabled="this.disabled && this.disabled.includes(this.onUndo)"
 			v-if="this.onUndo !== undefined"
@@ -55,6 +61,7 @@
 			<font-awesome-icon icon="undo-alt" />
 		</button>
 		<button
+			aria-label="Trash"
 			v-if="this.onClear"
 			type="button"
 			v-on:click.prevent="this.onClear"
@@ -63,6 +70,7 @@
 			<font-awesome-icon icon="trash" />
 		</button>
 		<button
+			aria-label="Next"
 			v-if="this.onNext"
 			type="button"
 			v-on:click.prevent="this.onNext"
@@ -97,7 +105,16 @@
 		}
 	}
 	> input[type="file"] {
-		display: none;
+		height: 1px;
+		opacity: 0;
+		overflow: hidden;
+		position: absolute;
+		width: 1px;
+		z-index: -1;
+	}
+	> input[type="file"]:focus + label {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
 	}
 	> *:disabled {
 		background-color: var(--muted-light);

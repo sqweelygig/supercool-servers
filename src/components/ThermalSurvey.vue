@@ -14,6 +14,12 @@
 	<page-header v-bind:text="this.phase" />
 	<template v-if="this.phase === 'about'">
 		<div>
+			This is a web application for modelling the savings possible by
+			proactively cooling a server room during off-peak tariffs. All data is
+			stored and processed locally, on your computer, without use of any
+			external data processors.
+		</div>
+		<div>
 			During this, the thermal observations stage, we will gather data on how
 			hard the air conditoner works to maintain a steady environment, what the
 			limits are on acceptable thermostat settings and how quickly the room
