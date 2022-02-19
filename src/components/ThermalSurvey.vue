@@ -37,6 +37,14 @@
 	</template>
 	<template v-else-if="this.phase === 'normal'">
 		<number-slider
+			id="external-slider"
+			v-bind:maximum="40"
+			v-bind:minimum="-10"
+			question="What is the outside temperature?"
+			units="°C"
+			v-model.number="externalTemperature"
+		/>
+		<number-slider
 			id="current-slider"
 			v-bind:maximum="30"
 			v-bind:minimum="10"
@@ -143,11 +151,8 @@
 <style scoped lang="scss">
 :deep() {
 	> * {
-		margin: var(--medium-small) 0;
+		margin: var(--extra-small) 0;
 		width: 100%;
-		> * {
-			margin: var(--small) 0;
-		}
 	}
 	> .section-header {
 		font-size: var(--medium-large);
@@ -183,6 +188,7 @@ enum ObservationPhases {
 }
 
 interface ThermalObservations extends DataSet {
+	externalTemperature: number;
 	maximumThermostat: number;
 	minimumThermostat: number;
 	normalThermostat: number;
@@ -274,6 +280,7 @@ export default defineComponent({
 		): ThermalObservationsState {
 			return {
 				error: undefined,
+				externalTemperature: 20,
 				maximumThermostat: 20,
 				minimumThermostat: 14,
 				normalThermostat: 18,
