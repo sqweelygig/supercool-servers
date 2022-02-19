@@ -51,7 +51,8 @@ It is also worth noting that it is not a critical system and the project commiss
 In conclusion, this project will be organised in an agile fashion, prompted mainly by the relative scale of MVP and potential.
 The MVP development will be a series of small increments, with further development being incremental or iterative as required.
 
-![Graphical summary of the MVP from the paragraph above](mvp.png)
+![Graphical summary of the MVP from the paragraph above](docs/mvp.png)
+
 Figure n.n - Initial project outline, showing boundaries of MVP.
 
 There are several models for agile software development with varying suitability for project contexts.
@@ -68,7 +69,8 @@ The product potential exceeds the project budget, but there is still value in re
 
 ## Architecture
 
-![Overview of gathering data, optimising schedule and presenting report](overview_diagram.png)
+![Overview of gathering data, optimising schedule and presenting report](docs/overview_diagram.png)
+
 Figure n.n - Activity diagram showing data flow for optimising a schedule and presenting a report.
 
 In deciding the deployment artefacts, there are several pertinent aspects.
@@ -128,7 +130,11 @@ To support this survey, the developer initialised the UI of this project, design
 The UI consists of a reactive website with custom data-gathering components, targetting low resolutions and touchscreen interaction to support smartphone usage.
 Within this, the survey observes the room as it moves between and maintains different temperatures. As a result, this data should support an intermediate thermal model.
 
+![Overview of gathering data](docs/thermal_observation_sequence.png)
+
 Figure n.n - Overview of the thermal survey workflow.
+
+![Smartphone interface](docs/screenshot.png)
 
 Figure n.n - Web interface at 360 x 640
 
@@ -221,6 +227,8 @@ Principal among these will be the air conditioning systems which good practice s
 The room will also conduct heat through its surface area to both indoor and outdoor environments.
 This cooling is all set against the heat a room generates from the servers it contains.
 
+![BMS interface](docs/bms_interface.jpg)
+
 Figure n.n - Building management system (BMS) interface
 
 Two 51.6kW air conditioning units cool the BDX for a total cooling power of 103.2kW.
@@ -239,6 +247,8 @@ This estimate puts a medium prioritisation on modelling passive cooling.
 
 Although further research is warranted and scheduled, these relative significances seem generalisable.
 These building materials and styles are typical, and a quick survey of case studies confirms this.
+
+![Server rooms image search](docs/server_room_quick_survey.png)
 
 Figure n.n - Quick survey of typical server room construction
 
@@ -267,15 +277,21 @@ Figure n.n - Quick survey of typical server room construction
 | ACIS provides the big picture at Brighton Digital Exchange      | Airedale                | 2015-07           | <https://www.airedale.com/case-studies/acis-provides-the-big-picture-at-brighton-digital-exchange>  | 2022-02-14  | Case study            |
 | Energy in buildings                                             | OpenLearn               | 2019-03           | <https://www.open.edu/openlearn/nature-environment/energy-buildings/content-section-2>              | 2022-02-15  | Modelling data        |
 | Environmental design : CIBSE guide A. 8th ed.                   | CIBSE.                  | 2015              | <https://app.knovel.com/kn/resources/kpEDCIBSE1/toc>                                                | 2022-02-15  | Modelling data        |
-| server room at DuckDuckGo                                       | DuckDuckGo              | 2022-02           | <https://duckduckgo.com/?q=server+room&t=h_&iax=images&ia=images>                                   | 2022-02-15  | Quick case studies    |
+| Server room image search at DuckDuckGo    | DuckDuckGo              | 2022-02           | <https://duckduckgo.com/?q=server+room&t=h_&iax=images&ia=images>                                   | 2022-02-15  | Quick case studies    |
 | What is Agile?                                                  | Atlassian               | 2019              | <https://www.atlassian.com/agile>                                                                   | 2022-02-15  | Development process   |
 
 ## To Read
 
 Aizawa, N. (2020) ‘Study on a Cooling System with Power Usage Effectiveness of 1.02 for Server Rooms’, ASHRAE transactions, 126(1), p. 212–.
+
 Koch, B. and Slezak, D. (2017) ‘Poster Abstract: Less energy, more efficiency in server rooms and data centers: A campaign by the Swiss Telecommunications Association’, Computer science (Berlin, Germany), 33(1-2), pp. 251–252. doi:10.1007/s00450-017-0369-0.
+
 Sasakura, K. et al. (2020) ‘Rack Temperature Prediction Model Using Machine Learning after Stopping Computer Room Air Conditioner in Server Room’, Energies (Basel), 13(17), p. 4300–. doi:10.3390/en13174300.
+
 Sasakura, K. et al. (2020) ‘A Temperature-Risk and Energy-Saving Evaluation Model for Supporting Energy-Saving Measures for Data Center Server Rooms’, Energies (Basel), 13(19), p. 1–. doi:10.3390/en13195222.
+
 Nada, S.A. et al. (2017) ‘Experimental parametric study of servers cooling management in data centers buildings’, Heat and mass transfer, 53(6), pp. 2083–2097. doi:10.1007/s00231-017-1966-y.
+
 Macedo, D. et al. (2019) ‘A Parametric Numerical Study of the Airflow and Thermal Performance in a Real Data Center for Improving Sustainability’, Applied sciences, 9(18), p. 3850–. doi:10.3390/app9183850.
+
 Duda, S.W. (2018) ‘N+1 HVAC for IT Closets And Server Rooms’, ASHRAE journal, 60(5), p. 56–.
