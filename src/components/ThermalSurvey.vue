@@ -1,24 +1,16 @@
 <template>
-	<error-message
-		v-if="this.error !== undefined"
-		v-bind:on-clear="this.clearError"
-	/>
+	<error-message v-if="this.error !== undefined" v-on:clear="this.clearError" />
 	<tool-bar
 		v-else
-		v-bind:on-back="this.previousPhase"
-		v-bind:on-clear="this.clearData"
-		v-bind:on-next="this.nextPhase"
-		v-bind:on-upload="this.uploadData"
+		v-bind:disabled="this.disabledFunctions"
 		v-bind:download="this.stringifiedData"
+		v-on:clear="this.clearData"
+		v-on:next="this.doNext"
+		v-on:previous="this.doPrevious"
+		v-on:upload="this.uploadData"
 	/>
 	<page-header v-bind:text="this.phase" />
-	<template v-if="this.phase === 'about'">
-		<div>
-			This is a web application for modelling the savings possible by
-			proactively cooling a server room during off-peak tariffs. All data is
-			stored and processed locally, on your computer, without use of any
-			external data processors.
-		</div>
+	<template v-if="this.phase === 'thermal survey'">
 		<div>
 			During this, the thermal observations stage, we will gather data on how
 			hard the air conditoner works to maintain a steady environment, what the
@@ -29,11 +21,6 @@
 			You will need to be able to observe whether the air conditioner is
 			operating and adjust the thermostat settings.
 		</div>
-		<div class="spacer"></div>
-		<tool-bar
-			v-bind:on-next="this.nextPhase"
-			v-bind:on-back="this.previousPhase"
-		/>
 	</template>
 	<template v-else-if="this.phase === 'normal'">
 		<number-slider
@@ -58,11 +45,6 @@
 			v-bind:temperature="this.normalThermostat"
 			v-model="this.observations"
 		/>
-		<div class="spacer"></div>
-		<tool-bar
-			v-bind:on-next="this.nextPhase"
-			v-bind:on-back="this.previousPhase"
-		/>
 	</template>
 	<template v-else-if="this.phase === 'cooling'">
 		<number-slider
@@ -81,11 +63,6 @@
 			v-bind:start-temperature="this.normalThermostat"
 			v-model="this.observations"
 		/>
-		<div class="spacer"></div>
-		<tool-bar
-			v-bind:on-next="this.nextPhase"
-			v-bind:on-back="this.previousPhase"
-		/>
 	</template>
 	<template v-else-if="this.phase === 'cooler'">
 		<thermostatic-observation
@@ -93,11 +70,6 @@
 			question="How hard is the A/C working?"
 			v-bind:temperature="this.minimumThermostat"
 			v-model="this.observations"
-		/>
-		<div class="spacer"></div>
-		<tool-bar
-			v-bind:on-next="this.nextPhase"
-			v-bind:on-back="this.previousPhase"
 		/>
 	</template>
 	<template v-else-if="this.phase === 'resting'">
@@ -117,11 +89,6 @@
 			v-bind:start-temperature="this.minimumThermostat"
 			v-model="this.observations"
 		/>
-		<div class="spacer"></div>
-		<tool-bar
-			v-bind:on-next="this.nextPhase"
-			v-bind:on-back="this.previousPhase"
-		/>
 	</template>
 	<template v-else-if="this.phase === 'warmer'">
 		<thermostatic-observation
@@ -130,22 +97,23 @@
 			v-bind:temperature="this.maximumThermostat"
 			v-model="this.observations"
 		/>
-		<div class="spacer"></div>
-		<tool-bar
-			v-bind:on-next="this.nextPhase"
-			v-bind:on-back="this.previousPhase"
-		/>
 	</template>
 	<template v-else-if="this.phase === 'finish'">
 		<div>Please reset the thermostat to {{ normalThermostat }}°C.</div>
 		<div>You may also wish to download a copy of the data gathered today.</div>
-		<div class="spacer"></div>
-		<tool-bar
-			v-bind:on-back="this.previousPhase"
-			v-bind:download="this.stringifiedData"
-			v-bind:on-next="this.nextPhase"
-		/>
 	</template>
+	<div class="spacer"></div>
+	<tool-bar
+		v-if="this.phase === 'finish'"
+		v-bind:disabled="this.disabledFunctions"
+		v-bind:download="this.stringifiedData"
+		v-on:next="this.doNext"
+	/>
+	<tool-bar
+		v-else
+		v-bind:disabled="this.disabledFunctions"
+		v-on:next="this.doNext"
+	/>
 </template>
 
 <style scoped lang="scss">
@@ -178,7 +146,7 @@ import ToolBar from "./ToolBar.vue";
 import { DataSet, isDataSet } from "../types";
 
 enum ObservationPhases {
-	About = "about",
+	Introduction = "thermal survey",
 	Normal = "normal",
 	Cooling = "cooling",
 	Cooler = "cooler",
@@ -224,6 +192,18 @@ export default defineComponent({
 		}
 	},
 	computed: {
+		disabledFunctions() {
+			if (this.phase === ObservationPhases.Finish && !this.onNext) {
+				return [this.doNext];
+			} else if (
+				this.phase === ObservationPhases.Introduction &&
+				!this.onPrevious
+			) {
+				return [this.doPrevious];
+			} else {
+				return [];
+			}
+		},
 		stringifiedData(): string {
 			return JSON.stringify(this.cleanseData(this.$data));
 		},
@@ -285,42 +265,46 @@ export default defineComponent({
 				minimumThermostat: 14,
 				normalThermostat: 18,
 				observations: [],
-				phase: ObservationPhases.About,
+				phase: ObservationPhases.Introduction,
 				version: 0,
 				...data,
 			};
 		},
 		// TODO Tidy incomplete observations on phase shift
-		nextPhase(): void {
+		doNext(): void {
 			Object.assign(this.$data, this.cleanseData(this.$data));
-			if (this.$data.phase === ObservationPhases.About) {
-				this.$data.phase = ObservationPhases.Normal;
-			} else if (this.$data.phase === ObservationPhases.Normal) {
-				this.$data.phase = ObservationPhases.Cooling;
-			} else if (this.$data.phase === ObservationPhases.Cooling) {
-				this.$data.phase = ObservationPhases.Cooler;
-			} else if (this.$data.phase === ObservationPhases.Cooler) {
-				this.$data.phase = ObservationPhases.Resting;
-			} else if (this.$data.phase === ObservationPhases.Resting) {
-				this.$data.phase = ObservationPhases.Warmer;
-			} else if (this.$data.phase === ObservationPhases.Warmer) {
-				this.$data.phase = ObservationPhases.Finish;
+			if (this.phase === ObservationPhases.Introduction) {
+				this.phase = ObservationPhases.Normal;
+			} else if (this.phase === ObservationPhases.Normal) {
+				this.phase = ObservationPhases.Cooling;
+			} else if (this.phase === ObservationPhases.Cooling) {
+				this.phase = ObservationPhases.Cooler;
+			} else if (this.phase === ObservationPhases.Cooler) {
+				this.phase = ObservationPhases.Resting;
+			} else if (this.phase === ObservationPhases.Resting) {
+				this.phase = ObservationPhases.Warmer;
+			} else if (this.phase === ObservationPhases.Warmer) {
+				this.phase = ObservationPhases.Finish;
+			} else if (this.phase === ObservationPhases.Finish) {
+				if (this.onNext) this.onNext();
 			}
 		},
-		previousPhase(): void {
+		doPrevious(): void {
 			Object.assign(this.$data, this.cleanseData(this.$data));
-			if (this.$data.phase === ObservationPhases.Finish) {
-				this.$data.phase = ObservationPhases.Warmer;
-			} else if (this.$data.phase === ObservationPhases.Warmer) {
-				this.$data.phase = ObservationPhases.Resting;
-			} else if (this.$data.phase === ObservationPhases.Resting) {
-				this.$data.phase = ObservationPhases.Cooler;
-			} else if (this.$data.phase === ObservationPhases.Cooler) {
-				this.$data.phase = ObservationPhases.Cooling;
-			} else if (this.$data.phase === ObservationPhases.Cooling) {
-				this.$data.phase = ObservationPhases.Normal;
-			} else if (this.$data.phase === ObservationPhases.Normal) {
-				this.$data.phase = ObservationPhases.About;
+			if (this.phase === ObservationPhases.Finish) {
+				this.phase = ObservationPhases.Warmer;
+			} else if (this.phase === ObservationPhases.Warmer) {
+				this.phase = ObservationPhases.Resting;
+			} else if (this.phase === ObservationPhases.Resting) {
+				this.phase = ObservationPhases.Cooler;
+			} else if (this.phase === ObservationPhases.Cooler) {
+				this.phase = ObservationPhases.Cooling;
+			} else if (this.phase === ObservationPhases.Cooling) {
+				this.phase = ObservationPhases.Normal;
+			} else if (this.phase === ObservationPhases.Normal) {
+				this.phase = ObservationPhases.Introduction;
+			} else if (this.phase === ObservationPhases.Introduction) {
+				if (this.onPrevious) this.onPrevious();
 			}
 		},
 		saveData(): void {
@@ -337,6 +321,10 @@ export default defineComponent({
 				this.$data.error = error;
 			}
 		},
+	},
+	props: {
+		onNext: Function,
+		onPrevious: Function,
 	},
 });
 </script>

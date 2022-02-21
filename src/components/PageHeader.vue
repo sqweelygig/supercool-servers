@@ -1,13 +1,14 @@
 <template>
-	<h1 class="page-header">
+	<div class="page-header">
 		{{ text }}
-	</h1>
+	</div>
 </template>
 
 <style scoped lang="scss">
 .page-header {
 	color: var(--dark);
 	font-size: var(--large);
+	font-weight: bold;
 	text-align: center;
 	text-transform: capitalize;
 }

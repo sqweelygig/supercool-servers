@@ -1,11 +1,11 @@
 <template>
 	<div class="tool-bar">
 		<button
-			aria-label="Back"
-			v-if="this.onBack"
+			aria-label="Previous"
+			v-if="this.onPrevious"
 			type="button"
-			v-on:click.prevent="this.onBack"
-			v-bind:disabled="this.disabled && this.disabled.includes(this.onBack)"
+			v-on:click.prevent="this.onPrevious"
+			v-bind:disabled="this.disabled && this.disabled.includes(this.onPrevious)"
 		>
 			<font-awesome-icon icon="chevron-left" />
 		</button>
@@ -182,10 +182,10 @@ export default defineComponent({
 	props: {
 		disabled: Array,
 		download: String,
-		onBack: Function,
 		onClear: Function,
 		onFall: Function,
 		onNext: Function,
+		onPrevious: Function,
 		onRise: Function,
 		onUndo: Function,
 		onUpload: Function,

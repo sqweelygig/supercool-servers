@@ -41,11 +41,6 @@
 				background: var(--dark);
 			}
 
-			body > * {
-				background: var(--white);
-				color: var(--black);
-			}
-
 			/* Layout */
 			:root {
 				--extra-small: min(1.9vw, 1.2rem);
@@ -60,23 +55,8 @@
 			body {
 				font-size: var(--medium);
 				margin: 0 auto;
-				max-width: 60rem;
-			}
-
-			body > #app {
-				border-radius: var(--medium-small);
-				display: flex;
-				flex-direction: column;
-				gap: var(--medium);
-				justify-content: space-between;
-				margin: var(--medium-small);
 				padding: var(--medium-small);
-				min-height: calc(100vh - 2 * var(--medium-small));
-				overflow: auto;
-			}
-
-			body > #app > .spacer {
-				flex-grow: 1;
+				max-width: 60rem;
 			}
 		</style>
 	</head>
