@@ -270,7 +270,6 @@ export default defineComponent({
 				...data,
 			};
 		},
-		// TODO Tidy incomplete observations on phase shift
 		doNext(): void {
 			Object.assign(this.$data, this.cleanseData(this.$data));
 			if (this.phase === ObservationPhases.Introduction) {

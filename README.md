@@ -23,7 +23,7 @@ This offsetting of operation through time is equivalent to storing energy when p
 
 ## Deliverables
 
-This project will create an application to steer an operator towards more efficient scheduling.
+This project will create an application to steer a server room technician towards more efficient scheduling.
 It will gather the data required via a survey, model the thermal characteristics of the room, compute an optimised thermostat schedule and present the forecast savings.
 The project assumes that its audience is technical, consistent with having some responsibility for a server room's environmental controls.
 
@@ -44,9 +44,9 @@ This budget resolves to about six full-time equivalent weeks.
 
 In choosing the software development model, the first consideration is positioning on the spectrum from waterfall to agile.
 This project has a small, well-bounded and useful product within a sizeable pluripotential scope for development.
-For example, the MVP could consist of a data-gathering flow, a simplified thermal model, a schedule optimisation algorithm and a brief final report.
+For example, the minimum viable product (MVP) could consist of a data-gathering flow, a simplified thermal model, a schedule optimisation algorithm and a brief final report.
 Alongside architecture decisions and toolchain initialisation, this MVP will require an estimated 70% of the project budget.
-The scope for improving this offering includes iteratively improving any of these functional requirements, adding integration with APIs, the internet of things, and more accurate modelling.
+The scope for improving this offering includes iteratively improving any of these functional requirements, adding integration with APIs, the internet of things (IoT), and more accurate modelling.
 It is also worth noting that it is not a critical system and the project commissioners require several milestones.
 In conclusion, this project will be organised in an agile fashion, prompted mainly by the relative scale of MVP and potential.
 The MVP development will be a series of small increments, with further development being incremental or iterative as required.
@@ -80,18 +80,21 @@ Third, there is value to data communication and sharing, but this is not an esse
 Finally, this should be available without installation as a significant proportion of users are likely to be single-use.
 These requirements suit deployment as a stand-alone website using client-side data retention and processing.
 
+The main issue with this deployment style is migrating data from previous versions, as the data is not under the systems' control. 
+To offset this issue, the top-level data objects will have version numbers, and there shall be a data loading procedure capable of stepping a dataset up the version numbers.
+
 Due to the project time constraints, the language and framework must be familiar to the developer.
 In addition, the project is quite data-centric, so it favours a strong type system.
 Alongside this, the immediate context for deployment is the web, so the language choice must support this.
 Finally, there is also potential for IoT and mobile deployments, which should steer consideration.
 Within these criteria, TypeScript seems the best choice for language.
 It has a modern type system, is compilable to ECMAScript for web deployment, can be executed in Node.js for IoT deployment and is familiar to the developer.
-One concern is its deployability as a mobile app, but the *-native projects should accommodate this.
+Of course, the entire product might derive value from a mobile-app deployment, but this is both beyond this project's scope and probably resolvable using the *-native projects.
 
-The selection of a user interface framework is more balanced than language but with a couple of early eliminations.
+The user interface framework selection is more balanced than language but with a couple of early eliminations.
 First, direct DOM manipulation is not sustainable or manageable.
-Secondly, server-side rendering of the DOM adds unnecessary components, specifically server-side processing.
-Therefore client-side reactive web frameworks were considered.
+Secondly, server-side calculation of the HTML adds unnecessary components, specifically server-side processing.
+Therefore client-side reactive web frameworks were favoured, simplifying the deployment and maintenance, with both Vue.js and React being familiar.
 As tie-breakers, the Vue.js experience was more developer-friendly, and it has a higher quantity of GitHub stars.
 In conclusion, this project will use Vue.js, especially single file components, but this was a close decision.
 
@@ -114,21 +117,24 @@ Figure n.n - Feature comparison matrix of language options.
 
 ## Work Completed
 
-For several reasons, gathering a set of thermal observations was a vital early milestone and this received priority above other concerns.
-First, gaining access to an example server room provides a case study, and gathering these observations proved that access.
+For several reasons, gathering a set of thermal observations is a vital early milestone and this received priority above other concerns.
+First, gaining access to an example server room provides a case study, and gathering these observations proves that access.
 Furthermore, these observations will inform and verify modelling assumptions, which is improved by gathering these observations across as wide a range of seasons as possible.
 
 Several elements were required to script this set of observations.
 Most importantly, research into the thermal behaviour of rooms was conducted and supplemented by a quick survey of the room available.
 This research ensured that any detailed survey taken suited a fully formed model.
 Since such a model would require calculations of how rapidly a room could change temperature, permission to adjust the room's thermostat was negotiated.
-The quick survey revealed that the server room windows are north facing and boarded over, so the initial model can ignore radiative thermal effects.
+The quick survey revealed that the server room windows are north facing and boarded over, so the initial model can ignore solar thermal effects.
+
+![Plan showing a server room 9m x 12m x 4m](docs/bdx_plan.png)
 
 Figure n.n - Plan of the server room surveyed
 
 To support this survey, the developer initialised the UI of this project, designed the survey's workflow, and implemented this in the interface.
 The UI consists of a reactive website with custom data-gathering components, targetting low resolutions and touchscreen interaction to support smartphone usage.
-Within this, the survey observes the room as it moves between and maintains different temperatures. As a result, this data should support an intermediate thermal model.
+Within this, the survey asks about the room as it moves between and maintains different temperatures.
+As a result, this data should support an intermediate thermal model.
 
 ![Overview of gathering data](docs/thermal_observation_sequence.png)
 
@@ -136,7 +142,7 @@ Figure n.n - Overview of the thermal survey workflow.
 
 ![Smartphone interface](docs/screenshot.png)
 
-Figure n.n - Web interface at 360 x 640
+Figure n.n - Web interface at 360 x 640.
 
 ## Simplifications
 
@@ -162,13 +168,14 @@ This section records the simplifying assumptions currently applied to the modell
   * Active observations measure the duty time required to enact temperature changes.
   * The duty cycle is directly proportional to the resource cost required without needing thermal units.
   * The basic units become `duty`, `celsius` and `hour`.
-    * e.g., passive cooling reduces the duty cycle of the air conditioning by 3% per celsius difference.
-    * e.g., changing the server room's temperature requires one duty hour per celsius.
-    * e.g., running the air conditioning uses 1 ton of CO2 per duty hour.
+  * e.g., passive cooling reduces the duty cycle of the air conditioning by 3% per celsius difference.
+  * e.g., changing the server room's temperature requires one duty hour per celsius.
+  * e.g., running the air conditioning uses 1 ton of CO2 per duty hour.
 
 ## Roadmap
 
-In line with the project lifecycle adopted, this is several lists of stakeholder stories, each in the format `A (stakeholder) (must|should|could|will not) …`.
+Similar to the project lifecycle adopted, this is several lists of stakeholder stories, each in the format `A (stakeholder) (must|should|could|will not) …`.
+This project adapts the core Kanban board by broadening the scope of concerns from "user stories" to "stakeholder stories" and by adding a qualitative bucket to capture persistent requirements.
 These stories will move in step with the code that implements them and reside in the code repository, so the project history is always accurate of that moment in time.
 
 ### Backlog
@@ -188,13 +195,12 @@ These stories will move in step with the code that implements them and reside in
 * A technician must be able to input an electricity tariff schedule.
 * A technician must be able to generate an optimised thermostat schedule.
 * A technician must be able to generate a business-oriented report.
-* A technician must be able to gather thermal observations of a server room.
-
-### Design
 
 ### Develop
 
-### Review
+### Done
+
+* A technician must be able to gather thermal observations of a server room.
 
 ### Qualitative
 
@@ -205,19 +211,18 @@ These stories will move in step with the code that implements them and reside in
 
 ## Blockers
 
-To achieve the task, "A technician should have information on an example server room available." the project requires permission to observe and adjust the thermostat of a server room.
+To achieve the task, "*A technician should have information on an example server room available.*" the project requires permission to observe and adjust the thermostat of a server room.
 This permission is critical as the risk has a high likelihood and high impact.
 This concern is likely because the temperature is a tightly controlled aspect of a server room.
-Furthermore, it is impactful because this example provides feedback about the user experience and gives the project a case study. 
+Furthermore, it is impactful because this example provides feedback about the user experience and gives the project a case study.
 
 Therefore, negotiation-in-principle started immediately upon beginning the project to bring any related decision point forwards.
 Now that we have outlined a survey workflow, the developer is negotiating access to perform the required tasks.
 If this negotiation fails, the project may continue without a case study or transition to modelling a more available example of thermodynamics and power offsetting, such as domestic refrigerators.
 
-To achieve or defer the task, "A technician should be able to model a room with significant passive cooling." the project must incorporate learning into the mathematics of thermodynamic cooling.
-Failing in this learning is of medium likelihood as the science is sure to be public domain but is also likely to be intermediate.
+To achieve or defer the task, "*A technician should be able to model a room with significant passive cooling.*" the project must incorporate learning into the mathematics of thermodynamic cooling.
+Failing in this learning is of medium likelihood as the science is sure to be public domain but is also likely to be intermediate level.
 In addition, this research is of high impact as it can underwrite and prioritise other simplifications.
-
 Therefore, achieving a basic understanding of this field is second only to finding an engaging case study, and is the target of early secondary research efforts.
 
 ## Thermodynamics
@@ -233,16 +238,16 @@ Figure n.n - Building management system (BMS) interface
 
 Two 51.6kW air conditioning units cool the BDX for a total cooling power of 103.2kW.
 This infrastructure is N + 1 redundant, implying a cap upon server equipment at 51.6kW before upgrades.
-The BDX complements this with precision units that cool the server equipment by heating the thermal mass of the room.
+The BDX complements this with precision units that cool the server equipment by heating the room's environment.
 
 The BMS holds the room at 20 degrees celsius, and the external temperature varies between 3 and 20 degrees celsius.
-The external wall comprises an uninsulated stud wall, an access corridor and a single pane glass wall of about 23 m².
-An upper estimate of cooling through this wall (rounded up to 1 s.f.) is 1 kilowatt (see Appendix n).
-This estimate diminishes the importance of modelling weather conditions in this situation.
+The external wall comprises a plastered concrete wall, an access corridor and a single pane glass wall of about 44 m^2.
+Therefore, an upper estimate of cooling through this wall (rounded up to 2 s.f.) is 1.8 kilowatt (see Appendix n).
+This estimate puts a medium prioritisation on modelling weather conditions in this situation.
 
-The remaining surfaces of the BDX separate the room from other offices and underground.
+The remaining surfaces of the BDX separate the room from other offices and underground with a surface area of around 330 m^2.
 The calculations model a 2 kelvin difference with the data hall to estimate significance.
-An upper estimate of cooling through the floor, ceiling, internal, and underground walls is 900 watts (rounded up to 1 s.f.) (see Appendix n) for a passive cooling total of up to 2 kilowatts.
+An upper estimate of cooling through the floor, ceiling, internal, and underground walls is 1.3 kilowatts (rounded up to 2 s.f.) (see Appendix n).
 This estimate puts a medium prioritisation on modelling passive cooling.
 
 Although further research is warranted and scheduled, these relative significances seem generalisable.
@@ -276,9 +281,9 @@ Figure n.n - Quick survey of typical server room construction
 | Brighton Digital Exchange Data Centre                           | Sudlows                 | 2015-07           | <https://www.sudlows.com/wp-content/uploads/2016/07/Brighton-Digital-Exchange.pdf>                  | 2022-02-14  | Case study            |
 | ACIS provides the big picture at Brighton Digital Exchange      | Airedale                | 2015-07           | <https://www.airedale.com/case-studies/acis-provides-the-big-picture-at-brighton-digital-exchange>  | 2022-02-14  | Case study            |
 | Energy in buildings                                             | OpenLearn               | 2019-03           | <https://www.open.edu/openlearn/nature-environment/energy-buildings/content-section-2>              | 2022-02-15  | Modelling data        |
-| Environmental design : CIBSE guide A. 8th ed.                   | CIBSE.                  | 2015              | <https://app.knovel.com/kn/resources/kpEDCIBSE1/toc>                                                | 2022-02-15  | Modelling data        |
-| Server room image search at DuckDuckGo    | DuckDuckGo              | 2022-02           | <https://duckduckgo.com/?q=server+room&t=h_&iax=images&ia=images>                                   | 2022-02-15  | Quick case studies    |
-| What is Agile?                                                  | Atlassian               | 2019              | <https://www.atlassian.com/agile>                                                                   | 2022-02-15  | Development process   |
+| Environmental design : CIBSE guide A. 8th ed.                   | CIBSE.                  | 2015-07           | <https://app.knovel.com/kn/resources/kpEDCIBSE1/toc>                                                | 2022-02-15  | Modelling data        |
+| Server room image search at DuckDuckGo                          | DuckDuckGo              | 2022-02           | <https://duckduckgo.com/?q=server+room&t=h_&iax=images&ia=images>                                   | 2022-02-15  | Quick case studies    |
+| What is Agile?                                                  | Atlassian               | 2019-03           | <https://www.atlassian.com/agile>                                                                   | 2022-02-15  | Development process   |
 
 ## To Read
 

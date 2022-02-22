@@ -75,7 +75,6 @@ export default defineComponent({
 					this.modelValue.slice(0, -1).concat([newTail])
 				);
 			} else if (
-				// TODO Replace this whole time listing with a list of times
 				recent.startTime !== undefined &&
 				recent.transitionTime !== undefined &&
 				recent.endTime === undefined
