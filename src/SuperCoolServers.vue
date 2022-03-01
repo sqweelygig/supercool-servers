@@ -1,20 +1,9 @@
 <template>
-	<div>
-		<div class="tab-bar">
-			<div
-				v-bind:class="{ selected: this.phase === 'introduction' }"
-				v-on:click.prevent="this.phase = 'introduction'"
-			>
-				Introduction
-			</div>
-			<div
-				v-bind:class="{ selected: this.phase === 'survey' }"
-				v-on:click.prevent="this.phase = 'survey'"
-			>
-				Thermal survey
-			</div>
-		</div>
-		<template v-if="this.phase === 'introduction'">
+	<!-- TODO Add icons to tab-bar -->
+	<tab-bar v-bind:selections="Phases" v-model="phase" />
+	<div class="content-pane">
+		<!-- TODO Make about into an SFC -->
+		<template v-if="phase === Phases.Introduction">
 			<page-header text="SuperCool Servers" />
 			<div>
 				This is a web application for modelling the savings possible by
@@ -23,30 +12,37 @@
 				external data processors.
 			</div>
 			<div class="spacer"></div>
-			<tool-bar v-on:next="this.doNext" />
+			<tool-bar v-on:next="setPhase(Phases.Survey)" />
 		</template>
 		<thermal-survey
-			v-else-if="this.phase === 'survey'"
-			v-on:previous="this.doPrevious"
-			v-on:next="this.doNext"
+			v-else-if="phase === Phases.Survey"
+			v-on:previous="setPhase(Phases.Introduction)"
+			v-on:next="setPhase(Phases.Tariff)"
 		/>
+		<template v-else-if="phase === Phases.Tariff">
+			<div>Tariff Data</div>
+		</template>
 	</div>
 </template>
 
 <style scoped lang="scss">
-div:deep() {
+div.content-pane {
+	background: var(--white);
+	color: var(--black);
 	display: flex;
+	flex-grow: 1;
 	flex-direction: column;
 	justify-content: space-between;
-	min-height: calc(100vh - 2 * var(--medium-small));
+}
+div.content-pane:deep() {
 	> div {
-		background: var(--white);
-		color: var(--black);
-		min-height: auto;
 		padding-bottom: var(--small);
 		padding-left: var(--medium);
 		padding-right: var(--medium);
 		padding-top: var(--small);
+	}
+	> div:first-child {
+		padding-top: var(--medium);
 	}
 	> div:last-child {
 		border-radius: 0 0 var(--medium-small) var(--medium-small);
@@ -56,62 +52,38 @@ div:deep() {
 		flex-grow: 1;
 		padding: 0;
 	}
-	> div.tab-bar {
-		background: transparent;
-		display: flex;
-		gap: var(--medium-small);
-		flex-direction: row;
-		padding: 0;
-		> div {
-			background: var(--light);
-			border-radius: var(--medium-small) var(--medium-small) 0 0;
-			cursor: pointer;
-			flex-grow: 1;
-			font-size: var(--medium-large);
-			padding: var(--small);
-		}
-		> div.selected {
-			background: var(--white);
-		}
-	}
-	> div.tab-bar + div {
-		padding-top: var(--medium);
-	}
 }
 </style>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import PageHeader from "./components/PageHeader.vue";
+import TabBar from "./components/TabBar.vue";
 import ThermalSurvey from "./components/ThermalSurvey.vue";
 import ToolBar from "./components/ToolBar.vue";
 
-enum Phases {
-	Introduction = "introduction",
-	Survey = "survey",
+export enum Phases {
+	Introduction = "Introduction",
+	Survey = "Thermal Survey",
+	Tariff = "Tariff Schedule",
 }
 
 export default defineComponent({
 	components: {
 		PageHeader,
+		TabBar,
 		ThermalSurvey,
 		ToolBar,
 	},
 	data() {
 		return {
 			phase: Phases.Introduction,
+			Phases,
 		};
 	},
 	methods: {
-		doNext() {
-			if (this.phase === Phases.Introduction) {
-				this.phase = Phases.Survey;
-			}
-		},
-		doPrevious() {
-			if (this.phase === Phases.Survey) {
-				this.phase = Phases.Introduction;
-			}
+		setPhase(phase: Phases) {
+			this.phase = phase;
 		},
 	},
 });
