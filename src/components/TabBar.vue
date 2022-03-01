@@ -2,11 +2,12 @@
 	<div class="tab-bar">
 		<div
 			v-bind:class="{ selected: modelValue === selection }"
-			v-bind:key="selection"
+			v-bind:key="selection.text"
 			v-for="selection in selections"
 			v-on:click.prevent="$emit('update:modelValue', selection)"
 		>
-			{{ selection }}
+			<font-awesome-icon v-bind:icon="selection.icon" />
+			<span>{{ selection.text }}</span>
 		</div>
 	</div>
 </template>
@@ -29,10 +30,22 @@ div.tab-bar {
 		padding: var(--small);
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		> * {
+			margin-left: 0.3em;
+		}
+		> *:first-child {
+			margin-left: 0;
+		}
+		> *:last-child {
+			display: none;
+		}
 	}
 	> div.selected {
 		background: var(--white);
 		flex-shrink: 0;
+		> *:last-child {
+			display: inline-block;
+		}
 	}
 }
 div.tab-bar + div {
@@ -41,15 +54,33 @@ div.tab-bar + div {
 </style>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+import { library as IconLibrary } from "@fortawesome/fontawesome-svg-core";
+import {
+	faInfoCircle,
+	faMoneyBill,
+	faThermometerHalf,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+IconLibrary.add(faInfoCircle, faMoneyBill, faThermometerHalf);
+
+export type TabItem = {
+	icon: string;
+	text: string;
+};
 
 export default defineComponent({
+	components: {
+		FontAwesomeIcon,
+	},
 	props: {
 		modelValue: {
 			required: true,
 		},
 		selections: {
 			required: true,
+			type: Array as PropType<Array<TabItem>>,
 		},
 	},
 });

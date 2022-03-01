@@ -1,19 +1,18 @@
 <template>
-	<!-- TODO Add icons to tab-bar -->
-	<tab-bar v-bind:selections="Phases" v-model="phase" />
+	<tab-bar v-bind:selections="orderedPhases" v-model="phase" />
 	<div class="main-pane">
 		<text-page
 			content="This is a web application for modelling the savings possible by proactively cooling a server room during off-peak tariffs. All data is stored and processed locally, on your computer, without use of any external data processors."
 			header="SuperCool Servers"
-			v-if="phase === Phases.Introduction"
-			v-on:next="setPhase(Phases.Survey)"
+			v-if="phase === indexedPhases.introduction"
+			v-on:next="setPhase(indexedPhases.survey)"
 		/>
 		<thermal-survey
-			v-else-if="phase === Phases.Survey"
-			v-on:previous="setPhase(Phases.Introduction)"
-			v-on:next="setPhase(Phases.Tariff)"
+			v-else-if="phase === indexedPhases.survey"
+			v-on:previous="setPhase(indexedPhases.introduction)"
+			v-on:next="setPhase(indexedPhases.tariff)"
 		/>
-		<template v-else-if="phase === Phases.Tariff">
+		<template v-else-if="phase === indexedPhases.tariff">
 			<div>Tariff Data</div>
 		</template>
 	</div>
@@ -51,15 +50,9 @@ div.main-pane:deep() {
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import TabBar from "./components/TabBar.vue";
+import TabBar, { TabItem } from "./components/TabBar.vue";
 import TextPage from "./components/TextPage.vue";
 import ThermalSurvey from "./components/ThermalSurvey.vue";
-
-export enum Phases {
-	Introduction = "Introduction",
-	Survey = "Thermal Survey",
-	Tariff = "Tariff Schedule",
-}
 
 export default defineComponent({
 	components: {
@@ -68,13 +61,24 @@ export default defineComponent({
 		ThermalSurvey,
 	},
 	data() {
+		const indexedPhases = {
+			introduction: { icon: "info-circle", text: "Introduction" },
+			survey: { icon: "thermometer-half", text: "Thermal Survey" },
+			tariff: { icon: "money-bill", text: "Tariff Schedule" },
+		};
+		const orderedPhases = [
+			indexedPhases.introduction,
+			indexedPhases.survey,
+			indexedPhases.tariff,
+		];
 		return {
-			phase: Phases.Introduction,
-			Phases,
+			indexedPhases,
+			orderedPhases,
+			phase: indexedPhases.introduction,
 		};
 	},
 	methods: {
-		setPhase(phase: Phases) {
+		setPhase(phase: TabItem) {
 			this.phase = phase;
 		},
 	},
