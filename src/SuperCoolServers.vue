@@ -12,14 +12,15 @@
 			v-on:previous="setPhase(indexedPhases.introduction)"
 			v-on:next="setPhase(indexedPhases.tariff)"
 		/>
-		<template v-else-if="phase === indexedPhases.tariff">
-			<div>Tariff Data</div>
-		</template>
+		<tariff-schedule
+			v-else-if="phase === indexedPhases.tariff"
+			v-on:previous="setPhase(indexedPhases.survey)"
+		/>
 	</div>
 </template>
 
 <style scoped lang="scss">
-div.main-pane {
+.main-pane {
 	background: var(--white);
 	border-radius: 0 0 var(--medium-small) var(--medium-small);
 	color: var(--black);
@@ -28,22 +29,40 @@ div.main-pane {
 	flex-direction: column;
 	justify-content: space-between;
 }
-div.main-pane:deep() {
-	> div {
+.main-pane:deep() {
+	> * {
 		padding-bottom: var(--small);
 		padding-left: var(--medium);
 		padding-right: var(--medium);
 		padding-top: var(--small);
+		> * {
+			margin: var(--extra-small) 0;
+			width: 100%;
+		}
+		> :first-child {
+			margin-top: 0;
+		}
+		> :last-child {
+			margin-bottom: 0;
+		}
 	}
-	> div:first-child {
+	> :first-child {
 		padding-top: var(--medium);
 	}
-	> div:last-child {
+	> :last-child {
 		padding-bottom: var(--medium);
 	}
-	> div.spacer {
+	> .spacer {
 		flex-grow: 1;
 		padding: 0;
+	}
+	.section-header {
+		font-size: var(--medium-large);
+	}
+	> .tool-bar {
+		> * {
+			margin: 0;
+		}
 	}
 }
 </style>
@@ -51,12 +70,14 @@ div.main-pane:deep() {
 <script lang="ts">
 import { defineComponent } from "vue";
 import TabBar, { TabItem } from "./components/TabBar.vue";
+import TariffSchedule from "./components/TariffSchedule.vue";
 import TextPage from "./components/TextPage.vue";
 import ThermalSurvey from "./components/ThermalSurvey.vue";
 
 export default defineComponent({
 	components: {
 		TabBar,
+		TariffSchedule,
 		TextPage,
 		ThermalSurvey,
 	},
