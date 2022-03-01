@@ -1,19 +1,13 @@
 <template>
 	<!-- TODO Add icons to tab-bar -->
 	<tab-bar v-bind:selections="Phases" v-model="phase" />
-	<div class="content-pane">
-		<!-- TODO Make about into an SFC -->
-		<template v-if="phase === Phases.Introduction">
-			<page-header text="SuperCool Servers" />
-			<div>
-				This is a web application for modelling the savings possible by
-				proactively cooling a server room during off-peak tariffs. All data is
-				stored and processed locally, on your computer, without use of any
-				external data processors.
-			</div>
-			<div class="spacer"></div>
-			<tool-bar v-on:next="setPhase(Phases.Survey)" />
-		</template>
+	<div class="main-pane">
+		<text-page
+			content="This is a web application for modelling the savings possible by proactively cooling a server room during off-peak tariffs. All data is stored and processed locally, on your computer, without use of any external data processors."
+			header="SuperCool Servers"
+			v-if="phase === Phases.Introduction"
+			v-on:next="setPhase(Phases.Survey)"
+		/>
 		<thermal-survey
 			v-else-if="phase === Phases.Survey"
 			v-on:previous="setPhase(Phases.Introduction)"
@@ -26,15 +20,16 @@
 </template>
 
 <style scoped lang="scss">
-div.content-pane {
+div.main-pane {
 	background: var(--white);
+	border-radius: 0 0 var(--medium-small) var(--medium-small);
 	color: var(--black);
 	display: flex;
 	flex-grow: 1;
 	flex-direction: column;
 	justify-content: space-between;
 }
-div.content-pane:deep() {
+div.main-pane:deep() {
 	> div {
 		padding-bottom: var(--small);
 		padding-left: var(--medium);
@@ -45,7 +40,6 @@ div.content-pane:deep() {
 		padding-top: var(--medium);
 	}
 	> div:last-child {
-		border-radius: 0 0 var(--medium-small) var(--medium-small);
 		padding-bottom: var(--medium);
 	}
 	> div.spacer {
@@ -57,10 +51,9 @@ div.content-pane:deep() {
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import PageHeader from "./components/PageHeader.vue";
 import TabBar from "./components/TabBar.vue";
+import TextPage from "./components/TextPage.vue";
 import ThermalSurvey from "./components/ThermalSurvey.vue";
-import ToolBar from "./components/ToolBar.vue";
 
 export enum Phases {
 	Introduction = "Introduction",
@@ -70,10 +63,9 @@ export enum Phases {
 
 export default defineComponent({
 	components: {
-		PageHeader,
 		TabBar,
+		TextPage,
 		ThermalSurvey,
-		ToolBar,
 	},
 	data() {
 		return {
