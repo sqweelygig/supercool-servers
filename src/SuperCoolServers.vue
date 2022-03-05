@@ -71,9 +71,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import TabBar, { TabItem } from "./components/TabBar.vue";
-import TariffSchedule from "./components/TariffSchedule.vue";
-import TextPage from "./components/TextPage.vue";
-import ThermalSurvey from "./components/ThermalSurvey.vue";
+import TariffSchedule from "./interfaces/TariffSchedule.vue";
+import TextPage from "./interfaces/TextPage.vue";
+import ThermalSurvey from "./interfaces/ThermalSurvey.vue";
 
 export default defineComponent({
 	components: {

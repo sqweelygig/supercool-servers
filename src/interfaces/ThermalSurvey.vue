@@ -2,7 +2,6 @@
 	<error-message v-if="error !== undefined" v-on:clear="clearError" />
 	<tool-bar
 		v-else
-		v-bind:disabled="disabledFunctions"
 		v-bind:download="stringifiedData"
 		v-on:clear="clearData"
 		v-on:next="doNext"
@@ -105,11 +104,10 @@
 	<div class="spacer"></div>
 	<tool-bar
 		v-if="phase === 'finish'"
-		v-bind:disabled="disabledFunctions"
 		v-bind:download="stringifiedData"
 		v-on:next="doNext"
 	/>
-	<tool-bar v-else v-bind:disabled="disabledFunctions" v-on:next="doNext" />
+	<tool-bar v-else v-on:next="doNext" />
 </template>
 
 <script lang="ts">
@@ -171,18 +169,6 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		disabledFunctions() {
-			if (this.phase === ObservationPhases.Finish && !this.onNext) {
-				return [this.doNext];
-			} else if (
-				this.phase === ObservationPhases.Introduction &&
-				!this.onPrevious
-			) {
-				return [this.doPrevious];
-			} else {
-				return [];
-			}
-		},
 		stringifiedData(): string {
 			return JSON.stringify(this.cleanseData(this.$data));
 		},
@@ -208,6 +194,14 @@ export default defineComponent({
 		} else {
 			return this.defaultData();
 		}
+	},
+	emits: {
+		next(): boolean {
+			return true;
+		},
+		previous(): boolean {
+			return true;
+		},
 	},
 	errorCaptured(error, component, info) {
 		console.error(error, component, info);
@@ -264,7 +258,7 @@ export default defineComponent({
 			} else if (this.phase === ObservationPhases.Warmer) {
 				this.phase = ObservationPhases.Finish;
 			} else if (this.phase === ObservationPhases.Finish) {
-				if (this.onNext) this.onNext();
+				this.$emit("next");
 			}
 		},
 		doPrevious(): void {
@@ -282,7 +276,7 @@ export default defineComponent({
 			} else if (this.phase === ObservationPhases.Normal) {
 				this.phase = ObservationPhases.Introduction;
 			} else if (this.phase === ObservationPhases.Introduction) {
-				if (this.onPrevious) this.onPrevious();
+				this.$emit("previous");
 			}
 		},
 		saveData(): void {
@@ -299,10 +293,6 @@ export default defineComponent({
 				this.$data.error = error;
 			}
 		},
-	},
-	props: {
-		onNext: Function,
-		onPrevious: Function,
 	},
 });
 </script>
