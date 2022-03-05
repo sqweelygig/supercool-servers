@@ -1,11 +1,13 @@
+export class DataParseError extends Error {}
+
 export interface Interval {
-	endTime: number;
-	startTime: number;
+	endTime: Date;
+	startTime: Date;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-function isInterval(data: any): data is Interval {
-	return typeof data.endTime === "number" && typeof data.startTime === "number";
+export function isInterval(data: any): data is Interval {
+	return data.endTime instanceof Date && data.startTime instanceof Date;
 }
 
 export interface ThermostatInterval extends Interval {

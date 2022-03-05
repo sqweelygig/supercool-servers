@@ -15,6 +15,7 @@
 		<tariff-schedule
 			v-else-if="phase === indexedPhases.tariff"
 			v-on:previous="setPhase(indexedPhases.survey)"
+			v-on:update="log"
 		/>
 	</div>
 </template>
@@ -96,9 +97,13 @@ export default defineComponent({
 			indexedPhases,
 			orderedPhases,
 			phase: indexedPhases.introduction,
+			tariffs: [],
 		};
 	},
 	methods: {
+		log(value: any) {
+			console.log(value);
+		},
 		setPhase(phase: TabItem) {
 			this.phase = phase;
 		},

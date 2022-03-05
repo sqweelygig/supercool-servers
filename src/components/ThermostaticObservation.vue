@@ -2,12 +2,12 @@
 	<div class="duty-cycle">
 		<div class="section-header">{{ question }}</div>
 		<div>{{ explanation }}</div>
-		<duty-table v-bind:observations="this.modelValue" />
+		<duty-table v-bind:observations="modelValue" />
 		<tool-bar
-			v-bind:disabled="this.disabledButtons"
-			v-bind:on-undo="this.clear"
-			v-bind:on-rise="this.onRise"
-			v-bind:on-fall="this.onFall"
+			v-bind:disabled="disabledButtons"
+			v-bind:on-undo="clear"
+			v-bind:on-rise="onRise"
+			v-bind:on-fall="onFall"
 		/>
 	</div>
 </template>
@@ -48,7 +48,7 @@ export default defineComponent({
 			this.$emit("update:modelValue", this.modelValue.slice(0, -1));
 		},
 		observe(isRisingEdge: boolean): void {
-			const rightNow = Date.now();
+			const rightNow = new Date();
 			const recent = this.modelValue[this.modelValue.length - 1] || {};
 			if (
 				recent.startTime === undefined &&
@@ -79,8 +79,9 @@ export default defineComponent({
 				recent.transitionTime !== undefined &&
 				recent.endTime === undefined
 			) {
-				const initialTime = recent.transitionTime - recent.startTime;
-				const totalTime = rightNow - recent.startTime;
+				const initialTime =
+					recent.transitionTime.getTime() - recent.startTime.getTime();
+				const totalTime = rightNow.getTime() - recent.startTime.getTime();
 				const initialProportion = initialTime / totalTime;
 				const dutyCycle = recent.initialObservation
 					? initialProportion

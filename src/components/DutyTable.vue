@@ -14,7 +14,7 @@
 		</tr>
 		<tr v-bind:key="index" v-for="(observation, index) in observations">
 			<td v-if="observation.startTime !== undefined">
-				{{ new Date(observation.startTime).toLocaleTimeString() }}
+				{{ observation.startTime.toLocaleTimeString() }}
 			</td>
 			<td v-else>--:--:--</td>
 			<td v-if="observation.startTemperature">
@@ -26,10 +26,10 @@
 			</td>
 			<td v-else>--%</td>
 			<td v-if="observation.endTime !== undefined">
-				{{ new Date(observation.endTime).toLocaleTimeString() }}
+				{{ observation.endTime.toLocaleTimeString() }}
 			</td>
 			<td v-else-if="observation.transitionTime !== undefined">
-				{{ new Date(observation.transitionTime).toLocaleTimeString() }}
+				{{ observation.transitionTime.toLocaleTimeString() }}
 			</td>
 			<td v-else>--:--:--</td>
 			<td v-if="observation.endTemperature">
@@ -46,14 +46,15 @@ import { ThermalInterval, isThermalInterval } from "../types";
 
 export interface ThermalObservation extends ThermalInterval {
 	initialObservation: boolean;
-	transitionTime?: number;
+	transitionTime?: Date;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 export function isThermalObservation(data: any): data is ThermalObservation {
 	return (
 		typeof data.initialObservation === "boolean" &&
-		["undefined", "number"].includes(typeof data.transitionTime) &&
+		(typeof data.transitionTime === "undefined" ||
+			data.transitionTime instanceof Date) &&
 		isThermalInterval(data)
 	);
 }

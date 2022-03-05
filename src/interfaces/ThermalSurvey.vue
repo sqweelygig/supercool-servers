@@ -114,14 +114,17 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ThermostaticObservation from "./ThermostaticObservation.vue";
-import ThermodynamicObservation from "./ThermodynamicObservation.vue";
-import { ThermalObservation, isThermalObservation } from "./DutyTable.vue";
-import ErrorMessage from "./ErrorMessage.vue";
-import NumberSlider from "./NumberSlider.vue";
-import PageHeader from "./PageHeader.vue";
-import ToolBar from "./ToolBar.vue";
-import { DataSet, isDataSet } from "../types";
+import ThermostaticObservation from "../components/ThermostaticObservation.vue";
+import ThermodynamicObservation from "../components/ThermodynamicObservation.vue";
+import {
+	ThermalObservation,
+	isThermalObservation,
+} from "../components/DutyTable.vue";
+import ErrorMessage from "../components/ErrorMessage.vue";
+import NumberSlider from "../components/NumberSlider.vue";
+import PageHeader from "../components/PageHeader.vue";
+import ToolBar from "../components/ToolBar.vue";
+import { DataParseError, DataSet, isDataSet } from "../types";
 
 enum ObservationPhases {
 	Introduction = "thermal survey",
@@ -145,8 +148,6 @@ interface ThermalObservations extends DataSet {
 interface ThermalObservationsState extends ThermalObservations {
 	error?: unknown;
 }
-
-export class DataParseError extends Error {}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isThermalObservations(data: any): data is ThermalObservations {
