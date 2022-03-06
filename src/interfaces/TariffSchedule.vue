@@ -170,13 +170,12 @@ export default defineComponent({
 		},
 	},
 	created(): void {
+		const emit = () => this.$emit("update", this.tariffIntervals);
 		for (const key in this.$data) {
 			this.$watch(key, this.saveData, { deep: true });
-			this.$watch(key, () => this.$emit("update", this.tariffIntervals), {
-				deep: true,
-			});
+			this.$watch(key, emit, { deep: true });
 		}
-		this.$emit("update", this.tariffIntervals);
+		emit();
 	},
 	data(): TariffScheduleState {
 		// TODO Combine this with similar methods in ThermalSurvey so its DRY.

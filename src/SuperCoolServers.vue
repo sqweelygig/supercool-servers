@@ -11,6 +11,7 @@
 			v-else-if="phase === indexedPhases.survey"
 			v-on:previous="setPhase(indexedPhases.introduction)"
 			v-on:next="setPhase(indexedPhases.tariff)"
+			v-on:update="log"
 		/>
 		<tariff-schedule
 			v-else-if="phase === indexedPhases.tariff"
@@ -101,6 +102,7 @@ export default defineComponent({
 		};
 	},
 	methods: {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		log(value: any) {
 			console.log(value);
 		},

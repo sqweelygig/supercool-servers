@@ -162,15 +162,102 @@ function isThermalObservations(data: any): data is ThermalObservations {
 	);
 }
 
+export interface ThermalProperties {
+	baseloadDutyCycle: number;
+	temperatureChangeVelocity: number;
+	maximumThermostat: number;
+	minimumThermostat: number;
+	normalThermostat: number;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isThermalProperties(data: any): data is ThermalProperties {
+	return (
+		typeof data === "object" &&
+		data !== null &&
+		typeof data.baseloadDutyCycle === "number" &&
+		typeof data.temperatureChangeVelocity === "number" &&
+		typeof data.maximumThermostat === "number" &&
+		typeof data.minimumThermostat === "number" &&
+		typeof data.normalThermostat === "number"
+	);
+}
+
+export function summariseObservations(observations: ThermalObservation[]): {
+	baseloadDutyCycle: number;
+	temperatureChangeVelocity: number;
+} {
+	const thermostaticObservations = observations.filter(
+		(observation: ThermalObservation) => {
+			return observation.endTemperature === observation.startTemperature;
+		}
+	);
+	const totalElapsed: number = thermostaticObservations.reduce(
+		(runningTotal: number, each: ThermalObservation) => {
+			const elapsed = each.endTime.getTime() - each.startTime.getTime();
+			return runningTotal + elapsed;
+		},
+		0
+	);
+	const totalDuty: number = thermostaticObservations.reduce(
+		(runningTotal: number, each: ThermalObservation) => {
+			const elapsed = each.endTime.getTime() - each.startTime.getTime();
+			return runningTotal + each.dutyCycle * elapsed;
+		},
+		0
+	);
+	const baseloadDutyCycle = totalDuty / totalElapsed;
+	const thermodynamicObservations = observations.filter(
+		(observation: ThermalObservation) => {
+			return observation.endTemperature !== observation.startTemperature;
+		}
+	);
+	const totalTemperatureChanges: number = thermodynamicObservations.reduce(
+		(runningTotal: number, each: ThermalObservation) => {
+			const temperatureChange = each.endTemperature - each.startTemperature;
+			return runningTotal + Math.abs(temperatureChange);
+		},
+		0
+	);
+	const totalVelocity: number = thermodynamicObservations.reduce(
+		(runningTotal: number, each: ThermalObservation) => {
+			const temperatureChange = each.endTemperature - each.startTemperature;
+			const weighting = Math.abs(temperatureChange);
+			const msElapsed = each.endTime.getTime() - each.startTime.getTime();
+			const hoursElapsed = msElapsed / (1000 * 60 * 60);
+			const effectiveDuty = each.dutyCycle - baseloadDutyCycle;
+			const velocity = temperatureChange / (effectiveDuty * hoursElapsed);
+			return runningTotal + weighting * velocity;
+		},
+		0
+	);
+	return {
+		baseloadDutyCycle,
+		temperatureChangeVelocity: totalVelocity / totalTemperatureChanges,
+	};
+}
+
 export default defineComponent({
 	created(): void {
+		const emit = () => this.$emit("update", this.thermalProperties);
 		for (const key in this.$data) {
 			this.$watch(key, this.saveData, { deep: true });
+			this.$watch(key, emit, { deep: true });
 		}
+		emit();
 	},
 	computed: {
 		stringifiedData(): string {
 			return JSON.stringify(this.cleanseData(this.$data));
+		},
+		thermalProperties(): ThermalProperties {
+			const fullObservations = this.observations.filter(isThermalObservation);
+			return {
+				maximumThermostat: this.maximumThermostat,
+				minimumThermostat: this.minimumThermostat,
+				normalThermostat: this.normalThermostat,
+				...summariseObservations(fullObservations),
+			};
 		},
 	},
 	components: {
@@ -201,6 +288,9 @@ export default defineComponent({
 		},
 		previous(): boolean {
 			return true;
+		},
+		update(data: ThermalProperties): boolean {
+			return isThermalProperties(data);
 		},
 	},
 	errorCaptured(error, component, info) {

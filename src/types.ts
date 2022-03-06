@@ -43,11 +43,3 @@ export interface DataSet {
 export function isDataSet(data: any): data is DataSet {
 	return typeof data.version === "number";
 }
-
-export interface ThermalProperties extends DataSet {
-	baseloadDutyCycle: number;
-	temperatureChangeVelocity: number;
-	maximumThermostat: number;
-	minimumThermostat: number;
-	normalThermostat: number;
-}
