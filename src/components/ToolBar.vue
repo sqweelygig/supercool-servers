@@ -1,80 +1,80 @@
 <template>
 	<div class="tool-bar">
 		<button
+			v-if="onPrevious"
 			aria-label="Previous"
-			v-if="this.onPrevious"
 			type="button"
-			v-on:click.prevent="this.onPrevious"
-			v-bind:disabled="this.disabled && this.disabled.includes(this.onPrevious)"
+			v-bind:disabled="disabled?.includes(onPrevious)"
+			v-on:click.prevent="onPrevious"
 		>
 			<font-awesome-icon icon="chevron-left" />
 		</button>
 		<a
+			v-if="download"
 			aria-label="Download"
-			v-if="this.download"
-			v-bind:disabled="this.disabled && this.disabled.includes(this.download)"
 			download="thermal-data.json"
-			v-bind:href="this.downloadData"
+			v-bind:disabled="disabled?.includes(download)"
+			v-bind:href="downloadData"
 		>
 			<font-awesome-icon icon="download" />
 		</a>
 		<input
-			v-bind:disabled="this.disabled && this.disabled.includes(this.onUpload)"
-			v-if="this.onUpload"
+			v-if="onUpload"
 			id="file-upload"
 			type="file"
+			v-bind:disabled="disabled?.includes(onUpload)"
 			v-on:change="uploadData"
 		/>
 		<label
+			v-if="onUpload"
 			aria-label="Upload"
-			v-if="this.onUpload"
 			for="file-upload"
-			v-bind:disabled="this.disabled && this.disabled.includes(this.onUpload)"
+			v-bind:disabled="disabled?.includes(onUpload)"
 		>
 			<font-awesome-icon icon="upload" />
 		</label>
 		<button
+			v-if="onRise"
 			aria-label="Rising Edge"
 			type="button"
-			v-bind:disabled="this.disabled && this.disabled.includes(this.onRise)"
-			v-if="this.onRise"
-			v-on:click.prevent="this.onRise"
+			v-bind:disabled="disabled?.includes(onRise)"
+			v-on:click.prevent="onRise"
 		>
 			<font-awesome-icon icon="level-up-alt" />
 		</button>
 		<button
+			v-if="onFall"
 			aria-label="Falling Edge"
 			type="button"
-			v-bind:disabled="this.disabled && this.disabled.includes(this.onFall)"
-			v-if="this.onFall !== undefined"
-			v-on:click.prevent="this.onFall"
+			v-bind:disabled="disabled?.includes(onFall)"
+			v-on:click.prevent="onFall"
 		>
 			<font-awesome-icon icon="level-down-alt" />
 		</button>
 		<button
+			v-if="onUndo"
 			aria-label="Undo"
 			type="button"
-			v-bind:disabled="this.disabled && this.disabled.includes(this.onUndo)"
-			v-if="this.onUndo !== undefined"
-			v-on:click.prevent="this.onUndo"
+			v-bind:disabled="disabled?.includes(onUndo)"
+			v-on:click.prevent="onUndo"
 		>
 			<font-awesome-icon icon="undo-alt" />
 		</button>
 		<button
+			v-if="onClear"
 			aria-label="Trash"
-			v-if="this.onClear"
 			type="button"
-			v-on:click.prevent="this.onClear"
-			v-bind:disabled="this.disabled && this.disabled.includes(this.onClear)"
+			v-bind:disabled="disabled?.includes(onClear)"
+			v-on:click.prevent="onClear"
 		>
 			<font-awesome-icon icon="trash" />
 		</button>
 		<button
+			v-if="onNext"
 			aria-label="Next"
-			v-if="this.onNext"
 			type="button"
-			v-on:click.prevent="this.onNext"
-			v-bind:disabled="this.disabled && this.disabled.includes(this.onNext)"
+			v-bind:disabled="disabled?.includes(onNext)"
+			v-on:click.prevent="onNext"
 		>
 			<font-awesome-icon icon="chevron-right" />
 		</button>
@@ -123,7 +123,7 @@
 </style>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import { library as IconLibrary } from "@fortawesome/fontawesome-svg-core";
 import {
 	faChevronLeft,
@@ -182,12 +182,12 @@ export default defineComponent({
 	props: {
 		disabled: Array,
 		download: String,
-		onClear: Function,
-		onFall: Function,
-		onNext: Function,
-		onPrevious: Function,
-		onRise: Function,
-		onUndo: Function,
+		onClear: Function as PropType<() => void>,
+		onFall: Function as PropType<() => void>,
+		onNext: Function as PropType<() => void>,
+		onPrevious: Function as PropType<() => void>,
+		onRise: Function as PropType<() => void>,
+		onUndo: Function as PropType<() => void>,
 		onUpload: Function,
 	},
 });

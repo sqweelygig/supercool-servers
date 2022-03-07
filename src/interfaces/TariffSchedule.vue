@@ -4,8 +4,8 @@
 		v-else
 		v-bind:download="stringifiedData"
 		v-on:clear="clearData"
-		v-on:next="$emit('next')"
-		v-on:previous="$emit('previous')"
+		v-on:next="onNext"
+		v-on:previous="onPrevious"
 		v-on:upload="uploadData"
 	/>
 	<page-header text="Tariff Schedule" />
@@ -34,7 +34,7 @@
 		<input id="night-start" type="time" v-model="nightStart" />
 	</div>
 	<div class="spacer"></div>
-	<tool-bar v-on:next="$emit('next')" />
+	<tool-bar v-on:next="onNext" />
 </template>
 
 <style scoped lang="scss">
@@ -62,30 +62,13 @@
 import {
 	DataParseError,
 	DataSet,
-	Interval,
 	isDataSet,
-	isInterval,
-} from "@/types";
-import { defineComponent } from "vue";
+	TariffInterval,
+} from "@/types/SuperCoolServers.types";
+import { defineComponent, PropType } from "vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import ToolBar from "@/components/ToolBar.vue";
-
-export interface TariffInterval extends Interval {
-	costPerHour: number;
-	units: string;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isTariffInterval(data: any): data is TariffInterval {
-	return (
-		typeof data === "object" &&
-		data !== null &&
-		typeof data.costPerHour === "number" &&
-		typeof data.units === "string" &&
-		isInterval(data)
-	);
-}
 
 interface TariffScheduleState extends DataSet {
 	dayCost: number;
@@ -170,7 +153,7 @@ export default defineComponent({
 		},
 	},
 	created(): void {
-		const emit = () => this.$emit("update", this.tariffIntervals);
+		const emit = () => this.onUpdate?.(this.tariffIntervals);
 		for (const key in this.$data) {
 			this.$watch(key, this.saveData, { deep: true });
 			this.$watch(key, emit, { deep: true });
@@ -191,17 +174,6 @@ export default defineComponent({
 		} else {
 			return this.defaultData();
 		}
-	},
-	emits: {
-		next(): boolean {
-			return true;
-		},
-		previous(): boolean {
-			return true;
-		},
-		update(data: TariffInterval[]): boolean {
-			return data.every(isTariffInterval);
-		},
 	},
 	errorCaptured(error, component, info) {
 		console.error(error, component, info);
@@ -227,12 +199,12 @@ export default defineComponent({
 		},
 		defaultData(data?: Partial<TariffScheduleState>): TariffScheduleState {
 			return {
-				dayCost: 4700,
+				dayCost: 47,
 				dayStart: "07:00",
 				error: undefined,
-				nightCost: 3400,
+				nightCost: 34,
 				nightStart: "00:00",
-				units: "pence",
+				units: "GBP",
 				version: 0,
 				...data,
 			};
@@ -251,6 +223,11 @@ export default defineComponent({
 				this.$data.error = error;
 			}
 		},
+	},
+	props: {
+		onNext: Function as PropType<() => void>,
+		onPrevious: Function as PropType<() => void>,
+		onUpdate: Function as PropType<(data: TariffInterval[]) => void>,
 	},
 });
 </script>

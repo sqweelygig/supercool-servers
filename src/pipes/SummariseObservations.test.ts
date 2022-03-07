@@ -1,9 +1,9 @@
-import { summariseObservations } from "./ThermalSurvey.vue";
 import { expect, test } from "vitest";
-import { ThermalObservation } from "../components/DutyTable.vue";
+import { summariseObservations } from "./SummariseObservations";
+import { ThermalInterval } from "@/types/SuperCoolServers.types";
 
 test("A single thermostatic observation", () => {
-	const observations: ThermalObservation[] = [
+	const observations: ThermalInterval[] = [
 		{
 			startTime: new Date("2022-01-01T07:00"),
 			startTemperature: 14,
@@ -17,7 +17,7 @@ test("A single thermostatic observation", () => {
 });
 
 test("two equal thermostatic observations", () => {
-	const observations: ThermalObservation[] = [
+	const observations: ThermalInterval[] = [
 		{
 			startTime: new Date("2022-01-01T07:00"),
 			startTemperature: 18,
@@ -38,7 +38,7 @@ test("two equal thermostatic observations", () => {
 });
 
 test("two unequal thermostatic observations", () => {
-	const observations: ThermalObservation[] = [
+	const observations: ThermalInterval[] = [
 		{
 			startTime: new Date("2022-01-01T07:00"),
 			startTemperature: 18,
@@ -59,7 +59,7 @@ test("two unequal thermostatic observations", () => {
 });
 
 test("a single thermodynamic observation", () => {
-	const observations: ThermalObservation[] = [
+	const observations: ThermalInterval[] = [
 		{
 			startTime: new Date("2022-01-01T07:00"),
 			startTemperature: 18,
@@ -81,7 +81,7 @@ test("a single thermodynamic observation", () => {
 });
 
 test("two thermodynamic observations", () => {
-	const observations: ThermalObservation[] = [
+	const observations: ThermalInterval[] = [
 		{
 			startTime: new Date("2022-01-01T07:00"),
 			startTemperature: 18,

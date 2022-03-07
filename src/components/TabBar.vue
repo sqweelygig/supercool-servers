@@ -1,13 +1,13 @@
 <template>
 	<div class="tab-bar">
 		<div
-			v-bind:class="{ selected: modelValue === selection }"
-			v-bind:key="selection.text"
-			v-for="selection in selections"
-			v-on:click.prevent="$emit('update:modelValue', selection)"
+			v-for="option in options"
+			v-bind:class="{ selected: modelValue === option }"
+			v-bind:key="option.text"
+			v-on:click.prevent="$emit('update:modelValue', option)"
 		>
-			<font-awesome-icon v-bind:icon="selection.icon" />
-			<span>{{ selection.text }}</span>
+			<font-awesome-icon v-bind:icon="option.icon" />
+			<span>{{ option.text }}</span>
 		</div>
 	</div>
 </template>
@@ -78,7 +78,7 @@ export default defineComponent({
 		modelValue: {
 			required: true,
 		},
-		selections: {
+		options: {
 			required: true,
 			type: Array as PropType<Array<TabItem>>,
 		},

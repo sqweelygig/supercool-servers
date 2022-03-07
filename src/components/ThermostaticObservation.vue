@@ -5,9 +5,9 @@
 		<duty-table v-bind:observations="modelValue" />
 		<tool-bar
 			v-bind:disabled="disabledButtons"
-			v-bind:on-undo="clear"
-			v-bind:on-rise="onRise"
-			v-bind:on-fall="onFall"
+			v-on:fall="onFall"
+			v-on:rise="onRise"
+			v-on:undo="undo"
 		/>
 	</div>
 </template>
@@ -44,9 +44,6 @@ export default defineComponent({
 		},
 	},
 	methods: {
-		clear(): void {
-			this.$emit("update:modelValue", this.modelValue.slice(0, -1));
-		},
 		observe(isRisingEdge: boolean): void {
 			const rightNow = new Date();
 			const recent = this.modelValue[this.modelValue.length - 1] || {};
@@ -115,6 +112,9 @@ export default defineComponent({
 		},
 		onRise() {
 			this.observe(true);
+		},
+		undo(): void {
+			this.$emit("update:modelValue", this.modelValue.slice(0, -1));
 		},
 	},
 	props: {

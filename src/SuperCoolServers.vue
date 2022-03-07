@@ -1,16 +1,16 @@
 <template>
-	<tab-bar v-bind:selections="orderedPhases" v-model="phase" />
+	<tab-bar v-bind:options="orderedPhases" v-model="phase" />
 	<div class="main-pane">
 		<text-page
+			v-if="phase === indexedPhases.introduction"
 			content="This is a web application for modelling the savings possible by proactively cooling a server room during off-peak tariffs. All data is stored and processed locally, on your computer, without use of any external data processors."
 			header="SuperCool Servers"
-			v-if="phase === indexedPhases.introduction"
 			v-on:next="setPhase(indexedPhases.survey)"
 		/>
 		<thermal-survey
 			v-else-if="phase === indexedPhases.survey"
-			v-on:previous="setPhase(indexedPhases.introduction)"
 			v-on:next="setPhase(indexedPhases.tariff)"
+			v-on:previous="setPhase(indexedPhases.introduction)"
 			v-on:update="log"
 		/>
 		<tariff-schedule
@@ -98,7 +98,6 @@ export default defineComponent({
 			indexedPhases,
 			orderedPhases,
 			phase: indexedPhases.introduction,
-			tariffs: [],
 		};
 	},
 	methods: {

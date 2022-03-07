@@ -24,18 +24,18 @@
 	<template v-else-if="phase === 'normal'">
 		<number-slider
 			id="external-slider"
-			v-bind:maximum="40"
-			v-bind:minimum="-10"
 			question="What is the outside temperature?"
 			units="°C"
+			v-bind:maximum="40"
+			v-bind:minimum="-10"
 			v-model.number="externalTemperature"
 		/>
 		<number-slider
 			id="current-slider"
-			v-bind:maximum="30"
-			v-bind:minimum="10"
 			question="What is the thermostat set to?"
 			units="°C"
+			v-bind:maximum="30"
+			v-bind:minimum="10"
 			v-model.number="normalThermostat"
 		/>
 		<thermostatic-observation
@@ -48,10 +48,10 @@
 	<template v-else-if="phase === 'cooling'">
 		<number-slider
 			id="cooler-slider"
-			v-bind:maximum="normalThermostat"
-			v-bind:minimum="10"
 			question="What is the coldest allowed?"
 			units="°C"
+			v-bind:maximum="normalThermostat"
+			v-bind:minimum="10"
 			v-model.number="minimumThermostat"
 		/>
 		<thermodynamic-observation
@@ -74,10 +74,10 @@
 	<template v-else-if="phase === 'resting'">
 		<number-slider
 			id="cooler-slider"
-			v-bind:maximum="30"
-			v-bind:minimum="normalThermostat"
 			question="What is the warmest allowed?"
 			units="°C"
+			v-bind:maximum="30"
+			v-bind:minimum="normalThermostat"
 			v-model.number="maximumThermostat"
 		/>
 		<thermodynamic-observation
@@ -111,20 +111,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import ThermostaticObservation from "../components/ThermostaticObservation.vue";
-import ThermodynamicObservation from "../components/ThermodynamicObservation.vue";
+import { defineComponent, PropType } from "vue";
+import ThermostaticObservation from "@/components/ThermostaticObservation.vue";
+import ThermodynamicObservation from "@/components/ThermodynamicObservation.vue";
+import ErrorMessage from "@/components/ErrorMessage.vue";
+import NumberSlider from "@/components/NumberSlider.vue";
+import PageHeader from "@/components/PageHeader.vue";
+import ToolBar from "@/components/ToolBar.vue";
+import { summariseObservations } from "@/pipes/SummariseObservations";
 import {
-	ThermalObservation,
-	isThermalObservation,
-} from "../components/DutyTable.vue";
-import ErrorMessage from "../components/ErrorMessage.vue";
-import NumberSlider from "../components/NumberSlider.vue";
-import PageHeader from "../components/PageHeader.vue";
-import ToolBar from "../components/ToolBar.vue";
-import { DataParseError, DataSet, isDataSet } from "../types";
+	DataParseError,
+	DataSet,
+	isDataSet,
+	ThermalInterval,
+	isThermalInterval,
+	ThermalProperties,
+} from "@/types/SuperCoolServers.types";
 
-enum ObservationPhases {
+enum SurveyPhases {
 	Introduction = "thermal survey",
 	Normal = "normal",
 	Cooling = "cooling",
@@ -134,112 +138,36 @@ enum ObservationPhases {
 	Finish = "finish",
 }
 
-interface ThermalObservations extends DataSet {
+interface ThermalSurveyState extends DataSet {
+	error?: unknown;
 	externalTemperature: number;
 	maximumThermostat: number;
 	minimumThermostat: number;
 	normalThermostat: number;
-	observations: Array<Partial<ThermalObservation>>;
-	phase: ObservationPhases;
-}
-
-interface ThermalObservationsState extends ThermalObservations {
-	error?: unknown;
+	observations: Array<Partial<ThermalInterval>>;
+	phase: SurveyPhases;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isThermalObservations(data: any): data is ThermalObservations {
+function isThermalSurveyState(data: any): data is ThermalSurveyState {
 	return (
 		typeof data === "object" &&
 		data !== null &&
+		typeof data.externalTemperature === "number" &&
 		typeof data.maximumThermostat === "number" &&
 		typeof data.minimumThermostat === "number" &&
 		typeof data.normalThermostat === "number" &&
 		Array.isArray(data.observations) &&
-		Object.values(ObservationPhases).includes(data.phase) &&
+		data.observations.every(isThermalInterval) &&
+		Object.values(SurveyPhases).includes(data.phase) &&
 		isDataSet(data) &&
 		data.version === 0
 	);
 }
 
-export interface ThermalProperties {
-	baseloadDutyCycle: number;
-	temperatureChangeVelocity: number;
-	maximumThermostat: number;
-	minimumThermostat: number;
-	normalThermostat: number;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isThermalProperties(data: any): data is ThermalProperties {
-	return (
-		typeof data === "object" &&
-		data !== null &&
-		typeof data.baseloadDutyCycle === "number" &&
-		typeof data.temperatureChangeVelocity === "number" &&
-		typeof data.maximumThermostat === "number" &&
-		typeof data.minimumThermostat === "number" &&
-		typeof data.normalThermostat === "number"
-	);
-}
-
-export function summariseObservations(observations: ThermalObservation[]): {
-	baseloadDutyCycle: number;
-	temperatureChangeVelocity: number;
-} {
-	const thermostaticObservations = observations.filter(
-		(observation: ThermalObservation) => {
-			return observation.endTemperature === observation.startTemperature;
-		}
-	);
-	const totalElapsed: number = thermostaticObservations.reduce(
-		(runningTotal: number, each: ThermalObservation) => {
-			const elapsed = each.endTime.getTime() - each.startTime.getTime();
-			return runningTotal + elapsed;
-		},
-		0
-	);
-	const totalDuty: number = thermostaticObservations.reduce(
-		(runningTotal: number, each: ThermalObservation) => {
-			const elapsed = each.endTime.getTime() - each.startTime.getTime();
-			return runningTotal + each.dutyCycle * elapsed;
-		},
-		0
-	);
-	const baseloadDutyCycle = totalDuty / totalElapsed;
-	const thermodynamicObservations = observations.filter(
-		(observation: ThermalObservation) => {
-			return observation.endTemperature !== observation.startTemperature;
-		}
-	);
-	const totalTemperatureChanges: number = thermodynamicObservations.reduce(
-		(runningTotal: number, each: ThermalObservation) => {
-			const temperatureChange = each.endTemperature - each.startTemperature;
-			return runningTotal + Math.abs(temperatureChange);
-		},
-		0
-	);
-	const totalVelocity: number = thermodynamicObservations.reduce(
-		(runningTotal: number, each: ThermalObservation) => {
-			const temperatureChange = each.endTemperature - each.startTemperature;
-			const weighting = Math.abs(temperatureChange);
-			const msElapsed = each.endTime.getTime() - each.startTime.getTime();
-			const hoursElapsed = msElapsed / (1000 * 60 * 60);
-			const effectiveDuty = each.dutyCycle - baseloadDutyCycle;
-			const velocity = temperatureChange / (effectiveDuty * hoursElapsed);
-			return runningTotal + weighting * velocity;
-		},
-		0
-	);
-	return {
-		baseloadDutyCycle,
-		temperatureChangeVelocity: totalVelocity / totalTemperatureChanges,
-	};
-}
-
 export default defineComponent({
 	created(): void {
-		const emit = () => this.$emit("update", this.thermalProperties);
+		const emit = () => this.onUpdate?.(this.thermalProperties);
 		for (const key in this.$data) {
 			this.$watch(key, this.saveData, { deep: true });
 			this.$watch(key, emit, { deep: true });
@@ -251,7 +179,7 @@ export default defineComponent({
 			return JSON.stringify(this.cleanseData(this.$data));
 		},
 		thermalProperties(): ThermalProperties {
-			const fullObservations = this.observations.filter(isThermalObservation);
+			const fullObservations = this.observations.filter(isThermalInterval);
 			return {
 				maximumThermostat: this.maximumThermostat,
 				minimumThermostat: this.minimumThermostat,
@@ -268,7 +196,7 @@ export default defineComponent({
 		ThermostaticObservation,
 		ToolBar,
 	},
-	data(): ThermalObservationsState {
+	data(): ThermalSurveyState {
 		if (localStorage.thermalData) {
 			try {
 				const rawData = JSON.parse(localStorage.thermalData);
@@ -282,30 +210,18 @@ export default defineComponent({
 			return this.defaultData();
 		}
 	},
-	emits: {
-		next(): boolean {
-			return true;
-		},
-		previous(): boolean {
-			return true;
-		},
-		update(data: ThermalProperties): boolean {
-			return isThermalProperties(data);
-		},
-	},
 	errorCaptured(error, component, info) {
 		console.error(error, component, info);
 		this.error = error;
 		return false;
 	},
 	methods: {
-		cleanseData(data: ThermalObservationsState): ThermalObservations {
+		cleanseData(data: ThermalSurveyState): ThermalSurveyState {
 			// Drop transient properties
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { error, ...cleansedData } = data;
-			cleansedData.observations =
-				data.observations.filter(isThermalObservation);
-			if (!isThermalObservations(data)) {
+			cleansedData.observations = data.observations.filter(isThermalInterval);
+			if (!isThermalSurveyState(data)) {
 				throw new DataParseError("Data not valid.");
 			}
 			return cleansedData;
@@ -318,9 +234,7 @@ export default defineComponent({
 		clearError(): void {
 			delete this.$data.error;
 		},
-		defaultData(
-			data?: Partial<ThermalObservationsState>
-		): ThermalObservationsState {
+		defaultData(data?: Partial<ThermalSurveyState>): ThermalSurveyState {
 			return {
 				error: undefined,
 				externalTemperature: 20,
@@ -328,45 +242,45 @@ export default defineComponent({
 				minimumThermostat: 14,
 				normalThermostat: 18,
 				observations: [],
-				phase: ObservationPhases.Introduction,
+				phase: SurveyPhases.Introduction,
 				version: 0,
 				...data,
 			};
 		},
 		doNext(): void {
 			Object.assign(this.$data, this.cleanseData(this.$data));
-			if (this.phase === ObservationPhases.Introduction) {
-				this.phase = ObservationPhases.Normal;
-			} else if (this.phase === ObservationPhases.Normal) {
-				this.phase = ObservationPhases.Cooling;
-			} else if (this.phase === ObservationPhases.Cooling) {
-				this.phase = ObservationPhases.Cooler;
-			} else if (this.phase === ObservationPhases.Cooler) {
-				this.phase = ObservationPhases.Resting;
-			} else if (this.phase === ObservationPhases.Resting) {
-				this.phase = ObservationPhases.Warmer;
-			} else if (this.phase === ObservationPhases.Warmer) {
-				this.phase = ObservationPhases.Finish;
-			} else if (this.phase === ObservationPhases.Finish) {
-				this.$emit("next");
+			if (this.phase === SurveyPhases.Introduction) {
+				this.phase = SurveyPhases.Normal;
+			} else if (this.phase === SurveyPhases.Normal) {
+				this.phase = SurveyPhases.Cooling;
+			} else if (this.phase === SurveyPhases.Cooling) {
+				this.phase = SurveyPhases.Cooler;
+			} else if (this.phase === SurveyPhases.Cooler) {
+				this.phase = SurveyPhases.Resting;
+			} else if (this.phase === SurveyPhases.Resting) {
+				this.phase = SurveyPhases.Warmer;
+			} else if (this.phase === SurveyPhases.Warmer) {
+				this.phase = SurveyPhases.Finish;
+			} else if (this.phase === SurveyPhases.Finish) {
+				this.onNext?.();
 			}
 		},
 		doPrevious(): void {
 			Object.assign(this.$data, this.cleanseData(this.$data));
-			if (this.phase === ObservationPhases.Finish) {
-				this.phase = ObservationPhases.Warmer;
-			} else if (this.phase === ObservationPhases.Warmer) {
-				this.phase = ObservationPhases.Resting;
-			} else if (this.phase === ObservationPhases.Resting) {
-				this.phase = ObservationPhases.Cooler;
-			} else if (this.phase === ObservationPhases.Cooler) {
-				this.phase = ObservationPhases.Cooling;
-			} else if (this.phase === ObservationPhases.Cooling) {
-				this.phase = ObservationPhases.Normal;
-			} else if (this.phase === ObservationPhases.Normal) {
-				this.phase = ObservationPhases.Introduction;
-			} else if (this.phase === ObservationPhases.Introduction) {
-				this.$emit("previous");
+			if (this.phase === SurveyPhases.Finish) {
+				this.phase = SurveyPhases.Warmer;
+			} else if (this.phase === SurveyPhases.Warmer) {
+				this.phase = SurveyPhases.Resting;
+			} else if (this.phase === SurveyPhases.Resting) {
+				this.phase = SurveyPhases.Cooler;
+			} else if (this.phase === SurveyPhases.Cooler) {
+				this.phase = SurveyPhases.Cooling;
+			} else if (this.phase === SurveyPhases.Cooling) {
+				this.phase = SurveyPhases.Normal;
+			} else if (this.phase === SurveyPhases.Normal) {
+				this.phase = SurveyPhases.Introduction;
+			} else if (this.phase === SurveyPhases.Introduction) {
+				this.onPrevious?.();
 			}
 		},
 		saveData(): void {
@@ -383,6 +297,11 @@ export default defineComponent({
 				this.$data.error = error;
 			}
 		},
+	},
+	props: {
+		onNext: Function as PropType<() => void>,
+		onPrevious: Function as PropType<() => void>,
+		onUpdate: Function as PropType<(data: ThermalProperties) => void>,
 	},
 });
 </script>
