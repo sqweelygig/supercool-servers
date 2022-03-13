@@ -190,17 +190,16 @@ These stories will move in step with the code that implements them and reside in
 
 ### Priorities
 
+* The system must be able to model the thermal changes of a room.
 * A technician should have information on an example server room available.
-* A technician must be able to input a baseline thermostat schedule.
-* A technician must be able to input an electricity tariff schedule.
-* A technician must be able to generate an optimised thermostat schedule.
 * A technician must be able to generate a business-oriented report.
-
-### Develop
 
 ### Done
 
 * A technician must be able to gather thermal observations of a server room.
+* A technician must be able to input a baseline thermostat schedule.
+* A technician must be able to input an electricity tariff schedule.
+* A technician must be able to generate an optimised thermostat schedule.
 
 ### Qualitative
 
