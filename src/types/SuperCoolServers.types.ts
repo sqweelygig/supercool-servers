@@ -64,13 +64,13 @@ export function isDataSet(data: any): data is DataSet {
 	return typeof data.version === "number";
 }
 
-export interface PhysicalThermalProperties {
+export interface TangibleThermalProperties {
 	baseloadDutyCycle: number;
+	normalThermostat: number;
 	temperatureChangeVelocity: number;
 }
 
-export interface ThermalProperties extends PhysicalThermalProperties {
+export interface ThermalProperties extends TangibleThermalProperties {
 	maximumThermostat: number;
 	minimumThermostat: number;
-	normalThermostat: number;
 }
