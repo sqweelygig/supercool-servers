@@ -122,6 +122,8 @@ By implementing these as components we allow each to encapsulate their user inte
 The workflow also has several data processing stages that use the data gathered to medel and recommend thermal schedules.
 Since these require several data objects and are closely related to the coordination between the phases, they reside in the coordinating class.
 
+![Overview of how the classes and types interact](docs/class_diagram.png)
+
 Figure 2.2.2 - Class diagram showing data relations and inheritance
 
 In deciding the deployment artefacts, there are several pertinent aspects.
