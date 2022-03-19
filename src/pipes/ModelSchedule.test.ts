@@ -159,9 +159,9 @@ test("a room with multiple scheduled thermostat intervals", () => {
 		{
 			startTime: new Date("2022-01-02T00:00"),
 			thermostatSetting: 18,
-			endTime: new Date("2022-01-02T07:00")
-		}
-	]
+			endTime: new Date("2022-01-02T07:00"),
+		},
+	];
 	const thermalProperties = {
 		baseloadDutyCycle: 0.4,
 		normalThermostat: 20,
