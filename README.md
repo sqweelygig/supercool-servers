@@ -202,23 +202,25 @@ Figure 2.3.3 - Web interface at 360 x 640.
 
 This section records the simplifying assumptions currently applied to the modelling process.
 These simplifications should not be treated as final but should be justified or removed if possible.
-At this stage these simplications are considered reasonable for the BDX, but limit the generalisation of the project to other contexts.
 * The server room comprises equipment racks, well-circulated air, air conditioning and thermal mass.
   * All electricity consumed by the server hardware becomes heat.
   * The server hardware generates a steady heat output.
   * The air conditioning performs equivalently in all temperatures.
   * The insulation within this space is insignificant.
   * The propagation of heat through this space is instantaneous.
-* Passive cooling is insignificant.
-  * Observing the duty cycle during different ambient temperatures can confirm this.
+* Passive thermodynamic effects are constant.
+  * Observing the duty cycle during different ambient conditions can confirm this.
+  * Server rooms are not typically subject to solar radiative warming.
   * Adopting this assumption unblocks creating a UX using a basic model.
   * This assumption pushes integrating with weather forecasts outside the MVP.
-* An insulating layer surrounds the server room. This assumption is currently irrelevant due to "Passive cooling is insignificant".
+* An insulating layer surrounds the server room. This assumption is currently irrelevant because "Passive thermodynamic effects are constant".
   * The thermal mass of this layer is insignificant.
   * Radiative thermal effects through windows are constant.
-* Outside the insulating layer is an ambient environment. This assumption is currently irrelevant due to "Passive cooling is insignificant".
-  * There is precisely one ambient environment.
-  * The server room does not affect the ambient environment.
+* Outside the insulating layer are ambient environments. This assumption is currently irrelevant because "Passive thermodynamic effects are constant".
+  * There are precisely two ambient environments.
+  * One of these is external and is subject to weather.
+  * One of these is internal and is thermostatically regulated.
+  * The server room does not affect the ambient environments.
 * Thermal units, such as coefficient of production and joules of thermal energy, can be eliminated from the model.
   * Passive observations measure the duty cycle required to maintain temperature differences.
   * Active observations measure the duty time required to enact temperature changes.
@@ -227,6 +229,17 @@ At this stage these simplications are considered reasonable for the BDX, but lim
   * e.g., passive cooling reduces the duty cycle of the air conditioning by 3% per celsius difference.
   * e.g., changing the server room's temperature requires one duty hour per celsius.
   * e.g., running the air conditioning uses 1 ton of CO2 per duty hour.
+
+These simplifications seem reasonable for the BDX and some other server rooms (see 2.6 - Thermodynamics) but could limit the project's generalisation to other contexts.
+Further research is warranted and scheduled to estimate the restrictiveness of each of these simplifications.
+
+A quick survey of server room photographs reinforces this assumption but is not yet at reasonable rigour.
+For example, most server rooms do not have significant glazed surfaces that would conduct heat.
+In addition, the building materials used in most server rooms will provide but not prioritise insulation.
+
+![Server rooms image search](docs/server_room_quick_survey.png)
+
+Figure 2.6.2 - Quick survey of typical server room construction, DuckDuckGo 2022
 
 ### 2.5 - Blockers
 
@@ -263,7 +276,7 @@ This infrastructure is N + 1 redundant, implying a cap upon server equipment at 
 The BDX complements this with precision units that cool the server equipment by heating the room's environment.
 
 The BMS holds the room at 20 degrees celsius, and the external temperature varies between 3 and 20 degrees celsius.
-The external wall comprises a plasterboard wall, an access corridor and a single pane glass wall of about 44 m^2.
+The external wall comprises a concrete wall, an access corridor and a single pane glass wall of about 44 m^2.
 Therefore, an upper estimate of cooling through this wall (rounded up to 2 s.f.) is 1.8 kilowatt (see Appendix I).
 This estimate puts a medium prioritisation on modelling weather conditions in this situation.
 
@@ -271,13 +284,6 @@ The remaining surfaces of the BDX separate the room from other offices and under
 The calculations model a 2 kelvin difference with the data hall to estimate significance.
 An upper estimate of cooling through the floor, ceiling, internal, and underground walls is 1.3 kilowatts (rounded up to 2 s.f.) (see Appendix I).
 This estimate puts a medium prioritisation on modelling passive cooling.
-
-Although further research is warranted and scheduled, these relative significances seem generalisable.
-These building materials and styles are typical, and a quick survey of case studies confirms this.
-
-![Server rooms image search](docs/server_room_quick_survey.png)
-
-Figure 2.6.2 - Quick survey of typical server room construction, DuckDuckGo 2022
 
 ### 2.7 - Glossary
 

@@ -3,7 +3,11 @@
 	<div class="main-pane">
 		<text-page
 			v-if="phase === indexedPhases.introduction"
-			content="This is a web application for modelling the savings possible by proactively cooling a server room during off-peak tariffs. All data is stored and processed locally, on your computer, without use of any external data processors."
+			v-bind:content="[
+				'This web application models the savings possible by proactively cooling a server room during off-peak tariffs.',
+				'It applies some simplifying assumptions to its thermal model, which are reasonable for some server rooms. Firstly, The model assumes that air conditioning units perform most of the cooling. Furthermore, it assumes that the servers are the primary heat source and that this is constant. Finally, it assumes that heat propagation within the room is instant. Further development may occur to eliminate these simplifications, and you are responsible for judging whether they are reasonable in your situation.',
+				'All data is stored and processed locally, on your computer, without any external data processors.',
+			]"
 			header="SuperCool Servers"
 			v-on:next="setPhase(indexedPhases.survey)"
 		/>

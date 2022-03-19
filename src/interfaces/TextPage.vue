@@ -1,6 +1,6 @@
 <template>
 	<page-header v-bind:text="header" />
-	<div>{{ content }}</div>
+	<div v-for="paragraph in content" v-bind:key="paragraph">{{ paragraph }}</div>
 	<div class="spacer"></div>
 	<tool-bar v-on:next="onNext" />
 </template>
@@ -13,7 +13,7 @@ import ToolBar from "@/components/ToolBar.vue";
 export default defineComponent({
 	components: { PageHeader, ToolBar },
 	props: {
-		content: String,
+		content: Array as PropType<string[]>,
 		header: String,
 		onNext: Function as PropType<() => void>,
 	},
