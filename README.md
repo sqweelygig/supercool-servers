@@ -314,7 +314,7 @@ Technology Connections (2021) ‘*Batteries aren't the only way to store energy.
 
 Agile Alliance (2001) ‘*Manifesto for Agile Software Development*’. Available at: https://agilemanifesto.org (accessed: 2022-01-02).
 
-Atlassian (2019) ‘*What is Agile?*’. Available at: https://www.atlassian.com/agile (accessed 2022-02-15)
+Atlassian (2019) ‘*What is Agile?*’. Available at: https://www.atlassian.com/agile (accessed 2022-02-15).
 
 Berning, D. (2020) ‘*How To Use TypeScript with Vue Single File Components*’, DigitalOcean. Available at: https://www.digitalocean.com/community/tutorials/vuejs-using-typescript-with-vue (accessed: 2022-01-30).
 
@@ -328,7 +328,11 @@ Rehkopf, M. (2018) ‘*Kanban vs Scrum*’, Atlassian. Available at: https://www
 
 Schwaber, K. & Sutherland, J. (2020) ‘*The Scrum Guide*’, Scrum Guides. Available at: https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-US.pdf (accessed: 2022-01-02).
 
-Valutis, O (2015) ‘*Styling and Customizing File Inputs the Smart Way*’. Available at: https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way (accessed: 2022-02-13)
+Syed, B. A. (2017) '*TypeScript Deep Dive*'. Availble at: https://basarat.gitbook.io/typescript/ (accessed: 2022-03-20).
+
+TypeScript (2022) '*The TypeScript Handbook*'. Available at: https://www.typescriptlang.org/assets/typescript-handbook.pdf (accessed: 2022-03-20).
+
+Valutis, O (2015) ‘*Styling and Customizing File Inputs the Smart Way*’. Available at: https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way (accessed: 2022-02-13).
 
 We Learn Code (2020) ‘*What is a Web Framework, and Why Should I use one?*’. Available at: https://welearncode.com/what-are-frontend-frameworks (accessed: 2022-01-29).
 

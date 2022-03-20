@@ -15,6 +15,17 @@ export interface TariffInterval extends Interval {
 	units: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+export function isTariffInterval(data: any): data is TariffInterval {
+	return (
+		typeof data === "object" &&
+		data !== null &&
+		typeof data.costPerHour === "number" &&
+		typeof data.units === "string" &&
+		isInterval(data)
+	);
+}
+
 export interface ThermalInterval extends Interval {
 	startTemperature: number;
 	endTemperature: number;
@@ -70,7 +81,31 @@ export interface TangibleThermalProperties {
 	temperatureChangeVelocity: number;
 }
 
+export function isTangibleThermalProperties(
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+	data: any
+): data is TangibleThermalProperties {
+	return (
+		typeof data === "object" &&
+		data !== null &&
+		typeof data.baseloadDutyCycle === "number" &&
+		typeof data.normalThermostat === "number" &&
+		typeof data.temperatureChangeVelocity === "number"
+	);
+}
+
 export interface ThermalProperties extends TangibleThermalProperties {
 	maximumThermostat: number;
 	minimumThermostat: number;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+export function isThermalProperties(data: any): data is ThermalProperties {
+	return (
+		typeof data === "object" &&
+		data !== null &&
+		typeof data.maximumThermostat === "number" &&
+		typeof data.minimumThermostat === "number" &&
+		isTangibleThermalProperties(data)
+	);
 }

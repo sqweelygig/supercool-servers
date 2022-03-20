@@ -1,26 +1,33 @@
 <template>
-	<tab-bar v-bind:options="orderedPhases" v-model="phase" />
+	<tab-bar v-bind:options="phaseTabs" v-model="phase" />
 	<div class="main-pane">
 		<text-page
-			v-if="phase === indexedPhases.introduction"
+			v-if="phase === 'introduction'"
 			v-bind:content="[
 				'This web application models the savings possible by proactively cooling a server room during off-peak tariffs.',
-				'It applies some simplifying assumptions to its thermal model, which are reasonable for some server rooms. Firstly, The model assumes that air conditioning units perform most of the cooling. Furthermore, it assumes that the servers are the primary heat source and that this is constant. Finally, it assumes that heat propagation within the room is instant. Further development may occur to eliminate these simplifications, and you are responsible for judging whether they are reasonable in your situation.',
+				[
+					'It applies some simplifying assumptions to its thermal model, which are reasonable for some server rooms.',
+					'Firstly, The model assumes that air conditioning units perform most of the cooling.',
+					'Furthermore, it assumes that the servers are the primary heat source and that this is constant.',
+					'Finally, it assumes that heat propagation within the room is instant.',
+					'Further development may occur to eliminate these simplifications.',
+					'You are responsible for judging whether they are reasonable in your situation.',
+				].join(' '),
 				'All data is stored and processed locally, on your computer, without any external data processors.',
 			]"
 			header="SuperCool Servers"
-			v-on:next="setPhase(indexedPhases.survey)"
+			v-on:next="doNext"
 		/>
 		<thermal-survey
-			v-else-if="phase === indexedPhases.survey"
-			v-on:next="setPhase(indexedPhases.tariff)"
-			v-on:previous="setPhase(indexedPhases.introduction)"
-			v-on:update="log"
+			v-else-if="phase === 'survey'"
+			v-on:next="doNext"
+			v-on:previous="doPrevious"
+			v-on:update="setThermalProperties"
 		/>
 		<tariff-schedule
-			v-else-if="phase === indexedPhases.tariff"
-			v-on:previous="setPhase(indexedPhases.survey)"
-			v-on:update="log"
+			v-else-if="phase === 'tariff'"
+			v-on:previous="doPrevious"
+			v-on:update="setTariffSchedule"
 		/>
 	</div>
 </template>
@@ -74,11 +81,49 @@
 </style>
 
 <script lang="ts">
+import {
+	DataParseError,
+	DataSet,
+	isDataSet,
+	TariffInterval,
+	isTariffInterval,
+	ThermalProperties,
+	isThermalProperties,
+} from "@/types/SuperCoolServers.types";
 import { defineComponent } from "vue";
-import TabBar, { TabItem } from "./components/TabBar.vue";
+import TabBar from "./components/TabBar.vue";
 import TariffSchedule from "./interfaces/TariffSchedule.vue";
 import TextPage from "./interfaces/TextPage.vue";
 import ThermalSurvey from "./interfaces/ThermalSurvey.vue";
+
+enum Phases {
+	Introduction = "introduction",
+	Survey = "survey",
+	Tariff = "tariff",
+}
+
+interface SuperCoolServersState extends DataSet {
+	error?: unknown;
+	phase: Phases;
+	tariffSchedule?: TariffInterval[];
+	thermalProperties?: ThermalProperties;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isSuperCoolServersState(data: any): data is SuperCoolServersState {
+	const tariffs = data.tariffSchedule;
+	const properties = data.thermalProperties;
+	return (
+		typeof data === "object" &&
+		data !== null &&
+		typeof data.phase === "string" &&
+		Object.values(Phases).includes(data.phase) &&
+		(tariffs === undefined || tariffs.every(isTariffInterval)) &&
+		(properties === undefined || isThermalProperties(properties)) &&
+		isDataSet(data) &&
+		data.version === 0
+	);
+}
 
 export default defineComponent({
 	components: {
@@ -87,30 +132,92 @@ export default defineComponent({
 		TextPage,
 		ThermalSurvey,
 	},
-	data() {
-		const indexedPhases = {
-			introduction: { icon: "info-circle", text: "Introduction" },
-			survey: { icon: "thermometer-half", text: "Thermal Survey" },
-			tariff: { icon: "money-bill", text: "Tariff Schedule" },
-		};
-		const orderedPhases = [
-			indexedPhases.introduction,
-			indexedPhases.survey,
-			indexedPhases.tariff,
-		];
-		return {
-			indexedPhases,
-			orderedPhases,
-			phase: indexedPhases.introduction,
-		};
+	computed: {
+		phaseTabs() {
+			return [
+				{
+					icon: "info-circle",
+					text: "Introduction",
+					value: Phases.Introduction,
+				},
+				{
+					icon: "thermometer-half",
+					text: "Thermal Survey",
+					value: Phases.Survey,
+				},
+				{ icon: "money-bill", text: "Tariff Schedule", value: Phases.Tariff },
+			];
+		},
+		stringifiedData(): string {
+			return JSON.stringify(this.cleanseData(this.$data));
+		},
+	},
+	created(): void {
+		for (const key in this.$data) {
+			this.$watch(key, this.saveData, { deep: true });
+		}
+	},
+	data(): SuperCoolServersState {
+		if (localStorage.superCoolServers) {
+			try {
+				const rawData = JSON.parse(localStorage.superCoolServers);
+				return this.defaultData(this.cleanseData(rawData));
+			} catch (error) {
+				delete localStorage.superCoolServers;
+				console.error(error);
+				return this.defaultData({ error });
+			}
+		} else {
+			return this.defaultData();
+		}
+	},
+	errorCaptured(error, component, info) {
+		console.error(error, component, info);
+		this.error = error;
+		return false;
 	},
 	methods: {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		log(value: any) {
-			console.log(value);
+		cleanseData(data: SuperCoolServersState): SuperCoolServersState {
+			if (!isSuperCoolServersState(data)) {
+				throw new DataParseError("Data not valid.");
+			}
+			return data;
 		},
-		setPhase(phase: TabItem) {
+		defaultData(data: Partial<SuperCoolServersState>): SuperCoolServersState {
+			return {
+				error: undefined,
+				phase: Phases.Introduction,
+				tariffSchedule: undefined,
+				thermalProperties: undefined,
+				version: 0,
+				...data,
+			};
+		},
+		doNext() {
+			if (this.phase === Phases.Introduction) {
+				this.phase = Phases.Survey;
+			} else if (this.phase === Phases.Survey) {
+				this.phase = Phases.Tariff;
+			}
+		},
+		doPrevious() {
+			if (this.phase === Phases.Survey) {
+				this.phase = Phases.Introduction;
+			} else if (this.phase === Phases.Tariff) {
+				this.phase = Phases.Survey;
+			}
+		},
+		saveData(): void {
+			localStorage.superCoolServers = this.stringifiedData;
+		},
+		setPhase(phase: Phases) {
 			this.phase = phase;
+		},
+		setTariffSchedule(schedule: TariffInterval[]) {
+			this.tariffSchedule = schedule;
+		},
+		setThermalProperties(properties: ThermalProperties) {
+			this.thermalProperties = properties;
 		},
 	},
 });

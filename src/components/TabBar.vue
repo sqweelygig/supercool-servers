@@ -2,9 +2,9 @@
 	<div class="tab-bar">
 		<div
 			v-for="option in options"
-			v-bind:class="{ selected: modelValue === option }"
+			v-bind:class="{ selected: modelValue === option.value }"
 			v-bind:key="option.text"
-			v-on:click.prevent="$emit('update:modelValue', option)"
+			v-on:click.prevent="$emit('update:modelValue', option.value)"
 		>
 			<font-awesome-icon v-bind:icon="option.icon" />
 			<span>{{ option.text }}</span>
@@ -68,6 +68,7 @@ IconLibrary.add(faInfoCircle, faMoneyBill, faThermometerHalf);
 export type TabItem = {
 	icon: string;
 	text: string;
+	value: string;
 };
 
 export default defineComponent({
