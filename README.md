@@ -81,7 +81,8 @@ These stories will move in step with the code that implements them and reside in
 
 #### Backlog
 
-* A technician should be able to model rooms with significant passive cooling.
+* A customer should benefit from a sophisticated schedule optimisation algorithm.
+* A customer should be able to model rooms with significant passive cooling.
 * A technician could integrate this with live data from weather forecasts.
 * A technician could integrate this with live data from electricity tariffs.
 * A developer could use this model and algorithm in a smart thermostat.
@@ -96,7 +97,7 @@ These stories will move in step with the code that implements them and reside in
 
 #### Done
 
-* The system must be able to model the thermal changes of a room.
+* A customer must receive the predicted thermal changes of a room.
 * A technician must be able to gather thermal observations of a server room.
 * A technician must be able to input a baseline thermostat schedule.
 * A technician must be able to input an electricity tariff schedule.
@@ -105,7 +106,7 @@ These stories will move in step with the code that implements them and reside in
 #### Qualitative
 
 * A technician could use this system without installation.
-* A technician should be able to understand how the system processes data.
+* A customer should be able to understand how the system processes data.
 * A technician should be able to use this system despite accessibility challenges.
 * A technician could use this system on a low-resolution touchscreen interface, such as a smartphone.
 
@@ -115,7 +116,7 @@ These stories will move in step with the code that implements them and reside in
 
 Figure 2.2.1 - Activity diagram showing data flow for optimising a schedule and presenting a report.
 
-The core workflow of this system suits a data flow architecture.
+The core workflow of this system suits a notification and data flow architecture.
 The workflow has several data gathering stages that favour compartmentalisation as user interfaces that gather the underlying data.
 Each stage requires no intervention from other components and emits strongly typed updates.
 By implementing these as components we allow each to encapsulate their user interface and bound their complexity.
@@ -287,10 +288,11 @@ This estimate puts a medium prioritisation on modelling passive cooling.
 
 ### 2.7 - Glossary
 
-| Term          | Definition                                                                                                                        |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------- | 
-| Technician    | An individual who maintains the environmental conditions of a server room.                                                        |
-| <<type>>      | An abstract data structure, like an interface, except it asserts that objects shall possess certain data types instead of methods |
+| Term          | Type          | Definition                                                                                                                        |
+| ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------- | 
+| Technician    | Stakeholder   | An individual who maintains the environmental conditions of a server room; they usually surface usability concerns.               |
+| Customer      | Stakeholder   | An organisation that may decide to adopt thermostat recommendations based on the report; they usually surfaces utility concerns.  |
+| <<type>>      | Software term | An abstract data structure, like an interface, except it asserts that objects shall possess certain data types instead of methods |
 
 ## 3 - Literature
 
