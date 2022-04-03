@@ -8,14 +8,13 @@
 </template>
 
 <style scoped lang="scss">
-// TODO Fix the presentation of this message
 .error-message {
 	cursor: pointer;
 	text-align: center;
 	> * {
 		align-items: center;
 		background: var(--contrast-light);
-		border-radius: var(--medium);
+		border-radius: var(--medium-small);
 		display: grid;
 		gap: var(--medium);
 		grid-auto-flow: column;
