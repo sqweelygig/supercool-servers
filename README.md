@@ -79,36 +79,8 @@ In accordance with the project lifecycle adopted, this is several lists of stake
 This project adapts the core Kanban board by broadening the scope of concerns from "user stories" to "stakeholder stories" and by adding a qualitative list to capture persistent requirements.
 These stories will move in step with the code that implements them and reside in the code repository, so the project history is always accurate of that moment in time.
 
-#### Backlog
+["Roadmap"](ROADMAP.md)
 
-* A customer should benefit from a sophisticated schedule optimisation algorithm.
-* A customer should be able to model rooms with significant passive cooling.
-* A technician could integrate this with live data from weather forecasts.
-* A technician could integrate this with live data from electricity tariffs.
-* A developer could use this model and algorithm in a smart thermostat.
-* A technician could use this system to control a smart thermostat.
-* A commercial environment could use this system.
-* A domestic environment could use this system.
-
-#### Priorities
-
-* A technician should have information on an example server room available.
-* A technician must be able to generate a business-oriented report.
-
-#### Done
-
-* A customer must receive the predicted thermal changes of a room.
-* A technician must be able to gather thermal observations of a server room.
-* A technician must be able to input a baseline thermostat schedule.
-* A technician must be able to input an electricity tariff schedule.
-* A technician must be able to generate an optimised thermostat schedule.
-
-#### Qualitative
-
-* A technician could use this system without installation.
-* A customer should be able to understand how the system processes data.
-* A technician should be able to use this system despite accessibility challenges.
-* A technician could use this system on a low-resolution touchscreen interface, such as a smartphone.
 
 ### 2.2 - Architecture
 
@@ -311,6 +283,28 @@ Sudlows (2015) ‘*Brighton Digital Exchange Data Centre*’. Available at: http
 Technology Connections (2021) ‘*Batteries aren't the only way to store energy. Here's another*’. Available at https://www.youtube.com/watch?v=0f9GpMWdvWI (accessed 2021-11-21).
 
 ### 3.2 - Bibliography
+
+Plottable JS
+
+Chart JS
+
+Other JS chart libs?
+
+GIMP render SVG to PNG
+
+https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL
+
+https://www.w3schools.com/graphics/svg_intro.asp
+
+https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/obama.svg
+
+https://support.google.com/docs/thread/79758249/not-able-to-insert-svg-image-in-google-docs?hl=en#:~:text=SVG%20images%20currently%20aren't,to%20Help%20%3E%20Report%20an%20issue.
+
+https://support.microsoft.com/en-us/office/graphic-file-types-you-can-insert-and-save-dad53574-3384-4ced-b472-348d37c326a7
+
+Joel Test
+
+https://www.w3.org/wiki/Graceful_degradation_versus_progressive_enhancement
 
 Agile Alliance (2001) ‘*Manifesto for Agile Software Development*’. Available at: https://agilemanifesto.org (accessed: 2022-01-02).
 
