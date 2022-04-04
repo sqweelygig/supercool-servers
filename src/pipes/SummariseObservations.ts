@@ -29,7 +29,7 @@ export function summariseObservations(observations: ThermalInterval[]): {
 			return observation.endTemperature !== observation.startTemperature;
 		}
 	);
-	const totalTemperatureChanges: number = thermodynamicObservations.reduce(
+	const totalTemperatureChange: number = thermodynamicObservations.reduce(
 		(runningTotal: number, each: ThermalInterval) => {
 			const temperatureChange = each.endTemperature - each.startTemperature;
 			return runningTotal + Math.abs(temperatureChange);
@@ -48,8 +48,9 @@ export function summariseObservations(observations: ThermalInterval[]): {
 		},
 		0
 	);
+	const temperatureChangeVelocity = totalVelocity / totalTemperatureChange;
 	return {
 		baseloadDutyCycle,
-		temperatureChangeVelocity: totalVelocity / totalTemperatureChanges,
+		temperatureChangeVelocity,
 	};
 }
