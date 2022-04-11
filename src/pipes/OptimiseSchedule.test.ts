@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
-import { optimiseSchedule } from "./OptimiseSchedule";
+import optimiseSchedule from "./OptimiseSchedule";
 
-test("thermostat is lower when tariff is lower", () => {
+test("optimise thermostat to be lower when tariff is lower", () => {
 	const firstTime = new Date("2022-01-01T00:00");
 	const secondTime = new Date("2022-01-01T07:00");
 	const thirdTime = new Date("2022-01-02T00:00");

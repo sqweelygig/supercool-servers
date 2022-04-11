@@ -4,7 +4,7 @@ import {
 	ThermostatInterval,
 } from "@/types/SuperCoolServers.types";
 
-export function modelSchedule(
+export default function(
 	thermostatSchedule: ThermostatInterval[],
 	thermalProperties: TangibleThermalProperties
 ): ThermalInterval[] {

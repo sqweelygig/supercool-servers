@@ -118,7 +118,7 @@ import ErrorMessage from "@/components/ErrorMessage.vue";
 import NumberSlider from "@/components/NumberSlider.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import ToolBar from "@/components/ToolBar.vue";
-import { summariseObservations } from "@/pipes/SummariseObservations";
+import summariseObservations from "@/pipes/SummariseObservations";
 import {
 	DataParseError,
 	DataSet,

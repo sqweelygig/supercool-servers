@@ -1,8 +1,8 @@
 import { expect, test } from "vitest";
-import { summariseObservations } from "./SummariseObservations";
+import summariseObservations from "./SummariseObservations";
 import { ThermalInterval } from "@/types/SuperCoolServers.types";
 
-test("A single thermostatic observation", () => {
+test("summarise single thermostatic observation", () => {
 	const observations: ThermalInterval[] = [
 		{
 			startTime: new Date("2022-01-01T07:00"),
@@ -16,7 +16,7 @@ test("A single thermostatic observation", () => {
 	expect(summary.baseloadDutyCycle).toBeCloseTo(0.5);
 });
 
-test("two equal thermostatic observations", () => {
+test("summarise two equal thermostatic observations", () => {
 	const observations: ThermalInterval[] = [
 		{
 			startTime: new Date("2022-01-01T07:00"),
@@ -37,7 +37,7 @@ test("two equal thermostatic observations", () => {
 	expect(summary.baseloadDutyCycle).toBeCloseTo(0.5);
 });
 
-test("two unequal thermostatic observations", () => {
+test("summarise two unequal thermostatic observations", () => {
 	const observations: ThermalInterval[] = [
 		{
 			startTime: new Date("2022-01-01T07:00"),
@@ -58,7 +58,7 @@ test("two unequal thermostatic observations", () => {
 	expect(summary.baseloadDutyCycle).toBeCloseTo(0.7);
 });
 
-test("a single thermodynamic observation", () => {
+test("summarise single thermodynamic observation", () => {
 	const observations: ThermalInterval[] = [
 		{
 			startTime: new Date("2022-01-01T07:00"),
@@ -80,7 +80,7 @@ test("a single thermodynamic observation", () => {
 	expect(summary.temperatureChangeVelocity).toBeCloseTo(-4.0);
 });
 
-test("two thermodynamic observations", () => {
+test("summarise two thermodynamic observations", () => {
 	const observations: ThermalInterval[] = [
 		{
 			startTime: new Date("2022-01-01T07:00"),

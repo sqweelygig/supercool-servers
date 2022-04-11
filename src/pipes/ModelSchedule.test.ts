@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
-import { modelSchedule } from "./ModelSchedule";
+import modelSchedule from "./ModelSchedule";
 
-test("a room with a flat thermostat schedule", () => {
+test("model a room with a flat thermostat schedule", () => {
 	const startTime = new Date("2022-01-01T07:00");
 	const endTime = new Date("2022-01-01T07:30");
 	const normalThermostat = 20;
@@ -29,7 +29,7 @@ test("a room with a flat thermostat schedule", () => {
 	expect(thermalPrediction[0].startTemperature).toEqual(normalThermostat);
 });
 
-test("a room that will cool but not reach equilibrium", () => {
+test("model a room that will cool but not reach equilibrium", () => {
 	const startTime = new Date("2022-01-01T07:00");
 	const endTime = new Date("2022-01-01T08:00");
 	const thermostatSchedule = [
@@ -56,7 +56,7 @@ test("a room that will cool but not reach equilibrium", () => {
 	expect(thermalPrediction[0].endTemperature).toBeCloseTo(19);
 });
 
-test("a room that will cool to equilibrium", () => {
+test("model a room that will cool to equilibrium", () => {
 	const startTime = new Date("2022-01-01T07:00");
 	const halfTime = new Date("2022-01-01T07:30");
 	const endTime = new Date("2022-01-01T08:00");
@@ -89,7 +89,7 @@ test("a room that will cool to equilibrium", () => {
 	expect(thermalPrediction[1].endTemperature).toEqual(18);
 });
 
-test("a room that will warm, but not to equilibrium", () => {
+test("model a room that will warm, but not to equilibrium", () => {
 	const startTime = new Date("2022-01-01T07:00");
 	const endTime = new Date("2022-01-01T07:30");
 	const thermostatSchedule = [
@@ -116,7 +116,7 @@ test("a room that will warm, but not to equilibrium", () => {
 	expect(thermalPrediction[0].endTemperature).toBeCloseTo(20.25);
 });
 
-test("a room that will warm to equilibrium", () => {
+test("model a room that will warm to equilibrium", () => {
 	const startTime = new Date("2022-01-01T07:00");
 	const endTime = new Date("2022-01-01T13:00");
 	const thermostatSchedule = [
@@ -149,7 +149,7 @@ test("a room that will warm to equilibrium", () => {
 	expect(thermalPrediction[1].endTemperature).toEqual(21);
 });
 
-test("a room with multiple scheduled thermostat intervals", () => {
+test("model a room with multiple scheduled thermostat intervals", () => {
 	const thermostatSchedule = [
 		{
 			startTime: new Date("2022-01-01T07:00"),
