@@ -60,7 +60,6 @@
 
 <script lang="ts">
 import {
-	DataParseError,
 	DataSet,
 	isDataSet,
 	TariffInterval,
@@ -69,6 +68,7 @@ import { defineComponent, PropType } from "vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import ToolBar from "@/components/ToolBar.vue";
+import { DataParseError } from "@/composables/useLocalStorage";
 
 interface TariffScheduleState extends DataSet {
 	dayCost: number;

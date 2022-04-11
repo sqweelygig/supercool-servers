@@ -120,13 +120,13 @@ import PageHeader from "@/components/PageHeader.vue";
 import ToolBar from "@/components/ToolBar.vue";
 import summariseObservations from "@/pipes/SummariseObservations";
 import {
-	DataParseError,
 	DataSet,
 	isDataSet,
 	ThermalInterval,
 	isThermalInterval,
 	ThermalProperties,
 } from "@/types/SuperCoolServers.types";
+import { DataParseError } from "@/composables/useLocalStorage";
 
 enum SurveyPhases {
 	Introduction = "thermal survey",

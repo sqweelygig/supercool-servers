@@ -1,5 +1,3 @@
-export class DataParseError extends Error {}
-
 export interface Interval {
 	endTime: Date;
 	startTime: Date;
@@ -66,7 +64,7 @@ export function isThermostatInterval(data: any): data is ThermostatInterval {
 	return typeof data.thermostatSetting === "number" && isInterval(data);
 }
 
-export interface DataSet {
+export interface DataSet extends Record<string, unknown> {
 	version: number;
 }
 

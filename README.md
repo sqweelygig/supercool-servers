@@ -284,6 +284,10 @@ Technology Connections (2021) ‘*Batteries aren't the only way to store energy.
 
 ### 3.2 - Bibliography
 
+https://vuejsdevelopers.com/2020/02/17/vue-composition-api-when-to-use/
+
+https://vuejsdevelopers.com/2017/06/11/vue-js-extending-components/
+
 Plottable JS
 
 Chart JS

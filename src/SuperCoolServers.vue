@@ -1,8 +1,8 @@
 <template>
-	<tab-bar v-bind:options="phaseTabs" v-model="phase" />
+	<tab-bar v-bind:options="phases" v-model="data.phase" />
 	<div class="main-pane">
 		<text-page
-			v-if="phase === 'introduction'"
+			v-if="data.phase === 'introduction'"
 			v-bind:content="[
 				'This web application models the savings possible by proactively cooling a server room during off-peak tariffs.',
 				[
@@ -16,17 +16,17 @@
 				'All data is stored and processed locally, on your computer, without any external data processors.',
 			]"
 			header="SuperCool Servers"
-			v-on:next="doNext"
+			v-on:next="phaseShift(1)"
 		/>
 		<thermal-survey
-			v-else-if="phase === 'survey'"
-			v-on:next="doNext"
-			v-on:previous="doPrevious"
+			v-else-if="data.phase === 'survey'"
+			v-on:next="phaseShift(1)"
+			v-on:previous="phaseShift(-1)"
 			v-on:update="setThermalProperties"
 		/>
 		<tariff-schedule
-			v-else-if="phase === 'tariff'"
-			v-on:previous="doPrevious"
+			v-else-if="data.phase === 'tariff'"
+			v-on:previous="phaseShift(-1)"
 			v-on:update="setTariffSchedule"
 		/>
 	</div>
@@ -82,7 +82,6 @@
 
 <script lang="ts">
 import {
-	DataParseError,
 	DataSet,
 	isDataSet,
 	TariffInterval,
@@ -91,10 +90,11 @@ import {
 	isThermalProperties,
 } from "@/types/SuperCoolServers.types";
 import { defineComponent } from "vue";
-import TabBar from "./components/TabBar.vue";
-import TariffSchedule from "./interfaces/TariffSchedule.vue";
-import TextPage from "./interfaces/TextPage.vue";
-import ThermalSurvey from "./interfaces/ThermalSurvey.vue";
+import TabBar, { usePhases } from "@/components/TabBar.vue";
+import TariffSchedule from "@/interfaces/TariffSchedule.vue";
+import TextPage from "@/interfaces/TextPage.vue";
+import ThermalSurvey from "@/interfaces/ThermalSurvey.vue";
+import useLocalStorage from "@/composables/useLocalStorage";
 
 enum Phases {
 	Introduction = "introduction",
@@ -102,8 +102,21 @@ enum Phases {
 	Tariff = "tariff",
 }
 
+const phases = [
+	{
+		icon: "info-circle",
+		text: "Introduction",
+		value: Phases.Introduction,
+	},
+	{
+		icon: "thermometer-half",
+		text: "Thermal Survey",
+		value: Phases.Survey,
+	},
+	{ icon: "money-bill", text: "Tariff Schedule", value: Phases.Tariff },
+];
+
 interface SuperCoolServersState extends DataSet {
-	error?: unknown;
 	phase: Phases;
 	tariffSchedule?: TariffInterval[];
 	thermalProperties?: ThermalProperties;
@@ -125,6 +138,18 @@ function isSuperCoolServersState(data: any): data is SuperCoolServersState {
 	);
 }
 
+function padSuperCoolServersState(
+	data: Partial<SuperCoolServersState>
+): SuperCoolServersState {
+	return {
+		phase: Phases.Introduction,
+		tariffSchedule: undefined,
+		thermalProperties: undefined,
+		version: 0,
+		...data,
+	};
+}
+
 export default defineComponent({
 	components: {
 		TabBar,
@@ -132,93 +157,24 @@ export default defineComponent({
 		TextPage,
 		ThermalSurvey,
 	},
-	computed: {
-		phaseTabs() {
-			return [
-				{
-					icon: "info-circle",
-					text: "Introduction",
-					value: Phases.Introduction,
-				},
-				{
-					icon: "thermometer-half",
-					text: "Thermal Survey",
-					value: Phases.Survey,
-				},
-				{ icon: "money-bill", text: "Tariff Schedule", value: Phases.Tariff },
-			];
-		},
-		stringifiedData(): string {
-			return JSON.stringify(this.cleanseData(this.$data));
-		},
-	},
-	created(): void {
-		for (const key in this.$data) {
-			this.$watch(key, this.saveData, { deep: true });
-		}
-	},
-	data(): SuperCoolServersState {
-		if (localStorage.superCoolServers) {
-			try {
-				const rawData = JSON.parse(localStorage.superCoolServers);
-				return this.defaultData(this.cleanseData(rawData));
-			} catch (error) {
-				delete localStorage.superCoolServers;
-				console.error(error);
-				return this.defaultData({ error });
-			}
-		} else {
-			return this.defaultData();
-		}
-	},
-	errorCaptured(error, component, info) {
-		console.error(error, component, info);
-		this.error = error;
-		return false;
-	},
-	methods: {
-		cleanseData(data: SuperCoolServersState): SuperCoolServersState {
-			if (!isSuperCoolServersState(data)) {
-				throw new DataParseError("Data not valid.");
-			}
-			return data;
-		},
-		defaultData(data: Partial<SuperCoolServersState>): SuperCoolServersState {
-			return {
-				error: undefined,
-				phase: Phases.Introduction,
-				tariffSchedule: undefined,
-				thermalProperties: undefined,
-				version: 0,
-				...data,
-			};
-		},
-		doNext() {
-			if (this.phase === Phases.Introduction) {
-				this.phase = Phases.Survey;
-			} else if (this.phase === Phases.Survey) {
-				this.phase = Phases.Tariff;
-			}
-		},
-		doPrevious() {
-			if (this.phase === Phases.Survey) {
-				this.phase = Phases.Introduction;
-			} else if (this.phase === Phases.Tariff) {
-				this.phase = Phases.Survey;
-			}
-		},
-		saveData(): void {
-			localStorage.superCoolServers = this.stringifiedData;
-		},
-		setPhase(phase: Phases) {
-			this.phase = phase;
-		},
-		setTariffSchedule(schedule: TariffInterval[]) {
-			this.tariffSchedule = schedule;
-		},
-		setThermalProperties(properties: ThermalProperties) {
-			this.thermalProperties = properties;
-		},
+	setup: function () {
+		const store = useLocalStorage(
+			"superCoolServers",
+			padSuperCoolServersState,
+			isSuperCoolServersState
+		);
+		const setTariffSchedule = (schedule: TariffInterval[]) => {
+			store.data.tariffSchedule = schedule;
+		};
+		const setThermalProperties = (properties: ThermalProperties) => {
+			store.data.thermalProperties = properties;
+		};
+		return {
+			setTariffSchedule,
+			setThermalProperties,
+			...usePhases(phases, store),
+			...store,
+		};
 	},
 });
 </script>

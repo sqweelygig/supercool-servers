@@ -71,6 +71,21 @@ export type TabItem = {
 	value: string;
 };
 
+export function usePhases(
+	phases: TabItem[],
+	store: { data: { phase: string } }
+): { phaseShift: (shift: number) => void; phases: TabItem[] } {
+	const phaseShift = (shift = 1) => {
+		const currentIndex = phases.findIndex(
+			(eachPhase) => eachPhase.value === store.data.phase
+		);
+		const lowerBounded = Math.max(currentIndex + shift, 0);
+		const bounded = Math.min(lowerBounded, phases.length - 1);
+		store.data.phase = phases[bounded].value;
+	};
+	return { phaseShift, phases };
+}
+
 export default defineComponent({
 	components: {
 		FontAwesomeIcon,
