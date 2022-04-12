@@ -94,6 +94,21 @@ function isTariffScheduleState(data: any): data is TariffScheduleState {
 	);
 }
 
+function padTariffScheduleState(
+	data?: Partial<TariffScheduleState>
+): TariffScheduleState {
+	return {
+		dayCost: 47,
+		dayStart: "07:00",
+		error: undefined,
+		nightCost: 34,
+		nightStart: "00:00",
+		units: "GBP",
+		version: 0,
+		...data,
+	};
+}
+
 export default defineComponent({
 	components: { ErrorMessage, PageHeader, ToolBar },
 	computed: {
@@ -165,14 +180,14 @@ export default defineComponent({
 		if (localStorage.tariffData) {
 			try {
 				const rawData = JSON.parse(localStorage.tariffData);
-				return this.defaultData(this.cleanseData(rawData));
+				return padTariffScheduleState(this.cleanseData(rawData));
 			} catch (error) {
 				delete localStorage.tariffData;
 				console.error(error);
-				return this.defaultData({ error });
+				return padTariffScheduleState({ error });
 			}
 		} else {
-			return this.defaultData();
+			return padTariffScheduleState();
 		}
 	},
 	errorCaptured(error, component, info) {
@@ -192,22 +207,10 @@ export default defineComponent({
 		clearData(): void {
 			delete localStorage.tariffData;
 			this.clearError();
-			Object.assign(this.$data, this.defaultData());
+			Object.assign(this.$data, padTariffScheduleState());
 		},
 		clearError(): void {
 			delete this.$data.error;
-		},
-		defaultData(data?: Partial<TariffScheduleState>): TariffScheduleState {
-			return {
-				dayCost: 47,
-				dayStart: "07:00",
-				error: undefined,
-				nightCost: 34,
-				nightStart: "00:00",
-				units: "GBP",
-				version: 0,
-				...data,
-			};
 		},
 		saveData(): void {
 			localStorage.tariffData = this.stringifiedData;
@@ -216,7 +219,7 @@ export default defineComponent({
 			try {
 				this.clearError();
 				const rawData = JSON.parse(data);
-				const cleanedData = this.defaultData(this.cleanseData(rawData));
+				const cleanedData = padTariffScheduleState(this.cleanseData(rawData));
 				Object.assign(this.$data, cleanedData);
 			} catch (error) {
 				console.error(error);
