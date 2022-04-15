@@ -1,0 +1,41 @@
+import { ComputedRef, UnwrapNestedRefs, Ref } from "vue";
+import useErrorCapture from "@/composables/useErrorCapture";
+import useLocalStorage from "@/composables/useLocalStorage";
+
+export default function useDataBoundary<
+	Data extends Record<string, unknown>,
+	Emit
+>(
+	index: string,
+	pad: (d: Partial<Data>) => Data,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	guard: (d: any) => d is Data,
+	convert: (d: Data) => Emit,
+	emit: (e: Emit) => void
+): {
+	// Avert a namespace collision
+	clear: undefined;
+	clearData: () => void;
+	clearError: () => void;
+	data: UnwrapNestedRefs<Data>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	error: Ref<any>;
+	stringified: ComputedRef<string>;
+	upload: (str: string) => void;
+} {
+	const errorBoundary = useErrorCapture();
+	const store = useLocalStorage(
+		index,
+		pad,
+		guard,
+		(d: Data) => emit(convert(d)),
+		errorBoundary.capture
+	);
+	return {
+		...store,
+		...errorBoundary,
+		clear: undefined,
+		clearData: store.clear,
+		clearError: errorBoundary.clear,
+	};
+}

@@ -2,28 +2,68 @@ import { computed, ComputedRef, reactive, UnwrapNestedRefs, watch } from "vue";
 
 export class DataParseError extends Error {}
 
+function parse<T extends Record<string, unknown>>(
+	str: string,
+	pad: (t: Partial<T>) => T,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	guard: (t: any) => t is T
+): T {
+	const importedData = pad(JSON.parse(str));
+	if (!guard(importedData)) {
+		throw new DataParseError("Could not parse:" + str);
+	}
+	return importedData;
+}
+
 export default function useLocalStorage<T extends Record<string, unknown>>(
 	index: string,
 	pad: (t: Partial<T>) => T,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	guard: (t: any) => t is T
-): { data: UnwrapNestedRefs<T>; stringified: ComputedRef<string> } {
-	let importedData = {};
+	guard: (t: any) => t is T,
+	emit: (t: T) => void,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	err: (error: any) => void
+): {
+	clear: () => void;
+	data: UnwrapNestedRefs<T>;
+	stringified: ComputedRef<string>;
+	upload: (str: string) => void;
+} {
+	let importedData = pad({});
 	if (localStorage[index] !== undefined) {
-		importedData = JSON.parse(localStorage[index]);
-		if (!guard(importedData)) {
+		try {
+			importedData = parse(localStorage[index], pad, guard);
+		} catch (error) {
 			delete localStorage[index];
-			throw new DataParseError(JSON.stringify(importedData));
+			err(error);
 		}
 	}
-	const vivifiedData = reactive(pad(importedData));
+	const vivifiedData = reactive(importedData);
 	const stringified = computed(() => {
 		return JSON.stringify({ ...vivifiedData });
 	});
-	const saveData = () => (localStorage[index] = stringified.value);
-	watch(vivifiedData, saveData, { deep: true });
+	const save = () => (localStorage[index] = stringified.value);
+	watch(vivifiedData, save, { deep: true });
+	const guardedEmit = () => {
+		const t = { ...vivifiedData };
+		if (guard(t)) emit(t);
+	};
+	guardedEmit();
+	watch(vivifiedData, guardedEmit, { deep: true });
+	const clear = () => {
+		Object.assign(vivifiedData, pad({}));
+	};
+	const upload = (str: string) => {
+		try {
+			Object.assign(vivifiedData, parse(str, pad, guard));
+		} catch (error) {
+			err(error);
+		}
+	};
 	return {
+		clear,
 		data: vivifiedData,
 		stringified,
+		upload,
 	};
 }

@@ -8,22 +8,6 @@ export function isInterval(data: any): data is Interval {
 	return data.endTime instanceof Date && data.startTime instanceof Date;
 }
 
-export interface TariffInterval extends Interval {
-	costPerHour: number;
-	units: string;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-export function isTariffInterval(data: any): data is TariffInterval {
-	return (
-		typeof data === "object" &&
-		data !== null &&
-		typeof data.costPerHour === "number" &&
-		typeof data.units === "string" &&
-		isInterval(data)
-	);
-}
-
 export interface ThermalInterval extends Interval {
 	startTemperature: number;
 	endTemperature: number;

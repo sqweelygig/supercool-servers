@@ -84,14 +84,16 @@
 import {
 	DataSet,
 	isDataSet,
-	TariffInterval,
-	isTariffInterval,
 	ThermalProperties,
 	isThermalProperties,
 } from "@/types/SuperCoolServers.types";
 import { defineComponent } from "vue";
 import TabBar, { usePhases } from "@/components/TabBar.vue";
-import TariffSchedule from "@/interfaces/TariffSchedule.vue";
+import TariffSchedule from "@/tariff-schedule/TariffSchedule.vue";
+import {
+	TariffInterval,
+	isTariffInterval,
+} from "@/tariff-schedule/TariffSchedule.types";
 import TextPage from "@/interfaces/TextPage.vue";
 import ThermalSurvey from "@/interfaces/ThermalSurvey.vue";
 import useLocalStorage from "@/composables/useLocalStorage";
@@ -161,7 +163,10 @@ export default defineComponent({
 		const store = useLocalStorage(
 			"superCoolServers",
 			padSuperCoolServersState,
-			isSuperCoolServersState
+			isSuperCoolServersState,
+			() => null,
+			// TODO Handle top-level import errors by making a landing page component
+			() => null
 		);
 		const setTariffSchedule = (schedule: TariffInterval[]) => {
 			store.data.tariffSchedule = schedule;
