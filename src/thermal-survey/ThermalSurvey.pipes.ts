@@ -6,14 +6,14 @@ export default function summariseObservations(
 	baseloadDutyCycle: number;
 	temperatureChangeVelocity: number;
 } {
-	if (observations.length === 0) {
-		throw new Error("Cannot summarise an empty list of observations.");
-	}
 	const thermostaticObservations = observations.filter(
 		(observation: ThermalInterval) => {
 			return observation.endTemperature === observation.startTemperature;
 		}
 	);
+	if (thermostaticObservations.length === 0) {
+		throw new Error("Cannot summarise without thermostatic observations.");
+	}
 	const totalElapsed: number = thermostaticObservations.reduce(
 		(runningTotal: number, each: ThermalInterval) => {
 			const elapsed = each.endTime.getTime() - each.startTime.getTime();
@@ -34,6 +34,9 @@ export default function summariseObservations(
 			return observation.endTemperature !== observation.startTemperature;
 		}
 	);
+	if (thermodynamicObservations.length === 0) {
+		throw new Error("Cannot summarise without thermodynamic observations.");
+	}
 	const totalTemperatureChange: number = thermodynamicObservations.reduce(
 		(runningTotal: number, each: ThermalInterval) => {
 			const temperatureChange = each.endTemperature - each.startTemperature;

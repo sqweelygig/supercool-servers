@@ -20,7 +20,7 @@ export interface ThermalSurveyState extends DataSet {
 	maximumThermostat: number;
 	minimumThermostat: number;
 	normalThermostat: number;
-	observations: Array<Partial<ThermalInterval>>;
+	observations: Array<Partial<ThermalObservation>>;
 	phase: SurveyPhases;
 }
 
@@ -44,15 +44,25 @@ export function isThermalSurveyState(data: any): data is ThermalSurveyState {
 export function padThermalSurveyState(
 	data?: Partial<ThermalSurveyState>
 ): ThermalSurveyState {
+	const dateified = (data?.observations || []).map((observation) => {
+		const transitionTime = observation.transitionTime;
+		return {
+			...observation,
+			endTime: observation.endTime && new Date(observation.endTime),
+			startTime: observation.startTime && new Date(observation.startTime),
+			transitionTime: transitionTime && new Date(transitionTime),
+		};
+	});
+	const filteredObservations = dateified.filter(isThermalInterval);
 	return {
 		externalTemperature: 20,
 		maximumThermostat: 20,
 		minimumThermostat: 14,
 		normalThermostat: 18,
-		observations: [],
 		phase: SurveyPhases.Introduction,
 		version: 0,
 		...data,
+		observations: filteredObservations,
 	};
 }
 
