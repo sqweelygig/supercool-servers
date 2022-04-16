@@ -125,6 +125,7 @@ import {
 	isThermalSurveyState,
 	padThermalSurveyState,
 	isThermalInterval,
+	isThermalProperties,
 } from "./ThermalSurvey.types";
 import useDataBoundary from "@/composables/useDataBoundary";
 import { usePhases } from "@/components/TabBar.vue";
@@ -139,7 +140,7 @@ export default defineComponent({
 		ToolBar,
 	},
 	emits: {
-		update: isThermalSurveyState,
+		update: isThermalProperties,
 	},
 	props: {
 		onNext: Function as PropType<() => void>,
