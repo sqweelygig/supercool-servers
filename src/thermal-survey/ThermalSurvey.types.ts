@@ -57,9 +57,9 @@ export function padThermalSurveyState(
 }
 
 export interface TangibleThermalProperties {
-	baseloadDutyCycle: number | null;
+	baseloadDutyCycle: number;
 	normalThermostat: number;
-	temperatureChangeVelocity: number | null;
+	temperatureChangeVelocity: number;
 }
 
 export function isTangibleThermalProperties(
@@ -71,9 +71,9 @@ export function isTangibleThermalProperties(
 	return (
 		typeof data === "object" &&
 		data !== null &&
-		(typeof baseloadDutyCycle === "number" || baseloadDutyCycle === null) &&
+		typeof baseloadDutyCycle === "number" &&
 		typeof data.normalThermostat === "number" &&
-		(typeof rateOfChange === "number" || rateOfChange === null)
+		typeof rateOfChange === "number"
 	);
 }
 

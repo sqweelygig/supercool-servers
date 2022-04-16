@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import summariseObservations from "./ThermalSurvey.pipes";
-import { ThermalInterval } from "@/SuperCoolServers.types";
+import { ThermalInterval } from "./ThermalSurvey.types";
 
 test("summarise single thermostatic observation", () => {
 	const observations: ThermalInterval[] = [

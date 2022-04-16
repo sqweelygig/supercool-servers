@@ -22,11 +22,18 @@ export default function useDataBoundary<
 	upload: (str: string) => void;
 } {
 	const errorBoundary = useErrorCapture();
+	const tryEmission = (d: Data) => {
+		try {
+			emit(convert(d));
+		} catch (error) {
+			console.warn(error);
+		}
+	};
 	const store = useLocalStorage(
 		index,
 		pad,
 		guard,
-		(d: Data) => emit(convert(d)),
+		tryEmission,
 		errorBoundary.capture
 	);
 	return {
