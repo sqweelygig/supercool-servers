@@ -1,10 +1,10 @@
-import { ThermalInterval } from "./ThermalSurvey.types"
+import { ThermalInterval } from "./ThermalSurvey.types";
 
 export default function summariseObservations(
 	observations: ThermalInterval[]
 ): {
-	baseloadDutyCycle: number;
-	temperatureChangeVelocity: number;
+	baseloadDutyCycle: number | null;
+	temperatureChangeVelocity: number | null;
 } {
 	const thermostaticObservations = observations.filter(
 		(observation: ThermalInterval) => {
@@ -50,9 +50,10 @@ export default function summariseObservations(
 		},
 		0
 	);
-	const temperatureChangeVelocity = totalVelocity / totalTemperatureChange;
+	const rateOfChange = totalVelocity / totalTemperatureChange;
 	return {
-		baseloadDutyCycle,
-		temperatureChangeVelocity,
+		// Since JSON flattens NaN to null, and I don't like NaN, we're flattening this at source.
+		baseloadDutyCycle: isNaN(baseloadDutyCycle) ? null : baseloadDutyCycle,
+		temperatureChangeVelocity: isNaN(rateOfChange) ? null : rateOfChange,
 	};
 }
