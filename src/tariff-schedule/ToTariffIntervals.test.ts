@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { toTariffIntervals } from "./TariffSchedule.pipes";
+import { toTariffIntervals } from "./ToTariffIntervals.pipe";
 
 test("convert a schedule with cheap rates during daylight hours", () => {
 	const result = toTariffIntervals({

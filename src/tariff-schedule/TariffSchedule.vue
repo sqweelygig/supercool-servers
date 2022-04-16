@@ -65,7 +65,7 @@ import {
 	padTariffScheduleState,
 	isTariffScheduleState,
 } from "./TariffSchedule.types";
-import { toTariffIntervals } from "./TariffSchedule.pipes";
+import { toTariffIntervals } from "./ToTariffIntervals.pipe";
 import { defineComponent, PropType } from "vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import PageHeader from "@/components/PageHeader.vue";
