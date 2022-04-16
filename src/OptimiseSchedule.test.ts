@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import optimiseSchedule from "./OptimiseSchedule";
+import optimiseSchedule from "./OptimiseSchedule.pipes";
 
 test("optimise thermostat to be lower when tariff is lower", () => {
 	const firstTime = new Date("2022-01-01T00:00");

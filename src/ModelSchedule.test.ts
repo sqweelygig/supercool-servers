@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import modelSchedule from "./ModelSchedule";
+import modelSchedule from "./ModelSchedule.pipes";
 
 test("model a room with a flat thermostat schedule", () => {
 	const startTime = new Date("2022-01-01T07:00");
