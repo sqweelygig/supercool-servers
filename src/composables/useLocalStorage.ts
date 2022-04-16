@@ -15,17 +15,17 @@ function parse<T extends Record<string, unknown>>(
 	return importedData;
 }
 
-export default function useLocalStorage<T extends Record<string, unknown>>(
+export default function useLocalStorage<Data extends Record<string, unknown>>(
 	index: string,
-	pad: (t: Partial<T>) => T,
+	pad: (d: Partial<Data>) => Data,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	guard: (t: any) => t is T,
-	emit: (t: T) => void,
+	guard: (d: any) => d is Data,
+	emit: (d: Data) => void,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	err: (error: any) => void
 ): {
 	clear: () => void;
-	data: UnwrapNestedRefs<T>;
+	data: UnwrapNestedRefs<Data>;
 	stringified: ComputedRef<string>;
 	upload: (str: string) => void;
 } {
