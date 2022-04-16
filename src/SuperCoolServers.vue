@@ -100,6 +100,9 @@ import { TariffInterval } from "@/tariff-schedule/TariffSchedule.types";
 import { ThermalProperties } from "@/thermal-survey/ThermalSurvey.types";
 import ThermalSurvey from "@/thermal-survey/ThermalSurvey.vue";
 import useDataBoundary from "@/composables/useDataBoundary";
+import ErrorMessage from "@/components/ErrorMessage.vue";
+import PageHeader from "@/components/PageHeader.vue";
+import ToolBar from "@/components/ToolBar.vue";
 
 const phases = [
 	{
@@ -117,9 +120,12 @@ const phases = [
 
 export default defineComponent({
 	components: {
+		ErrorMessage,
+		PageHeader,
 		TabBar,
 		TariffSchedule,
 		ThermalSurvey,
+		ToolBar,
 	},
 	setup: function () {
 		const store = useDataBoundary(
