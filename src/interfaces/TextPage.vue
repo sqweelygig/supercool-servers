@@ -9,7 +9,7 @@
 import { defineComponent, PropType } from "vue";
 import PageHeader from "@/components/PageHeader.vue";
 import ToolBar from "@/components/ToolBar.vue";
-
+// TODO Handle top-level import errors by making a landing page component
 export default defineComponent({
 	components: { PageHeader, ToolBar },
 	props: {

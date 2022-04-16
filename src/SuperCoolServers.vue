@@ -84,8 +84,6 @@
 import {
 	DataSet,
 	isDataSet,
-	ThermalProperties,
-	isThermalProperties,
 } from "@/types/SuperCoolServers.types";
 import { defineComponent } from "vue";
 import TabBar, { usePhases } from "@/components/TabBar.vue";
@@ -94,8 +92,12 @@ import {
 	TariffInterval,
 	isTariffInterval,
 } from "@/tariff-schedule/TariffSchedule.types";
+import {
+	ThermalProperties,
+	isThermalProperties,
+} from "@/thermal-survey/ThermalSurvey.types";
 import TextPage from "@/interfaces/TextPage.vue";
-import ThermalSurvey from "@/interfaces/ThermalSurvey.vue";
+import ThermalSurvey from "@/thermal-survey/ThermalSurvey.vue";
 import useLocalStorage from "@/composables/useLocalStorage";
 
 enum Phases {

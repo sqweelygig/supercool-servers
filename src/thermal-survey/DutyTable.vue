@@ -42,10 +42,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import {
-	ThermalInterval,
-	isThermalInterval,
-} from "@/types/SuperCoolServers.types";
+import { ThermalInterval, isThermalInterval } from "./ThermalSurvey.types";
 
 export interface ThermalObservation extends ThermalInterval {
 	initialObservation: boolean;

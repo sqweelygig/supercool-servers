@@ -1,6 +1,8 @@
-import { ThermalInterval } from "@/types/SuperCoolServers.types";
+import { ThermalInterval } from "./ThermalSurvey.types"
 
-export default function (observations: ThermalInterval[]): {
+export default function summariseObservations(
+	observations: ThermalInterval[]
+): {
 	baseloadDutyCycle: number;
 	temperatureChangeVelocity: number;
 } {

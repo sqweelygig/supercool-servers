@@ -153,7 +153,7 @@ export default defineComponent({
 	computed: {
 		downloadData(): string {
 			const preamble = "data:application/json;charset=utf-8,";
-			return preamble + this.download;
+			return preamble + encodeURI(this.download || "{}");
 		},
 	},
 	methods: {

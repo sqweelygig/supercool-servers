@@ -14,8 +14,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import DutyTable, { ThermalObservation } from "./DutyTable.vue";
-import ToolBar from "./ToolBar.vue";
+import DutyTable from "./DutyTable.vue";
+import { ThermalObservation } from "./ThermalSurvey.types";
+import ToolBar from "@/components/ToolBar.vue";
 
 export default defineComponent({
 	components: { DutyTable, ToolBar },

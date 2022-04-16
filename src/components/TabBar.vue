@@ -71,15 +71,27 @@ export type TabItem = {
 	value: string;
 };
 
-export function usePhases(
-	phases: TabItem[],
-	store: { data: { phase: string } }
-): { phaseShift: (shift: number) => void; phases: TabItem[] } {
+export function usePhases<Phase extends { value: string }>(
+	phases: Phase[],
+	store: { data: { phase: string } },
+	beforeFirst?: () => void,
+	afterFinal?: () => void,
+	eachPhase?: () => void
+): { phaseShift: (shift: number) => void; phases: Phase[] } {
 	const phaseShift = (shift = 1) => {
+		for (let i = 0; i < Math.abs(shift); i++) {
+			eachPhase?.();
+		}
 		const currentIndex = phases.findIndex(
 			(eachPhase) => eachPhase.value === store.data.phase
 		);
-		const lowerBounded = Math.max(currentIndex + shift, 0);
+		const proposedIndex = currentIndex + shift;
+		if (proposedIndex < 0) {
+			beforeFirst?.();
+		} else if (phases.length <= proposedIndex) {
+			afterFinal?.();
+		}
+		const lowerBounded = Math.max(proposedIndex, 0);
 		const bounded = Math.min(lowerBounded, phases.length - 1);
 		store.data.phase = phases[bounded].value;
 	};

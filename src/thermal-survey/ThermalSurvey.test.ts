@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import summariseObservations from "./SummariseObservations";
+import summariseObservations from "./ThermalSurvey.pipes";
 import { ThermalInterval } from "@/types/SuperCoolServers.types";
 
 test("summarise single thermostatic observation", () => {
