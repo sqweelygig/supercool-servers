@@ -2,12 +2,12 @@ import { computed, ComputedRef, reactive, UnwrapNestedRefs, watch } from "vue";
 
 export class DataParseError extends Error {}
 
-function parse<T extends Record<string, unknown>>(
+function parse<Data extends Record<string, unknown>>(
 	str: string,
-	pad: (t: Partial<T>) => T,
+	pad: (d: Partial<Data>) => Data,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	guard: (t: any) => t is T
-): T {
+	guard: (d: any) => d is Data
+): Data {
 	const importedData = pad(JSON.parse(str));
 	if (!guard(importedData)) {
 		throw new DataParseError("Could not parse:" + str);

@@ -77,9 +77,10 @@ export default defineComponent({
 				recent.transitionTime !== undefined &&
 				recent.endTime === undefined
 			) {
-				const initialTime =
-					recent.transitionTime.getTime() - recent.startTime.getTime();
-				const totalTime = rightNow.getTime() - recent.startTime.getTime();
+				const transitionTime = recent.transitionTime;
+				const startTime = recent.startTime;
+				const initialTime = transitionTime.getTime() - startTime.getTime();
+				const totalTime = rightNow.getTime() - startTime.getTime();
 				const initialProportion = initialTime / totalTime;
 				const dutyCycle = recent.initialObservation
 					? initialProportion

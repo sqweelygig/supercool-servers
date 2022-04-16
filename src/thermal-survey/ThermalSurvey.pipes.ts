@@ -6,7 +6,9 @@ export default function summariseObservations(
 	baseloadDutyCycle: number;
 	temperatureChangeVelocity: number;
 } {
-	if (observations.length === 0) throw new Error("Cannot summarise an empty list of observations.")
+	if (observations.length === 0) {
+		throw new Error("Cannot summarise an empty list of observations.");
+	}
 	const thermostaticObservations = observations.filter(
 		(observation: ThermalInterval) => {
 			return observation.endTemperature === observation.startTemperature;
