@@ -1,25 +1,8 @@
 <template>
 	<tab-bar v-bind:options="phases" v-model="data.phase" />
 	<div class="main-pane">
-		<text-page
-			v-if="data.phase === 'introduction'"
-			v-bind:content="[
-				'This web application models the savings possible by proactively cooling a server room during off-peak tariffs.',
-				[
-					'It applies some simplifying assumptions to its thermal model, which are reasonable for some server rooms.',
-					'Firstly, The model assumes that air conditioning units perform most of the cooling.',
-					'Furthermore, it assumes that the servers are the primary heat source and that this is constant.',
-					'Finally, it assumes that heat propagation within the room is instant.',
-					'Further development may occur to eliminate these simplifications.',
-					'You are responsible for judging whether they are reasonable in your situation.',
-				].join(' '),
-				'All data is stored and processed locally, on your computer, without any external data processors.',
-			]"
-			header="SuperCool Servers"
-			v-on:next="phaseShift(1)"
-		/>
 		<thermal-survey
-			v-else-if="data.phase === 'survey'"
+			v-if="data.phase === 'survey'"
 			v-on:next="phaseShift(1)"
 			v-on:previous="phaseShift(-1)"
 			v-on:update="setThermalProperties"
@@ -29,6 +12,30 @@
 			v-on:previous="phaseShift(-1)"
 			v-on:update="setTariffSchedule"
 		/>
+		<template v-else>
+			<error-message v-if="error !== undefined" v-on:clear="clearError" />
+			<page-header v-else text="SuperCool Servers" />
+			<div>
+				This web application models the savings possible by proactively cooling
+				a server room during off-peak tariffs.
+			</div>
+			<div>
+				It applies some simplifying assumptions to its thermal model, which are
+				reasonable for some server rooms. Firstly, The model assumes that air
+				conditioning units perform most of the cooling. Furthermore, it assumes
+				that the servers are the primary heat source and that this is constant.
+				Finally, it assumes that heat propagation within the room is instant.
+				Further development may occur to eliminate these simplifications. You
+				are responsible for judging whether they are reasonable in your
+				situation.
+			</div>
+			<div>
+				All data is stored and processed locally, on your computer, without any
+				external data processors.
+			</div>
+			<div class="spacer"></div>
+			<tool-bar v-on:next="phaseShift(1)" />
+		</template>
 	</div>
 </template>
 
@@ -81,27 +88,18 @@
 </style>
 
 <script lang="ts">
-import { DataSet, isDataSet } from "@/types/SuperCoolServers.types";
+import {
+	padSuperCoolServersState,
+	isSuperCoolServersState,
+	Phases,
+} from "./SuperCoolServers.types";
 import { defineComponent } from "vue";
 import TabBar, { usePhases } from "@/components/TabBar.vue";
 import TariffSchedule from "@/tariff-schedule/TariffSchedule.vue";
-import {
-	TariffInterval,
-	isTariffInterval,
-} from "@/tariff-schedule/TariffSchedule.types";
-import {
-	ThermalProperties,
-	isThermalProperties,
-} from "@/thermal-survey/ThermalSurvey.types";
-import TextPage from "@/interfaces/TextPage.vue";
+import { TariffInterval } from "@/tariff-schedule/TariffSchedule.types";
+import { ThermalProperties } from "@/thermal-survey/ThermalSurvey.types";
 import ThermalSurvey from "@/thermal-survey/ThermalSurvey.vue";
-import useLocalStorage from "@/composables/useLocalStorage";
-
-enum Phases {
-	Introduction = "introduction",
-	Survey = "survey",
-	Tariff = "tariff",
-}
+import useDataBoundary from "@/composables/useDataBoundary";
 
 const phases = [
 	{
@@ -117,52 +115,20 @@ const phases = [
 	{ icon: "money-bill", text: "Tariff Schedule", value: Phases.Tariff },
 ];
 
-interface SuperCoolServersState extends DataSet {
-	phase: Phases;
-	tariffSchedule?: TariffInterval[];
-	thermalProperties?: ThermalProperties;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isSuperCoolServersState(data: any): data is SuperCoolServersState {
-	const tariffs = data.tariffSchedule;
-	const thermals = data.thermalProperties;
-	return (
-		typeof data === "object" &&
-		data !== null &&
-		typeof data.phase === "string" &&
-		Object.values(Phases).includes(data.phase) &&
-		(tariffs === undefined || tariffs.every(isTariffInterval)) &&
-		(thermals === undefined || isThermalProperties(thermals)) &&
-		isDataSet(data) &&
-		data.version === 0
-	);
-}
-
-function padSuperCoolServersState(
-	data: Partial<SuperCoolServersState>
-): SuperCoolServersState {
-	return {
-		phase: Phases.Introduction,
-		version: 0,
-		...data,
-	};
-}
-
 export default defineComponent({
 	components: {
 		TabBar,
 		TariffSchedule,
-		TextPage,
 		ThermalSurvey,
 	},
 	setup: function () {
-		const store = useLocalStorage(
+		const store = useDataBoundary(
 			"superCoolServers",
 			padSuperCoolServersState,
 			isSuperCoolServersState,
+			// Swallow value conversion
 			() => null,
-			// TODO Handle top-level import errors by making a landing page component
+			// Swallow value emission
 			() => null
 		);
 		const setTariffSchedule = (schedule: TariffInterval[]) => {

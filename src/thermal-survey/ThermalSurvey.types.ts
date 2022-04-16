@@ -3,7 +3,7 @@ import {
 	isDataSet,
 	Interval,
 	isInterval,
-} from "@/types/SuperCoolServers.types";
+} from "@/SuperCoolServers.types";
 
 export enum SurveyPhases {
 	Introduction = "thermal survey",

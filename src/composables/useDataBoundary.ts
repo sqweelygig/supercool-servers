@@ -13,13 +13,11 @@ export default function useDataBoundary<
 	convert: (d: Data) => Emit,
 	emit: (e: Emit) => void
 ): {
-	// Avert a namespace collision
 	clear: undefined;
 	clearData: () => void;
 	clearError: () => void;
 	data: UnwrapNestedRefs<Data>;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	error: Ref<any>;
+	error: Ref<Error | undefined>;
 	stringified: ComputedRef<string>;
 	upload: (str: string) => void;
 } {
@@ -34,6 +32,7 @@ export default function useDataBoundary<
 	return {
 		...store,
 		...errorBoundary,
+		// Avert a namespace collision
 		clear: undefined,
 		clearData: store.clear,
 		clearError: errorBoundary.clear,

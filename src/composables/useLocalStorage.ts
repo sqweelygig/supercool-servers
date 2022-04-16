@@ -21,8 +21,7 @@ export default function useLocalStorage<Data extends Record<string, unknown>>(
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	guard: (d: any) => d is Data,
 	emit: (d: Data) => void,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	err: (error: any) => void
+	err: (error: Error) => void
 ): {
 	clear: () => void;
 	data: UnwrapNestedRefs<Data>;
@@ -35,7 +34,7 @@ export default function useLocalStorage<Data extends Record<string, unknown>>(
 			importedData = parse(localStorage[index], pad, guard);
 		} catch (error) {
 			delete localStorage[index];
-			err(error);
+			err(error as Error);
 		}
 	}
 	const vivifiedData = reactive(importedData);
@@ -57,7 +56,7 @@ export default function useLocalStorage<Data extends Record<string, unknown>>(
 		try {
 			Object.assign(vivifiedData, parse(str, pad, guard));
 		} catch (error) {
-			err(error);
+			err(error as Error);
 		}
 	};
 	return {

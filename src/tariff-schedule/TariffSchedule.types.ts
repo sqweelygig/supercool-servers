@@ -3,7 +3,7 @@ import {
 	isDataSet,
 	isInterval,
 	Interval,
-} from "@/types/SuperCoolServers.types";
+} from "@/SuperCoolServers.types";
 
 export interface TariffInterval extends Interval {
 	costPerHour: number;
