@@ -81,10 +81,7 @@
 </style>
 
 <script lang="ts">
-import {
-	DataSet,
-	isDataSet,
-} from "@/types/SuperCoolServers.types";
+import { DataSet, isDataSet } from "@/types/SuperCoolServers.types";
 import { defineComponent } from "vue";
 import TabBar, { usePhases } from "@/components/TabBar.vue";
 import TariffSchedule from "@/tariff-schedule/TariffSchedule.vue";
@@ -129,14 +126,14 @@ interface SuperCoolServersState extends DataSet {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isSuperCoolServersState(data: any): data is SuperCoolServersState {
 	const tariffs = data.tariffSchedule;
-	const properties = data.thermalProperties;
+	const thermals = data.thermalProperties;
 	return (
 		typeof data === "object" &&
 		data !== null &&
 		typeof data.phase === "string" &&
 		Object.values(Phases).includes(data.phase) &&
 		(tariffs === undefined || tariffs.every(isTariffInterval)) &&
-		(properties === undefined || isThermalProperties(properties)) &&
+		(thermals === undefined || isThermalProperties(thermals)) &&
 		isDataSet(data) &&
 		data.version === 0
 	);
@@ -147,8 +144,6 @@ function padSuperCoolServersState(
 ): SuperCoolServersState {
 	return {
 		phase: Phases.Introduction,
-		tariffSchedule: undefined,
-		thermalProperties: undefined,
 		version: 0,
 		...data,
 	};
