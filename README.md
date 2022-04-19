@@ -274,59 +274,69 @@ Airedale (2015) ‘*ACIS provides the big picture at Brighton Digital Exchange*�
 
 CIBSE (2015) ‘*Environmental Design – CIBSE Guide A (8th Edition)*’.
 
-DuckDuckGo (2022) ‘*Server room image search at DuckDuckGo*’. Available at: https://duckduckgo.com/?q=server+room&t=h_&iax=images&ia=images (accessed 2022-02-15)
+DuckDuckGo (2022) ‘*Server room image search at DuckDuckGo*’. Available at: https://duckduckgo.com/?q=server+room&t=h_&iax=images&ia=images (accessed 2022-02-15).
 
-OpenLearn (2019) ‘*Energy in buildings*’. Available at: https://www.open.edu/openlearn/nature-environment/energy-buildings (accessed 2022-02-15)
+Naver Corp. (2022) '*Region With Timeseries*'. Available at https://naver.github.io/billboard.js/demo/#Region.RegionWithTimeseries (accessed 2022-04-19).
 
-Sudlows (2015) ‘*Brighton Digital Exchange Data Centre*’. Available at: https://www.sudlows.com/wp-content/uploads/2016/07/Brighton-Digital-Exchange.pdf (accessed 2022-02-14)
+OpenLearn (2019) ‘*Energy in buildings*’. Available at: https://www.open.edu/openlearn/nature-environment/energy-buildings (accessed 2022-02-15).
+
+Palantir (2021) '*Background Bands*'. Available at: http://plottablejs.org/examples/bands/ (accessed 2022-04-19).
+
+StatCounter (2022) '*Screen Resolution Stats Worldwide*'. Available at: https://gs.statcounter.com/screen-resolution-stats (accessed 2022-04-19).
+
+Sudlows (2015) ‘*Brighton Digital Exchange Data Centre*’. Available at: https://www.sudlows.com/wp-content/uploads/2016/07/Brighton-Digital-Exchange.pdf (accessed 2022-02-14).
 
 Technology Connections (2021) ‘*Batteries aren't the only way to store energy. Here's another*’. Available at https://www.youtube.com/watch?v=0f9GpMWdvWI (accessed 2021-11-21).
 
+Toast.com (2021) '*8.15 [Line Chart] Plot Bands, Line*'. Available at: http://nhn.github.io/tui.chart/latest/tutorial-example08-15-line-chart-plot-bands-lines (accessed 2022-04-19).
+
+You, E. et al (2022) '*vuejs/core v3.2*'. Available at: https://github.com/vuejs/core (accessed 2022-04-19).
+
 ### 3.2 - Bibliography
-
-https://gs.statcounter.com/screen-resolution-stats
-
-https://vuejsdevelopers.com/2020/02/17/vue-composition-api-when-to-use/
-
-https://vuejsdevelopers.com/2017/06/11/vue-js-extending-components/
-
-Plottable JS
-
-Chart JS
-
-Other JS chart libs?
-
-GIMP render SVG to PNG
-
-https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL
-
-https://www.w3schools.com/graphics/svg_intro.asp
-
-https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/obama.svg
-
-https://support.google.com/docs/thread/79758249/not-able-to-insert-svg-image-in-google-docs?hl=en#:~:text=SVG%20images%20currently%20aren't,to%20Help%20%3E%20Report%20an%20issue.
-
-https://support.microsoft.com/en-us/office/graphic-file-types-you-can-insert-and-save-dad53574-3384-4ced-b472-348d37c326a7
-
-Joel Test
-
-https://www.w3.org/wiki/Graceful_degradation_versus_progressive_enhancement
 
 Agile Alliance (2001) ‘*Manifesto for Agile Software Development*’. Available at: https://agilemanifesto.org (accessed: 2022-01-02).
 
 Atlassian (2019) ‘*What is Agile?*’. Available at: https://www.atlassian.com/agile (accessed 2022-02-15).
 
+amCharts.com (2022) '*amCharts 5 Demos*'. Available at: https://www.amcharts.com/demos/ (accessed 2022-04-19).
+
+ApexCharts.com (2022) '*JavaScript Chart Demos*'. Available at: https://apexcharts.com/javascript-chart-demos/ (accessed 2022-04-19).
+
+Au-Yeung, J. (2021) '*Vue.js 3 By Example*'. Birmingham: Packt Publishing, Limited.
+
 Berning, D. (2020) ‘*How To Use TypeScript with Vue Single File Components*’, DigitalOcean. Available at: https://www.digitalocean.com/community/tutorials/vuejs-using-typescript-with-vue (accessed: 2022-01-30).
 
+Chartjs.org (2022) '*Chart.js*'. Available at: https://www.chartjs.org/docs/latest/samples/information.html (accessed 2022-04-19).
+
+Dygraphs.com (2017) '*Draws a time series with weekends highlighted*'. Available at: https://dygraphs.com/gallery/#g/highlighted-weekends (accessed 2022-04-19).
+
 Facebook (2021) ‘*A declarative, efficient, and flexible JavaScript library for building user interfaces*’. Available at: https://github.com/facebook/react (accessed: 2022-01-29).
+
+Frappe.io (2021) '*Modern, Open Source SVG Charts*'. Available at https://frappe.io/charts (accessed 2022-04-19).
+
+Gamma, E., Helm, R., Johnson, R. & Vlissides, J. (1994) '*Design Patterns*'.
+
+Gimp Team (2022) '*GNU Image Manipulation Program*'. Available at https://www.gimp.org/ (accessed 2022-04-19).
+
+Google Docs Support Forums (2020) '*Not able to insert SVG image in Google Docs*'. Available at: https://support.google.com/docs/thread/79758249/not-able-to-insert-svg-image-in-google-docs (accessed 2022-04-19).
 
 Holland, A. (2021) ‘*Creating A Custom Range Input That Looks Consistent Across All Browsers*’, Smashing Magazine. Available at: https://www.smashingmagazine.com/2021/12/create-custom-range-input-consistent-browsers (accessed: 2022-02-02).
 
 Kanbanize (2017) ‘*What is Kanban?*’. Available at: https://kanbanize.com/kanban-resources/getting-started/what-is-kanban (accessed: 2022-01-02).
 
+Microsoft Support (2021) '*Graphic file types you can insert and save*'. Available at: https://support.microsoft.com/en-us/office/graphic-file-types-you-can-insert-and-save-dad53574-3384-4ced-b472-348d37c326a7 (accessed 2022-04-19).
+
+Mozilla Developer Network (2022) '*HTMLCanvasElement.toDataURL()*'. Available at https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL (accessed 2022-04-19).
+
+Novus Partners (2014) '*NVD3 Re-usable charts for d3.js*'. Available at: https://nvd3.org/ (accessed 2022-04-19).
+
 Rehkopf, M. (2018) ‘*Kanban vs Scrum*’, Atlassian. Available at: https://www.atlassian.com/agile/kanban/kanban-vs-scrum (accessed: 2021-12-11).
 
+Ribeiro, H.R. (2020) '*Vue.js 3 Cookbook*'. Birmingham: Packt Publishing, Limited.
+
 Schwaber, K. & Sutherland, J. (2020) ‘*The Scrum Guide*’, Scrum Guides. Available at: https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-US.pdf (accessed: 2022-01-02).
+
+Spolsky, J. (2000) '*The Joel Test*'. Available at: https://www.joelonsoftware.com/2000/08/09/the-joel-test-12-steps-to-better-code/ (accessed 2022-04-19).
 
 Syed, B. A. (2017) '*TypeScript Deep Dive*'. Availble at: https://basarat.gitbook.io/typescript/ (accessed: 2022-03-20).
 
@@ -334,9 +344,14 @@ TypeScript (2022) '*The TypeScript Handbook*'. Available at: https://www.typescr
 
 Valutis, O (2015) ‘*Styling and Customizing File Inputs the Smart Way*’. Available at: https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way (accessed: 2022-02-13).
 
+vis.js (2022) '*Vis Graph2D Examples*'. Available at: https://visjs.github.io/vis-timeline/examples/graph2d/ (accessed 2022-04-19).
+
 We Learn Code (2020) ‘*What is a Web Framework, and Why Should I use one?*’. Available at: https://welearncode.com/what-are-frontend-frameworks (accessed: 2022-01-29).
 
-You, E. (2021) ‘*🖖 Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web*’, vuejs. Available at: https://github.com/vuejs/vue (accessed: 2022-01-29).
+
+w3.org (2015) '*Graceful degradation versus progressive enhancement*'. Available at: https://www.w3.org/wiki/Graceful_degradation_versus_progressive_enhancement (accessed 2022-04-19).
+
+w3schools.com (2022) '*SVG Tutorial*'. Available at: https://www.w3schools.com/graphics/svg_intro.asp (accessed 2022-04-19).
 
 ### 3.3 - To Read
 
