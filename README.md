@@ -4,6 +4,29 @@ Inspired by ["Batteries aren't the only way to store power. Here's another."](ht
 
 ## Table of Contents
 
+* Project Management
+  1. Motivation - 3rd person, present tense, optimistic tone [x]
+  1. Deliverables - 3rd person, future tense, analytical tone [x]
+  1. Lifecycle - 3rd person, present tense, informational tone [x]
+  1. Roadmap - 3rd person, future tense, analytical tone [x]
+  1. Risk Management - Mostly 3rd person, present tense, analytical tone [x]
+* Project Progress - 1st person, past perfect tense, informational tone [x]
+  2. Architecture - 3rd person, imperative tense, informational tone [x]
+  2. UX - 3rd person, imperative tense, informational tone [x]
+  2. Simplifications - 3rd person, imperative tense, analytical tone [x]
+  2. Thermodynamics - 3rd person, imperative tense, technical tone [x]
+  2. Implementation - 1st person, past tense, technical tone [x]
+  2. Reflection - 1st person, mixed tense, informational tone [x]
+* Glossary - Impersonal, imperative tense, technical tone [x]
+* Literature
+	4. References [x]
+	4. Bibliography [x]
+	4. To Read [x]
+* Appendix I, Insulation calculations [x]
+* Appendix II, Access negotiations
+* Appendix III, Project log
+* Appendix IV, Code
+
 ## 1 - Project Management
 
 ### 1.1 - Motivation
@@ -276,6 +299,8 @@ CIBSE (2015) ‘*Environmental Design – CIBSE Guide A (8th Edition)*’.
 
 DuckDuckGo (2022) ‘*Server room image search at DuckDuckGo*’. Available at: https://duckduckgo.com/?q=server+room&t=h_&iax=images&ia=images (accessed 2022-02-15).
 
+Met Office (2016) '*Southern England: climate*'. Available at https://www.metoffice.gov.uk/binaries/content/assets/metofficegovuk/pdf/weather/learn-about/uk-past-events/regional-climates/southern-england_-climate---met-office.pdf (accessed 2022-04-25).
+
 Naver Corp. (2022) '*Region With Timeseries*'. Available at https://naver.github.io/billboard.js/demo/#Region.RegionWithTimeseries (accessed 2022-04-19).
 
 OpenLearn (2019) ‘*Energy in buildings*’. Available at: https://www.open.edu/openlearn/nature-environment/energy-buildings (accessed 2022-02-15).
@@ -291,6 +316,8 @@ Technology Connections (2021) ‘*Batteries aren't the only way to store energy.
 Toast.com (2021) '*8.15 [Line Chart] Plot Bands, Line*'. Available at: http://nhn.github.io/tui.chart/latest/tutorial-example08-15-line-chart-plot-bands-lines (accessed 2022-04-19).
 
 You, E. et al (2022) '*vuejs/core v3.2*'. Available at: https://github.com/vuejs/core (accessed 2022-04-19).
+
+w3.org (2015) '*Graceful degradation versus progressive enhancement*'. Available at: https://www.w3.org/wiki/Graceful_degradation_versus_progressive_enhancement (accessed 2022-04-19).
 
 ### 3.2 - Bibliography
 
@@ -310,7 +337,7 @@ Chartjs.org (2022) '*Chart.js*'. Available at: https://www.chartjs.org/docs/late
 
 Dygraphs.com (2017) '*Draws a time series with weekends highlighted*'. Available at: https://dygraphs.com/gallery/#g/highlighted-weekends (accessed 2022-04-19).
 
-Facebook (2021) ‘*A declarative, efficient, and flexible JavaScript library for building user interfaces*’. Available at: https://github.com/facebook/react (accessed: 2022-01-29).
+Facebook (2021) ‘*React*’. Available at: https://github.com/facebook/react (accessed: 2022-01-29).
 
 Frappe.io (2021) '*Modern, Open Source SVG Charts*'. Available at https://frappe.io/charts (accessed 2022-04-19).
 
@@ -318,13 +345,23 @@ Gamma, E., Helm, R., Johnson, R. & Vlissides, J. (1994) '*Design Patterns*'.
 
 Gimp Team (2022) '*GNU Image Manipulation Program*'. Available at https://www.gimp.org/ (accessed 2022-04-19).
 
+Google (2022) '*Chrome*'. Available at https://www.google.co.uk/chrome/ (accessed 2022-04-25).
+
 Google Docs Support Forums (2020) '*Not able to insert SVG image in Google Docs*'. Available at: https://support.google.com/docs/thread/79758249/not-able-to-insert-svg-image-in-google-docs (accessed 2022-04-19).
 
 Holland, A. (2021) ‘*Creating A Custom Range Input That Looks Consistent Across All Browsers*’, Smashing Magazine. Available at: https://www.smashingmagazine.com/2021/12/create-custom-range-input-consistent-browsers (accessed: 2022-02-02).
 
+Iyengar, M., Schmidt, R. & Caricari, J. (2010) 'Reducing energy usage is data centers through control of Room Air Conditioning units', *2010 12th IEEE Intersociety Conference on Thermal and Thermomechanical Phenomena in Electronic Systems* pp. 1-11. doi: 10.1109/ITHERM.2010.5501418.
+
 Kanbanize (2017) ‘*What is Kanban?*’. Available at: https://kanbanize.com/kanban-resources/getting-started/what-is-kanban (accessed: 2022-01-02).
 
+Koch, B. & Slezak, D. (2018) 'Less energy, more efficiency in server rooms and data centers', *Computer Science - Research and Development*, 33(1), pp.251-252. doi: 10.1007/s00450-017-0369-0.
+
+Lin, M., Shao, S., Zhang, X., VanGilder, J. W., Avelar, V. & Hu, X. (2014) 'Strategies for data center temperature control during a cooling system outage', *Energy and Buildings*, 73, pp. 146-152. doi: 10.1016/j.enbuild.2013.12.015.
+
 Microsoft Support (2021) '*Graphic file types you can insert and save*'. Available at: https://support.microsoft.com/en-us/office/graphic-file-types-you-can-insert-and-save-dad53574-3384-4ced-b472-348d37c326a7 (accessed 2022-04-19).
+
+Mousavi, A., Vyatkin, V., Berezovskaya, Y. & Zhang, X. (2015) 'Towards energy smart data centers: Simulation of server room cooling system' *2015 IEEE 20th Conference on Emerging Technologies & Factory Automation (ETFA)* pp. 1-6. doi: 10.1109/ETFA.2015.7301573.
 
 Mozilla Developer Network (2022) '*HTMLCanvasElement.toDataURL()*'. Available at https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL (accessed 2022-04-19).
 
@@ -348,23 +385,4 @@ vis.js (2022) '*Vis Graph2D Examples*'. Available at: https://visjs.github.io/vi
 
 We Learn Code (2020) ‘*What is a Web Framework, and Why Should I use one?*’. Available at: https://welearncode.com/what-are-frontend-frameworks (accessed: 2022-01-29).
 
-
-w3.org (2015) '*Graceful degradation versus progressive enhancement*'. Available at: https://www.w3.org/wiki/Graceful_degradation_versus_progressive_enhancement (accessed 2022-04-19).
-
 w3schools.com (2022) '*SVG Tutorial*'. Available at: https://www.w3schools.com/graphics/svg_intro.asp (accessed 2022-04-19).
-
-### 3.3 - To Read
-
-Aizawa, N. (2020) ‘Study on a Cooling System with Power Usage Effectiveness of 1.02 for Server Rooms’, ASHRAE transactions, 126(1), p. 212–.
-
-Koch, B. and Slezak, D. (2017) ‘Poster Abstract: Less energy, more efficiency in server rooms and data centers: A campaign by the Swiss Telecommunications Association’, Computer science (Berlin, Germany), 33(1-2), pp. 251–252. doi:10.1007/s00450-017-0369-0.
-
-Sasakura, K. et al. (2020) ‘Rack Temperature Prediction Model Using Machine Learning after Stopping Computer Room Air Conditioner in Server Room’, Energies (Basel), 13(17), p. 4300–. doi:10.3390/en13174300.
-
-Sasakura, K. et al. (2020) ‘A Temperature-Risk and Energy-Saving Evaluation Model for Supporting Energy-Saving Measures for Data Center Server Rooms’, Energies (Basel), 13(19), p. 1–. doi:10.3390/en13195222.
-
-Nada, S.A. et al. (2017) ‘Experimental parametric study of servers cooling management in data centers buildings’, Heat and mass transfer, 53(6), pp. 2083–2097. doi:10.1007/s00231-017-1966-y.
-
-Macedo, D. et al. (2019) ‘A Parametric Numerical Study of the Airflow and Thermal Performance in a Real Data Center for Improving Sustainability’, Applied sciences, 9(18), p. 3850–. doi:10.3390/app9183850.
-
-Duda, S.W. (2018) ‘N+1 HVAC for IT Closets And Server Rooms’, ASHRAE journal, 60(5), p. 56–.
