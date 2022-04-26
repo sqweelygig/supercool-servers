@@ -5,27 +5,29 @@ Inspired by ["Batteries aren't the only way to store power. Here's another."](ht
 ## Table of Contents
 
 * Project Management
-  1. Motivation - 3rd person, present tense, optimistic tone [x]
-  1. Deliverables - 3rd person, future tense, analytical tone [x]
-  1. Lifecycle - 3rd person, present tense, informational tone [x]
-  1. Roadmap - 3rd person, future tense, analytical tone [x]
-  1. Risk Management - Mostly 3rd person, present tense, analytical tone [x]
-* Project Progress - 1st person, past perfect tense, informational tone [x]
-  2. Architecture - 3rd person, imperative tense, informational tone [x]
-  2. UX - 3rd person, imperative tense, informational tone [x]
-  2. Simplifications - 3rd person, imperative tense, analytical tone [x]
-  2. Thermodynamics - 3rd person, imperative tense, technical tone [x]
-  2. Implementation - 1st person, past tense, technical tone [x]
-  2. Reflection - 1st person, mixed tense, informational tone [x]
-* Glossary - Impersonal, imperative tense, technical tone [x]
+  1. Motivation
+  1. Deliverables
+  1. Lifecycle
+  1. Risk Management
+  1. Roadmap
+  1. Reflection
+* Project Progress
+  2. Architecture
+  2. User Experience
+  2. Simplifications
+  2. Thermodynamics
+  2. Output
+  2. Implementation
+* Glossary
 * Literature
-	4. References [x]
-	4. Bibliography [x]
-	4. To Read [x]
-* Appendix I, Insulation calculations [x]
+	4. References
+	4. Bibliography
+	4. To Read
+* Appendix I, Insulation calculations
 * Appendix II, Access negotiations
 * Appendix III, Project log
 * Appendix IV, Code
+* Appendix V, Roadmap
 
 ## 1 - Project Management
 
@@ -62,6 +64,11 @@ Furthermore, this survey is likely to be conducted on a portable device, so inte
 The system will mathematically model the thermal properties of the server room through time in different configurations.
 This modelling will allow the comparison of configurations in a printable, business-oriented report.
 One of these configurations will be computed algorithmically, with this algorithm being developed and implemented during the project.
+The developer will use test-driven development and automated testing for all modelling aspects of this product.
+This philosophy will ensure that solid mathematical foundations underpin the model.
+
+Any deliverable subset of the product, especially each project milestone, should be evaluated against the dual criteria of improving the features delivered and supporting the development of features imagined.
+The project will explicitly document this at each milestone and also adopt this as a healthy part of commit hygiene.
 
 ### 1.3 - Lifecycle
 
@@ -89,27 +96,101 @@ In contrast, if the product develops beyond this project, there is value to targ
 This context would suggest a more discrete deployment model, but a continuous pipeline can easily adopt pinned releases.
 Based on these observations and the principle of only adding processes when they add value, the project development model will be Kanban.
 
-The first delivered use case will be an assisted survey of a site's thermal properties.
-This use case is selected because the project runs from February to September, so collecting data as early as possible will cover a more significant seasonal variance.
-At the other end of the project lifecycle, the final submission should include options for future development, captured as backlog cards.
+Consistent with the lifecycle model chosen, the project accepts that a requirements specification is continuous, reflective and discovered. 
+Therefore, distant goals are recorded in an outline form to maintain agility and reduce speculative specification.
+These encapsulate improvements visible to the project but beyond the current priority's scope.
+As a priority begins and proceeds, the team will decompose these goals into more specific tasks.
+Active reflection occurs as each task is committed to the repository, considering code quality, feature completeness and transferrable learning.
+Finally, as a priority concludes, the team must consider which goals warrant their subsequent efforts.
+At the project conclusion, the final submission should include goals for future development, captured as backlog cards.
 The product potential exceeds the project budget, but there is still value in recording these options.
 
-## 2 - Project work
+The reflection and self-improvement in this lifecycle occur at two frequencies.
+The least frequent reflection opportunities occur in-between priorities; these suit consideration of the project budget, schedule and direction.
+The first happened after the initial whiteboarding of the project, and the estimates of domain research and project schedule come from this reflection.
+Another project overview will occur after the MVP.
+Secondly, the development effort is organised into commits, each a quantum of improvement.
+As each is committed to the repository, the contributor takes a deliberate moment to ensure that the code is of reasonable quality and explain what value the code delivers.
+One risk experienced with continual learning and self-improvement is the temptation to refactor existing code.
+To yoke this temptation a deliberate opportunity is given at the end of each priority to apply later learning to earlier development.
 
-### 2.1 - Roadmap
+![Screwthread model of continual improvement](docs/continual_improvement.png)
+
+Figure 1.3.2 - Limiting revisits while adopting continual improvement
+
+The first delivered use case will be an assisted survey of a site's thermal properties.
+This use case is selected because the project runs from February to September, so collecting data as early as possible will cover a more significant seasonal variance.
+Therefore to support the "as early as possible" qualitative requirement, this deliverable will include just enough research to ensure that the data gathered supports high-quality models, just enough interface that a technician can comfortably operate the system and just enough workflow for a customer to perceive the value.
+Immediately upon completing this deliverable, there will be an opportunity to reflect on the product direction, schedule and lessons.
+
+### 1.4 - Risk Management
+
+|                  | 1 - Rare            | 2 - Unlikely        | 3 - Possible        | 4 - Likely          | 5 - Almost certain  |
+| ---------------- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- |
+| 1 - Trivial      |                     |                     | The project might underrun |              |                     |
+| 2 - Minor        |                     | The project might overrun |               |                     |                     |
+| 3 - Moderate     | All electrical tariff data might be priveledged | | Permission might be denied to adjust the thermostat | | |
+| 4 - Major        |                     |                     |                     |                     |                     |
+| 5 - Catastrophic |                     | The mathematics of thermal cooling might be too complicated | | |                     |
+
+Figure 1.4.1 - Risk assessment grid for the project
+
+To achieve the task, "A technician should have information on an example server room available." the project requires permission to observe and adjust the thermostat of a server room.
+This permission is critical as the risk has a moderate likelihood and impact.
+This likelihood is "possible" because the temperature is a tightly controlled aspect of a server room, offset by the corporate relationships and philosophy.
+Furthermore, the impact is "moderate" because this example provides feedback about the user experience and gives the project a case study. 
+
+Therefore, negotiation-in-principle started immediately upon beginning the project to bring any related decision point forwards.
+Now that we have outlined a survey workflow, the developer is negotiating access to perform the required tasks.
+If this negotiation fails, the project may continue without a case study or transition to modelling a more available example of thermodynamics and power offsetting, such as domestic refrigerators.
+
+To achieve or defer the task, "A technician should be able to model a room with significant passive cooling." the project must incorporate learning into the mathematics of thermodynamic cooling.
+Failing in this learning is "unlikely" as the science is sure to be public domain but is also likely to be intermediate level.
+In addition, this research is of "catastrophic" impact as it underwrites the model and prioritises simplifications.
+Therefore, achieving a basic understanding of this field is second only to finding an engaging case study, and is the target of early research efforts.
+Whilst a raw analysis of the risk assessment would prioritise this above thermostat permission, the schedule placed this second because it relies on fewer factors external to the project and therefore experiences a lower latency.
+
+As with any project, there is a risk that the scope will not match the budget.
+In addition, since this project includes research and discovery aspects, it is challenging to reconcile these two ledgers in advance.
+To mitigate the dual risks of overrun and underrun, the project will deliver a viable product before the deadline, providing an opportunity to reflect, re-scope and improve.
+
+### 1.5 - Roadmap
 
 In accordance with the project lifecycle adopted, this is several lists of stakeholder stories, each in the format `A (stakeholder) (must|should|could|will not) …`.
 This project adapts the core Kanban board by broadening the scope of concerns from "user stories" to "stakeholder stories" and by adding a qualitative list to capture persistent requirements.
 These stories will move in step with the code that implements them and reside in the code repository, so the project history is always accurate of that moment in time.
+For an up-to-date listing, see Appendix V.
 
-["Roadmap"](ROADMAP.md)
+For several reasons, gathering a set of thermal observations is a vital early objective and this received priority above other concerns.
+First, gaining access to an example server room provides a case study, and gathering these observations proves that access.
+Furthermore, these observations are more useful when gathered across as wide a range of seasons as possible.
+Several elements were required to script this set of observations.
+Firstly, research into the thermal behaviour of rooms was conducted and supplemented by a quick survey of the BDX.
+Secondly, I implemented the survey interface and progressed negotiations to conduct a more detailed survey.
 
+### 1.6 - Reflection
 
-### 2.2 - Architecture
+The project progress covers the input and processing of data but no output, a little ahead of the project timeline estimated in Figure 1.3.1.
+
+One challenge faced during this arc was the verification of the UX and data accuracy, especially regression bugs and JSON parsing and serialisation.
+As a result, the next development phase will include time for the research and adoption of a front-end component testing framework.
+When scoping the project, I had not expected to require these tests to be automated.
+With the benefit of hindsight, this reinforces the TDD adage, "If you cannot work out what you want clearly enough to write a test, you should not be writing any code yet".
+Nevertheless, the project plan has time and agility enough to incorporate this unexpected requirement.
+
+The other significant challenge during this arc was structuring code reuse.
+Vue.js (2022) favours composition and mixin reuse in a facade pattern.
+Whilst this is not my usual development paradigm, I decided to adopt it for this project.
+In this codebase, this presents as "use...()" functions and "{...}" object recomposition.
+Whilst this has not always been easy, it has increased my flexibility as a developer.
+
+## 2 - Project work
+
+### 2.1 - Architecture
 
 ![Overview of gathering data, optimising schedule and presenting report](docs/overview_diagram.png)
 
-Figure 2.2.1 - Activity diagram showing data flow for optimising a schedule and presenting a report.
+Figure 2.1.1 - Activity diagram showing data flow for optimising a schedule and presenting a report.
 
 The core workflow of this system suits a notification and data flow architecture.
 The workflow has several data gathering stages that favour compartmentalisation as user interfaces that gather the underlying data.
@@ -120,7 +201,7 @@ Since these require several data objects and are closely related to the coordina
 
 ![Overview of how the classes and types interact](docs/class_diagram.png)
 
-Figure 2.2.2 - Class diagram showing data relations and inheritance
+Figure 2.1.2 - Class diagram showing data relations and inheritance
 
 In deciding the deployment artefacts, there are several pertinent aspects.
 First, all the data driving this model is from the primary observations of the technician or third party APIs.
@@ -164,37 +245,24 @@ In conclusion, this project will use Vue.js, especially single file components, 
 
 Figure n.n - Feature comparison matrix of language options.
 
-### 2.3 - Work Completed
-
-For several reasons, gathering a set of thermal observations is a vital early milestone and this received priority above other concerns.
-First, gaining access to an example server room provides a case study, and gathering these observations proves that access.
-Furthermore, these observations will inform and verify modelling assumptions, which is improved by gathering these observations across as wide a range of seasons as possible.
-
-Several elements were required to script this set of observations.
-Most importantly, research into the thermal behaviour of rooms was conducted and supplemented by a quick survey of the BDX.
-This research ensured that any detailed survey taken suited a fully formed model.
-Since such a model would require calculations of how rapidly a room could change temperature, negotiation began to adjust the thermostat.
-The BDX has been selected as a possible case study due to its close association with my employer and its likely philosophical alignment with the goals of this project.
-The quick survey revealed that the server room windows are north facing and boarded over, so the initial model can ignore solar thermal effects.
-
-![Plan showing a server room 9m x 12m x 4m](docs/bdx_plan.png)
-
-Figure 2.3.1 - Plan of the server room surveyed
-
-To support this survey, the developer initialised the UI of this project, designed the survey's workflow, and implemented this in the interface.
-The UI consists of a reactive website with custom data-gathering components, targeting low resolutions and touchscreen interaction to support smartphone usage.
-Within this, the survey asks about the room as it moves between and maintains different temperatures.
-As a result, this data should support an intermediate thermal model.
+### 2.2 - User Experience
 
 ![Overview of gathering data](docs/thermal_observation_sequence.png)
 
-Figure 2.3.2 - Overview of the thermal survey workflow.
+Figure 2.2.1 - Overview of the thermal survey workflow.
+
+The user experience implements the data flow shown in Figure 2.3.2 as a sequence of incremental steps, each adding data to the model.
+It deliberately captures the most controversial data first, using the principle of failing early rather than the psychological trick of the sunk-cost fallacy, as this is a more ethical user experience.
+The MVP prioritises a smartphone interface as this is the most restrictive interface expected.
+The w3c (2015) considers progressive enhancement to generally be more effective and maintainable than graceful degradation, especially when adopted from the initialisation of the project.
+Therefore, the interface should not rely on high resolutions, easy keyboard typing, hover events or other aspects absent from a smartphone. 
+To support this, I will develop at a 360x640px resolution using Chrome's low-resolution developer toolkit as statcounter.com (2022) states that this is the lowest resolution that receives frequent use.
 
 ![Smartphone interface](docs/screenshot.png)
 
-Figure 2.3.3 - Web interface at 360 x 640.
+Figure 2.2.2 - Web interface at 360 x 640.
 
-### 2.4 - Simplifications
+### 2.3 - Simplifications
 
 This section records the simplifying assumptions currently applied to the modelling process.
 These simplifications should not be treated as final but should be justified or removed if possible.
@@ -235,30 +303,9 @@ In addition, the building materials used in most server rooms will provide but n
 
 ![Server rooms image search](docs/server_room_quick_survey.png)
 
-Figure 2.6.2 - Quick survey of typical server room construction, DuckDuckGo 2022
+Figure 2.3.1 - Quick survey of typical server room construction, DuckDuckGo 2022
 
-### 2.5 - Blockers
-
-![Risk assessment grid](docs/risk_assessment.png)
-
-Figure 2.5.1 - Risk assessment grid for the project
-
-To achieve the task, "*A technician should have information on an example server room available.*" the project requires permission to observe and adjust the thermostat of a server room.
-This permission is critical as the risk has a high likelihood and high impact.
-This concern is likely because the temperature is a tightly controlled aspect of a server room.
-Furthermore, it is impactful because this example provides feedback about the user experience and gives the project a case study.
-
-Therefore, negotiation-in-principle started immediately upon beginning the project to bring any related decision point forwards.
-Now that we have outlined a survey workflow, the developer is negotiating access to perform the required tasks.
-This negotiation does have the possibility of failure due to the management committee of the BDX being external to the project.
-If this negotiation fails, the project may seek a different case study, continue without a case study or transition to modelling a more available example of thermodynamics and power offsetting, such as domestic refrigerators.
-
-To achieve or defer the task, "*A technician should be able to model a room with significant passive cooling.*" the project must incorporate learning into the mathematics of thermodynamic cooling.
-Failing in this learning is of medium likelihood as the science is sure to be public domain but is also likely to be intermediate level.
-In addition, this research is of high impact as it can underwrite and prioritise other simplifications.
-Therefore, achieving a basic understanding of this field is second only to finding an engaging case study, and is the target of early secondary research efforts.
-
-### 2.6 - Thermodynamics
+### 2.4 - Thermodynamics
 
 There are multiple routes by which a server room sheds heat.
 Principal among these will be the air conditioning systems which good practice states will exceed the cooling requirements using an N + 1 redundant infrastructure.
@@ -267,7 +314,7 @@ This cooling is all set against the heat a room generates from the servers it co
 
 ![BMS interface](docs/bms_interface.jpg)
 
-Figure 2.6.1 - Building management system (BMS) interface, Airedale 2015
+Figure 2.4.1 - Building management system (BMS) interface, Airedale 2015
 
 Two 51.6kW air conditioning units cool the BDX for a total cooling power of 103.2kW.
 This infrastructure is N + 1 redundant, implying a cap upon server equipment at 51.6kW before upgrades.
@@ -283,6 +330,87 @@ The calculations model a 2 kelvin difference with the data hall to estimate sign
 An upper estimate of cooling through the floor, ceiling, internal, and underground walls is 1.3 kilowatts (rounded up to 2 s.f.) (see Appendix I).
 This estimate puts a medium prioritisation on modelling passive cooling.
 
+![Plan showing a server room 9m x 12m x 4m](docs/bdx_plan.png)
+
+Figure 2.1.1 - Plan of the server room surveyed
+
+## 2.5 - Output
+
+The intended final output of this workflow is a recommendation for an alternative thermostat schedule that would reduce the resource consumption of a server room.
+This output must be presentable as a business report and suit a technical, but not specialist, business audience.
+We assume that the technician compiling the output will author a proposal or business proforma around the recommendations.
+Therefore, this project should support them by providing comparison figures, a graphic and the version number of the underlying thermal model.
+
+Figure 2.5.1 - Initial design of the chart.
+
+The scan shown above captures the chart design immediately after hallway testing and in a state suitable for implementation.
+Firstly, it shows the electrical tariff interval inputted by the technician as a function of time.
+Over the same period, it shows the recommended thermostat schedule and predicted temperature.
+The common factor linking all these is the duty cycle of the air conditioning, so the design renders this as shading to build upon that association.
+The design also shows a black line that hallway testing explored as an option to present the duty cycle of the air conditioning.
+The testing found that syntactical correctness and precision of value were advantages but not as advantageous as presenting two values in a single gaze and using the semantic association between a line and its immediate background.
+
+The chart should be as universally embeddable as possible, with the initial set of targetted applications being Microsoft's and Google's productivity suites.
+Therefore, a shortlist of PNG and SVG was assessed against their compatibility for use in Microsoft Office and Google Drive to decide upon graphics format.
+Since they are rendering a graph, the comparison includes infinite scalability.
+
+Figure 2.5.2 - Comparison matrix of graphics format compatibility
+
+Google Docs support forums (2020) indicated that SVG format is not supported, backed by primary research.
+Primary research indicates that the PNG format is insertable into a Google Doc.
+Microsoft support (2021) and primary research indicate that PNG is insertable into Microsoft Office. 
+
+It is worth noting that there are routes by which each technology can fulfil the feature set of its alternative.
+Firstly, the GIMP application (2022) can convert SVG to PNG, and it is free; therefore, SVG's features in this context are a superset of PNG's features.
+Secondly, by rendering a PNG at high resolution, one can achieve, to all practical concerns, the benefit of infinite scalability.
+Of course, neither of these are optimal workflows, but they are possible.
+This analysis of the technical capabilities of the output format does not assert a firm conclusion, and decision-makers should look to other analyses for a simple recommendation. 
+
+To implement this chart, the developer reviewed the example libraries of several client-side plotting libraries (amcharts.com, apexcharts.com, chartjs.org, dygraphs.com, frappe.io, naver.github.io, nvd3.org, plottablejs.org, toast.com, vis.js) for background bands and double y-axes.
+Four of these seemed suitable, the "background bands" example published by plottable.js, the "Draws a time series with weekends highlighted" published by dygraphs.com, the "Region With Timeseries" published by Naver Corp as part of billboard.js and the "8.15 [Line Chart] Plot Bands, Line" published by toast.com.
+
+Figure 2.5.3 - Feature comparison of chart libraries
+
+The research into dygraphs.com demoted it from consideration without needing to complete the comparison.
+The presentation style is lacklustre, the band implementation uses direct manipulation of the DOM canvas element, and the data input format is a CSV string.
+In selecting between toast.com, billboard.js and plottablejs.org, two factors proved critical.
+The toast.com presentation style is more professional than the others, and its deployment options include a Vue.js wrapper.
+Therefore the initial attempts at implementing this feature will explore the toast.com library.
+
+## 2.6 - Implementation
+
+I have initiated this user interface using Vue.js single file components (SFCs) and typescript files (see Appendix IV).
+The top-level SFC in SuperCoolServers.vue provides broad stroke templating and coordination between interfaces.
+This imports interfaces and registers to listen to their update, next and previous events.
+Since each interface uses many similar features, they mixin these from /src/composables.
+The pipes, stored alongside each SFC, support the SFC by encapsulating all the mathematical modelling as pure functions and bundling these as .ts files for testing and other contexts.
+
+The first layer in the system is SuperCoolServers.vue.
+Depending on the active phase, this file's `<template>` section brings in the relevant sub-component.
+Next, the `<style>` section applies reused sub-component style rules.
+This reuse asserts specific characteristics of each sub-component and means that a sub-component should be importable into a different top-level frame.
+The main assertion is that the sub-component renders a sequence of block-level elements, so this is not very restrictive.
+Finally, the `<script>` section defines data factories and emit handlers before passing these to some of the shared composables.
+
+Figure 2.6.1 - The useDataBoundary reused architecture.
+
+The useDataBoundary is a facade of two other utilities that can be constructed together and are frequently used together in this codebase.
+It first defines a set of properties and methods to capture errors.
+It then uses an adapter/model hybrid pattern to vivify properties within localStorage.
+Each sub-component provides methods to vivify a JSON parsed version of its state, typeguard the state, and convert it into an emit payload.
+In exchange, the useLocalStorage library handles saving the state to persistent storage, uploading and downloading of files, and emitting updates.
+As well as useDataBoundary, the imports also include usePhases, stored alongside the rendering details in TabBar.vue.
+This library provides utility functions for storing and progressing through a list of ordered phases referred to by their title string.
+
+Each phase is a subfolder and has a .vue SFC, responsible for its render and state.
+These use the same utility library to handle data persistence and conversion, configured with the required data shape.
+Each provides a pure function adapter to transform emissions from the data that the phase gathers into more generic properties.
+In addition, these each use specific subcomponents and project-level subcomponents to handle recyclable elements.
+The top-level component in SuperCoolServers.vue then catches these emit payloads and stores them for the decision stages of the workflow.
+
+By implementing the workflow in this manner, each stage is responsible for its data, render and pace, on the condition that the updates it emits are typed suitably for the overall analysis.
+This architecture minimises and specifies the coupling between the analysis and survey phases while keeping each phase and the UX cohesive.
+
 ### 2.7 - Glossary
 
 | Term          | Type          | Definition                                                                                                                        |
@@ -290,6 +418,8 @@ This estimate puts a medium prioritisation on modelling passive cooling.
 | Technician    | Stakeholder   | An individual who maintains the environmental conditions of a server room; they usually surface usability concerns.               |
 | Customer      | Stakeholder   | An organisation that may decide to adopt thermostat recommendations based on the report; they usually surfaces utility concerns.  |
 | <<type>>      | Software term | An abstract data structure, like an interface, except it asserts that objects shall possess certain data types instead of methods |
+| Project       | Project management | The subset of the *product* scheduled within the budgetary constraints |
+| Product       | Project management | The set of features that deliver value when measured against the mission statement |
 
 ## 3 - Literature
 
