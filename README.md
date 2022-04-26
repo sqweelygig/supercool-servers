@@ -45,7 +45,7 @@ By reducing these expenses, operators may achieve a more efficient server room w
 
 Thermal mass reduces the rate at which temperature changes occur and, in this context, can be used as energy storage.
 For example, a schedule may set the target temperature on an air-conditioner thermostat to a cooler temperature when electricity is cheaper.
-As a result, the air-conditioner will draw more heat energy from the room than routine operations require, and the thermal mass will cool.
+As a result, the air-conditioner will draw more heat energy from the room than routine requirements, and the thermal mass will cool. 
 Conversely, the same schedule may resume the normal target temperature during expensive electricity tariffs.
 The thermal mass, being colder than the target temperature and the passive equilibrium of the room, will absorb some heat energy and slow the room's warming.
 This offsetting of operation through time is equivalent to storing energy when power is cheap and using it when power is expensive.
@@ -56,10 +56,10 @@ This project will create an application to steer a server room technician toward
 It will gather the data required via a survey, model the thermal characteristics of the room, compute an optimised thermostat schedule, and present the forecast savings.
 The project assumes that its audience is technical, consistent with having some responsibility for a server room's environmental controls.
 
-The system cannot assume that the server room has a smart thermostat since its purposes include justifying such an expense.
+The system cannot assume that the server room has a smart thermostat since its output might be part of justifying such an expense.
 Therefore, to gather the dataset, a technician might observe the thermal properties of the server room.
 The dataset required to compute the desired report is not trivial, so a guided survey will improve accuracy, reliability, and uptake.
-Furthermore, this survey is likely to be conducted on a portable device, so interface development should support small screen sizes.
+Furthermore, this survey is likely to be conducted on a portable device, so interface development should target small screen sizes.
 
 The system will mathematically model the thermal properties of the server room through time in different configurations.
 This modelling will allow the comparison of configurations in a printable, business-oriented report.
@@ -118,7 +118,7 @@ To yoke this temptation a deliberate opportunity is given at the end of each pri
 
 Figure 1.3.2 - Limiting revisits while adopting continual improvement
 
-The first delivered use case will be an assisted survey of a site's thermal properties.
+The first delivered use case will be an assisted survey of a room's thermal properties.
 This use case is selected because the project runs from February to September, so collecting data as early as possible will cover a more significant seasonal variance.
 Therefore to support the "as early as possible" qualitative requirement, this deliverable will include just enough research to ensure that the data gathered supports high-quality models, just enough interface that a technician can comfortably operate the system and just enough workflow for a customer to perceive the value.
 Immediately upon completing this deliverable, there will be an opportunity to reflect on the product direction, schedule and lessons.
@@ -156,10 +156,10 @@ To mitigate the dual risks of overrun and underrun, the project will deliver a v
 
 ### 1.5 - Roadmap
 
-In accordance with the project lifecycle adopted, this is several lists of stakeholder stories, each in the format `A (stakeholder) (must|should|could|will not) …`.
-This project adapts the core Kanban board by broadening the scope of concerns from "user stories" to "stakeholder stories" and by adding a qualitative list to capture persistent requirements.
-These stories will move in step with the code that implements them and reside in the code repository, so the project history is always accurate of that moment in time.
-For an up-to-date listing, see Appendix V.
+Following the project lifecycle model adopted, this is several lists of stakeholder stories, each in the format `A (stakeholder) (must|should|could|will not) …`.
+This project adapts the core Kanban board by broadening the scope of concerns from "user stories" to "stakeholder stories" and adding a qualitative list to contain persistent requirements.
+These stories will move in step with the code that implements them and reside in the code repository, so the project history is always up-to-date.
+For an up-to-date roadmap listing, see Appendix V.
 
 For several reasons, gathering a set of thermal observations is a vital early objective and this received priority above other concerns.
 First, gaining access to an example server room provides a case study, and gathering these observations proves that access.
@@ -188,16 +188,13 @@ Whilst this has not always been easy, it has increased my flexibility as a devel
 
 ### 2.1 - Architecture
 
-![Overview of gathering data, optimising schedule and presenting report](docs/overview_diagram.png)
-
-Figure 2.1.1 - Activity diagram showing data flow for optimising a schedule and presenting a report.
-
-The core workflow of this system suits a notification and data flow architecture.
-The workflow has several data gathering stages that favour compartmentalisation as user interfaces that gather the underlying data.
-Each stage requires no intervention from other components and emits strongly typed updates.
-By implementing these as components we allow each to encapsulate their user interface and bound their complexity.
-The workflow also has several data processing stages that use the data gathered to medel and recommend thermal schedules.
-Since these require several data objects and are closely related to the coordination between the phases, they reside in the coordinating class.
+The core workflow of this system suits a composite of notification and data flow architectures.
+The workflow has several autonomous data-gathering stages that favour compartmentalisation as UI panes that gather the underlying data.
+Each stage requires no intervention from other panes, should control its own pace and emits strongly typed updates.
+These will be components to allow each stage to encapsulate its user interface and bound its complexity.
+The workflow also has several data-processing stages that use the data gathered to model and recommend thermal schedules.
+These will be piped together and are pure functions, which provides the advantage of divorcing all complicated mathematics from state and easing unit testing.
+Where these require input from several data gathering phases and therefore rely on coordination, they reside in the coordinating class.
 
 ![Overview of how the classes and types interact](docs/class_diagram.png)
 
@@ -207,19 +204,19 @@ In deciding the deployment artefacts, there are several pertinent aspects.
 First, all the data driving this model is from the primary observations of the technician or third party APIs.
 Second, the modelling expected is not intensive, so calculation performance is a minor factor.
 Third, there is value to data communication and sharing, but this is not an essential feature.
-Finally, this should be available without installation as a significant proportion of users are likely to be single-use.
+Finally, this should be available without installation as many users are likely to be single-use.
 These requirements suit deployment as a stand-alone website using client-side data retention and processing.
 
-The main issue with this deployment style is migrating data from previous versions, as the data is not under the systems' control. 
+The main issue with this deployment style is migrating data from previous versions, as the data is not under the systems' control.
 To offset this issue, the top-level data objects will have version numbers, and there shall be a data loading procedure capable of stepping a dataset up the version numbers.
 
 Due to the project time constraints, the language and framework must be familiar to the developer.
-In addition, the project is quite data-centric, so it favours a strong type system.
-Alongside this, the immediate context for deployment is the web, so the language choice must support this.
+In addition, the project is quite data-centric, so it favours strong typing.
+Furthermore, the immediate context for deployment is the web, so the language choice must support this.
 Finally, there is also potential for IoT and mobile deployments, which should steer consideration.
 Within these criteria, TypeScript seems the best choice for language.
 It has a modern type system, is compilable to ECMAScript for web deployment, can be executed in Node.js for IoT deployment and is familiar to the developer.
-Of course, the entire product might derive value from a mobile-app deployment, but this is both beyond this project's scope and probably resolvable using the *-native projects.
+Of course, the entire product might derive value from a mobile-app deployment, but this is both beyond this project's scope and resolvable using the *-native projects.
 
 The user interface framework selection is more balanced than language but with a couple of early eliminations.
 First, direct DOM manipulation is not sustainable or manageable.
@@ -251,7 +248,7 @@ Figure n.n - Feature comparison matrix of language options.
 
 Figure 2.2.1 - Overview of the thermal survey workflow.
 
-The user experience implements the data flow shown in Figure 2.3.2 as a sequence of incremental steps, each adding data to the model.
+The user experience implements the data flow as a sequence of incremental steps, each adding data to the model.
 It deliberately captures the most controversial data first, using the principle of failing early rather than the psychological trick of the sunk-cost fallacy, as this is a more ethical user experience.
 The MVP prioritises a smartphone interface as this is the most restrictive interface expected.
 The w3c (2015) considers progressive enhancement to generally be more effective and maintainable than graceful degradation, especially when adopted from the initialisation of the project.
@@ -266,6 +263,7 @@ Figure 2.2.2 - Web interface at 360 x 640.
 
 This section records the simplifying assumptions currently applied to the modelling process.
 These simplifications should not be treated as final but should be justified or removed if possible.
+
 * The server room comprises equipment racks, well-circulated air, air conditioning and thermal mass.
   * All electricity consumed by the server hardware becomes heat.
   * The server hardware generates a steady heat output.
@@ -285,6 +283,10 @@ These simplifications should not be treated as final but should be justified or 
   * One of these is external and is subject to weather.
   * One of these is internal and is thermostatically regulated.
   * The server room does not affect the ambient environments.
+* Overcooling the server room environment will have a negligible effect on the internal temperature of computing equipment.
+	* The use of precision ventilation units can counter the risk of hot and cold spots.
+  * The computing equipment fans will slow since the same volume of cooler air will have an increased cooling effect.
+  * There is a moderate range of acceptable temperatures at the inlet of a server
 * Thermal units, such as coefficient of production and joules of thermal energy, can be eliminated from the model.
   * Passive observations measure the duty cycle required to maintain temperature differences.
   * Active observations measure the duty time required to enact temperature changes.
@@ -320,19 +322,21 @@ Two 51.6kW air conditioning units cool the BDX for a total cooling power of 103.
 This infrastructure is N + 1 redundant, implying a cap upon server equipment at 51.6kW before upgrades.
 The BDX complements this with precision units that cool the server equipment by heating the room's environment.
 
-The BMS holds the room at 20 degrees celsius, and the external temperature varies between 3 and 20 degrees celsius.
-The external wall comprises a concrete wall, an access corridor and a single pane glass wall of about 44 m^2.
-Therefore, an upper estimate of cooling through this wall (rounded up to 2 s.f.) is 1.8 kilowatt (see Appendix I).
-This estimate puts a medium prioritisation on modelling weather conditions in this situation.
-
+The BMS holds the room at 20 degrees celsius, and the Met Office's "Southern England: climate" (2016) states that the external temperature is generally between 3 and 21 degrees celsius.
+The external wall comprises a plastered concrete wall, an access corridor and a single pane glass wall of about 44 m^2. 
+Therefore, an upper estimate of cooling through this wall (rounded up to 2 s.f.) is 810 watts (see Appendix I).
 The remaining surfaces of the BDX separate the room from other offices and underground with a surface area of around 330 m^2.
 The calculations model a 2 kelvin difference with the data hall to estimate significance.
-An upper estimate of cooling through the floor, ceiling, internal, and underground walls is 1.3 kilowatts (rounded up to 2 s.f.) (see Appendix I).
-This estimate puts a medium prioritisation on modelling passive cooling.
+From this, an upper estimate of cooling to fixed temperature environments is 1.6 kilowatts (rounded up to 2 s.f.). 
 
 ![Plan showing a server room 9m x 12m x 4m](docs/bdx_plan.png)
 
 Figure 2.1.1 - Plan of the server room surveyed
+
+Compared to the active components of the room, these are insignificant; therefore, modelling passive cooling as a function of temperature difference and weather is of low priority.
+However, passive cooling calculations are more straightforward when the temperature difference is constant and are more significant since the active components are scaled back.
+Therefore, modelling passive cooling for a fixed temperature difference is of medium priority.
+In addition, the quick survey revealed that the server room windows are north facing and boarded over, so the initial model can ignore solar thermal radiation.
 
 ## 2.5 - Output
 
@@ -354,6 +358,12 @@ The chart should be as universally embeddable as possible, with the initial set 
 Therefore, a shortlist of PNG and SVG was assessed against their compatibility for use in Microsoft Office and Google Drive to decide upon graphics format.
 Since they are rendering a graph, the comparison includes infinite scalability.
 
+|                         | PNG                                 | SVG                     |
+| ----------------------- | ----------------------------------- | ----------------------- |
+| Vector graphic          | No                                  | Yes                     |
+| MS Office compatible    | Yes, according to support and tests | Yes, according to tests |
+| Google Drive compatible | Yes, according to tests             | No, according to tests  |
+
 Figure 2.5.2 - Comparison matrix of graphics format compatibility
 
 Google Docs support forums (2020) indicated that SVG format is not supported, backed by primary research.
@@ -364,17 +374,27 @@ It is worth noting that there are routes by which each technology can fulfil the
 Firstly, the GIMP application (2022) can convert SVG to PNG, and it is free; therefore, SVG's features in this context are a superset of PNG's features.
 Secondly, by rendering a PNG at high resolution, one can achieve, to all practical concerns, the benefit of infinite scalability.
 Of course, neither of these are optimal workflows, but they are possible.
-This analysis of the technical capabilities of the output format does not assert a firm conclusion, and decision-makers should look to other analyses for a simple recommendation. 
+This analysis of the technical capabilities of the output format does not assert a firm conclusion, and decision-makers should look to other analyses for a simple recommendation.
 
 To implement this chart, the developer reviewed the example libraries of several client-side plotting libraries (amcharts.com, apexcharts.com, chartjs.org, dygraphs.com, frappe.io, naver.github.io, nvd3.org, plottablejs.org, toast.com, vis.js) for background bands and double y-axes.
 Four of these seemed suitable, the "background bands" example published by plottable.js, the "Draws a time series with weekends highlighted" published by dygraphs.com, the "Region With Timeseries" published by Naver Corp as part of billboard.js and the "8.15 [Line Chart] Plot Bands, Line" published by toast.com.
+
+|                      | dygraphs.com   | plottablejs.org     | toast.com    | billboard.js |
+| ---------------------| -------------- | ------------------- | ------------ | ------------ |
+| Presentation         | Poor           | Simple              | Professional | Professional |
+| Bands implementation | via DOM canvas | Native              | Native       | Native       |
+| Double y-axes        | Not researched | Native              | Native       | Native       |
+| Export options       | Not researched | via DOM SVG element | Native PNG   | Native       |
+| Vue.js wrapper       | Not researched | No                  | Yes          | No           |
+| Extra dependencies   | Not researched | None                | None         | d3js.org     |
+| License              | Not researched | MIT                 | MIT          | MIT          |
 
 Figure 2.5.3 - Feature comparison of chart libraries
 
 The research into dygraphs.com demoted it from consideration without needing to complete the comparison.
 The presentation style is lacklustre, the band implementation uses direct manipulation of the DOM canvas element, and the data input format is a CSV string.
-In selecting between toast.com, billboard.js and plottablejs.org, two factors proved critical.
-The toast.com presentation style is more professional than the others, and its deployment options include a Vue.js wrapper.
+In selecting between toast.com, billboard.js and plottablejs.org, three factors prevailed.
+The toast.com presentation style is more professional than plottable, the dependency tree is flatter than billboard, and its deployment options include a Vue.js wrapper.
 Therefore the initial attempts at implementing this feature will explore the toast.com library.
 
 ## 2.6 - Implementation
@@ -413,13 +433,13 @@ This architecture minimises and specifies the coupling between the analysis and 
 
 ### 2.7 - Glossary
 
-| Term          | Type          | Definition                                                                                                                        |
-| ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------- | 
-| Technician    | Stakeholder   | An individual who maintains the environmental conditions of a server room; they usually surface usability concerns.               |
-| Customer      | Stakeholder   | An organisation that may decide to adopt thermostat recommendations based on the report; they usually surfaces utility concerns.  |
-| <<type>>      | Software term | An abstract data structure, like an interface, except it asserts that objects shall possess certain data types instead of methods |
-| Project       | Project management | The subset of the *product* scheduled within the budgetary constraints |
-| Product       | Project management | The set of features that deliver value when measured against the mission statement |
+| Term          | Type               | Definition                                                                                                                         |
+| ------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Technician    | Stakeholder        | An individual who maintains the environmental conditions of a server room; they usually surface usability concerns.                |
+| Customer      | Stakeholder        | An organisation that may decide to adopt thermostat recommendations based on the report; they usually surfaces utility concerns.   |
+| `<<type>>`    | Software term      | An abstract data structure, like an interface, except it asserts that objects shall possess certain data types instead of methods. |
+| Project       | Project management | The subset of the *product* scheduled within the budgetary constraints.                                                            |
+| Product       | Project management | The set of features that deliver value when measured against the mission statement.                                                |
 
 ## 3 - Literature
 
@@ -518,3 +538,13 @@ vis.js (2022) '*Vis Graph2D Examples*'. Available at: https://visjs.github.io/vi
 We Learn Code (2020) ‘*What is a Web Framework, and Why Should I use one?*’. Available at: https://welearncode.com/what-are-frontend-frameworks (accessed: 2022-01-29).
 
 w3schools.com (2022) '*SVG Tutorial*'. Available at: https://www.w3schools.com/graphics/svg_intro.asp (accessed 2022-04-19).
+
+## Appendix I - Insulation calculations
+
+## Appendix II - Access negotiations
+
+## Appendix III - Project log
+
+## Appendix IV - Code
+
+## Appendix V - Roadmap
