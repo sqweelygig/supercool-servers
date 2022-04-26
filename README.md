@@ -239,6 +239,8 @@ Figure 2.6.2 - Quick survey of typical server room construction, DuckDuckGo 2022
 
 ### 2.5 - Blockers
 
+![Risk assessment grid](docs/risk_assessment.png)
+
 Figure 2.5.1 - Risk assessment grid for the project
 
 To achieve the task, "*A technician should have information on an example server room available.*" the project requires permission to observe and adjust the thermostat of a server room.
