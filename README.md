@@ -541,10 +541,20 @@ w3schools.com (2022) '*SVG Tutorial*'. Available at: https://www.w3schools.com/g
 
 ## Appendix I - Insulation calculations
 
+[BDX insulation calculations](docs/bdx_thermals.xlsx)
+
 ## Appendix II - Access negotiations
+
+[Communications log](docs/comms_log.md)
 
 ## Appendix III - Project log
 
+[Git](.git/)
+
 ## Appendix IV - Code
 
+[Source code](src/)
+
 ## Appendix V - Roadmap
+
+[Roadmap](roadmap.md)
