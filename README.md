@@ -22,7 +22,6 @@ Inspired by ["Batteries aren't the only way to store power. Here's another."](ht
 * Literature
 	4. References
 	4. Bibliography
-	4. To Read
 * Appendix I, Insulation calculations
 * Appendix II, Access negotiations
 * Appendix III, Project log
@@ -198,7 +197,7 @@ Where these require input from several data gathering phases and therefore rely 
 
 ![Overview of how the classes and types interact](docs/class_diagram.png)
 
-Figure 2.1.2 - Class diagram showing data relations and inheritance
+Figure 2.1.1 - Class diagram showing data relations and inheritance
 
 In deciding the deployment artefacts, there are several pertinent aspects.
 First, all the data driving this model is from the primary observations of the technician or third party APIs.
@@ -240,7 +239,7 @@ In conclusion, this project will use Vue.js, especially single file components, 
 | React             | Low           | High          | 182k          |
 | Vue               | Low           | High          | 193k          |
 
-Figure n.n - Feature comparison matrix of language options.
+Figure 2.1.2 - Feature comparison matrix of language options.
 
 ### 2.2 - User Experience
 
@@ -331,14 +330,14 @@ From this, an upper estimate of cooling to fixed temperature environments is 1.6
 
 ![Plan showing a server room 9m x 12m x 4m](docs/bdx_plan.png)
 
-Figure 2.1.1 - Plan of the server room surveyed
+Figure 2.4.2 - Plan of the server room surveyed
 
 Compared to the active components of the room, these are insignificant; therefore, modelling passive cooling as a function of temperature difference and weather is of low priority.
 However, passive cooling calculations are more straightforward when the temperature difference is constant and are more significant since the active components are scaled back.
 Therefore, modelling passive cooling for a fixed temperature difference is of medium priority.
 In addition, the quick survey revealed that the server room windows are north facing and boarded over, so the initial model can ignore solar thermal radiation.
 
-## 2.5 - Output
+### 2.5 - Output
 
 The intended final output of this workflow is a recommendation for an alternative thermostat schedule that would reduce the resource consumption of a server room.
 This output must be presentable as a business report and suit a technical, but not specialist, business audience.
@@ -397,7 +396,7 @@ In selecting between toast.com, billboard.js and plottablejs.org, three factors 
 The toast.com presentation style is more professional than plottable, the dependency tree is flatter than billboard, and its deployment options include a Vue.js wrapper.
 Therefore the initial attempts at implementing this feature will explore the toast.com library.
 
-## 2.6 - Implementation
+### 2.6 - Implementation
 
 I have initiated this user interface using Vue.js single file components (SFCs) and typescript files (see Appendix IV).
 The top-level SFC in SuperCoolServers.vue provides broad stroke templating and coordination between interfaces.
