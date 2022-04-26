@@ -17,6 +17,8 @@
 
 * A technician should have information on an example server room available.
 * A technician must be able to generate a business-oriented report.
+* A technician must have a good understanding of the generalisability of the simplifications.
+* A developer must be able to rely on a set of UX tests.
 
 ## Done
 
