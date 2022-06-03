@@ -344,6 +344,8 @@ This output must be presentable as a business report and suit a technical, but n
 We assume that the technician compiling the output will author a proposal or business proforma around the recommendations.
 Therefore, this project should support them by providing comparison figures, a graphic and the version number of the underlying thermal model.
 
+![Chart showing thermostat setting, A/C response and thermal response](docs/chart_sketch.jpeg)
+
 Figure 2.5.1 - Initial design of the chart.
 
 The scan shown above captures the chart design immediately after hallway testing and in a state suitable for implementation.
