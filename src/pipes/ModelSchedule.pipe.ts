@@ -1,9 +1,10 @@
+import { ThermostatInterval } from "@/SuperCoolServers.types";
 import {
-	ThermostatInterval,
-} from "@/SuperCoolServers.types";
-import { TangibleThermalProperties, ThermalInterval } from "@/thermal-survey/ThermalSurvey.types";
+	TangibleThermalProperties,
+	ThermalInterval,
+} from "@/thermal-survey/ThermalSurvey.types";
 
-export default function(
+export default function (
 	thermostatSchedule: ThermostatInterval[],
 	thermalProperties: TangibleThermalProperties
 ): ThermalInterval[] {

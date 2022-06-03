@@ -7,7 +7,6 @@ import {
 
 export interface TariffInterval extends Interval {
 	costPerHour: number;
-	units: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -16,12 +15,11 @@ export function isTariffInterval(data: any): data is TariffInterval {
 		typeof data === "object" &&
 		data !== null &&
 		typeof data.costPerHour === "number" &&
-		typeof data.units === "string" &&
 		isInterval(data)
 	);
 }
 
-export interface TariffScheduleState extends DataSet {
+export interface TariffSurveyState extends DataSet {
 	dayCost: number;
 	dayStart: string;
 	nightCost: number;
@@ -30,7 +28,7 @@ export interface TariffScheduleState extends DataSet {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-export function isTariffScheduleState(data: any): data is TariffScheduleState {
+export function isTariffSurveyState(data: any): data is TariffSurveyState {
 	return (
 		typeof data === "object" &&
 		data !== null &&
@@ -44,9 +42,9 @@ export function isTariffScheduleState(data: any): data is TariffScheduleState {
 	);
 }
 
-export function padTariffScheduleState(
-	data?: Partial<TariffScheduleState>
-): TariffScheduleState {
+export function padTariffSurveyState(
+	data?: Partial<TariffSurveyState>
+): TariffSurveyState {
 	return {
 		dayCost: 47,
 		dayStart: "07:00",
@@ -56,4 +54,19 @@ export function padTariffScheduleState(
 		version: 0,
 		...data,
 	};
+}
+
+export interface TariffSchedule {
+	intervals: TariffInterval[];
+	units: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+export function isTariffSchedule(data: any): data is TariffSchedule {
+	return (
+		typeof data === "object" &&
+		data !== null &&
+		typeof data.units === "string" &&
+		data.intervals.every(isTariffInterval)
+	);
 }

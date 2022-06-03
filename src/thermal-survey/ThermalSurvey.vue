@@ -2,11 +2,12 @@
 	<error-message v-if="error !== undefined" v-on:clear="clearError" />
 	<tool-bar
 		v-else
-		v-bind:download="stringified"
+		v-bind:download="'data:application/json;charset=utf-8,' + stringified"
 		v-on:clear="clearData"
 		v-on:next="phaseShift(1)"
 		v-on:previous="phaseShift(-1)"
 		v-on:upload="upload"
+		download-name="thermal-survey.json"
 	/>
 	<page-header v-bind:text="data.phase" />
 	<template v-if="data.phase === 'thermal survey'">
@@ -101,10 +102,11 @@
 		<div>Please reset the thermostat to {{ data.normalThermostat }}°C.</div>
 		<div>You may also wish to download a copy of the data gathered today.</div>
 	</template>
-	<div class="spacer"></div>
+	<vertical-spacer />
 	<tool-bar
 		v-if="data.phase === 'finish'"
-		v-bind:download="stringified"
+		download-name="thermal-survey.json"
+		v-bind:download="'data:application/json;charset=utf-8,' + stringified"
 		v-on:next="phaseShift(1)"
 	/>
 	<tool-bar v-else v-on:next="phaseShift(1)" />
@@ -129,6 +131,7 @@ import {
 } from "./ThermalSurvey.types";
 import useDataBoundary from "@/composables/useDataBoundary";
 import { usePhases } from "@/components/TabBar.vue";
+import VerticalSpacer from "@/components/VerticalSpacer.vue";
 
 export default defineComponent({
 	components: {
@@ -138,6 +141,7 @@ export default defineComponent({
 		ThermodynamicObservation,
 		ThermostaticObservation,
 		ToolBar,
+		VerticalSpacer,
 	},
 	emits: {
 		update: isThermalProperties,

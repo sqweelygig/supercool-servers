@@ -2,7 +2,6 @@
 	<div class="tool-bar">
 		<button
 			v-if="onPrevious"
-			aria-label="Previous"
 			type="button"
 			v-bind:disabled="disabled?.includes(onPrevious)"
 			v-on:click.prevent="onPrevious"
@@ -10,11 +9,14 @@
 			<font-awesome-icon icon="chevron-left" />
 		</button>
 		<a
-			v-if="download"
-			aria-label="Download"
-			download="thermal-data.json"
-			v-bind:disabled="disabled?.includes(download)"
-			v-bind:href="downloadData"
+			v-if="downloadName"
+			v-bind:download="downloadName"
+			v-bind:disabled="
+				disabled?.includes(download) ||
+				disabled?.includes(downloadName) ||
+				download === undefined
+			"
+			v-bind:href="encodeURI(download || '')"
 		>
 			<font-awesome-icon icon="download" />
 		</a>
@@ -27,7 +29,6 @@
 		/>
 		<label
 			v-if="onUpload"
-			aria-label="Upload"
 			for="file-upload"
 			v-bind:disabled="disabled?.includes(onUpload)"
 		>
@@ -35,7 +36,6 @@
 		</label>
 		<button
 			v-if="onRise"
-			aria-label="Rising Edge"
 			type="button"
 			v-bind:disabled="disabled?.includes(onRise)"
 			v-on:click.prevent="onRise"
@@ -44,7 +44,6 @@
 		</button>
 		<button
 			v-if="onFall"
-			aria-label="Falling Edge"
 			type="button"
 			v-bind:disabled="disabled?.includes(onFall)"
 			v-on:click.prevent="onFall"
@@ -53,7 +52,6 @@
 		</button>
 		<button
 			v-if="onUndo"
-			aria-label="Undo"
 			type="button"
 			v-bind:disabled="disabled?.includes(onUndo)"
 			v-on:click.prevent="onUndo"
@@ -62,7 +60,6 @@
 		</button>
 		<button
 			v-if="onClear"
-			aria-label="Trash"
 			type="button"
 			v-bind:disabled="disabled?.includes(onClear)"
 			v-on:click.prevent="onClear"
@@ -71,7 +68,6 @@
 		</button>
 		<button
 			v-if="onNext"
-			aria-label="Next"
 			type="button"
 			v-bind:disabled="disabled?.includes(onNext)"
 			v-on:click.prevent="onNext"
@@ -150,12 +146,6 @@ IconLibrary.add(
 
 export default defineComponent({
 	components: { FontAwesomeIcon },
-	computed: {
-		downloadData(): string {
-			const preamble = "data:application/json;charset=utf-8,";
-			return preamble + encodeURI(this.download || "{}");
-		},
-	},
 	methods: {
 		uploadData(uploadEvent: Event): void {
 			if (this.onUpload && uploadEvent.target) {
@@ -182,6 +172,7 @@ export default defineComponent({
 	props: {
 		disabled: Array,
 		download: String,
+		downloadName: String,
 		onClear: Function as PropType<() => void>,
 		onFall: Function as PropType<() => void>,
 		onNext: Function as PropType<() => void>,

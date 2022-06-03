@@ -27,9 +27,9 @@ export function isDataSet(data: any): data is DataSet {
 }
 
 import {
-	TariffInterval,
-	isTariffInterval,
-} from "./tariff-schedule/TariffSchedule.types";
+	TariffSchedule,
+	isTariffSchedule,
+} from "./tariff-survey/TariffSurvey.types";
 import {
 	ThermalProperties,
 	isThermalProperties,
@@ -39,11 +39,12 @@ export enum Phases {
 	Introduction = "introduction",
 	Survey = "survey",
 	Tariff = "tariff",
+	Chart = "chart",
 }
 
 export interface SuperCoolServersState extends DataSet {
 	phase: Phases;
-	tariffSchedule?: TariffInterval[];
+	tariffSchedule?: TariffSchedule;
 	thermalProperties?: ThermalProperties;
 }
 
@@ -58,7 +59,7 @@ export function isSuperCoolServersState(
 		data !== null &&
 		typeof data.phase === "string" &&
 		Object.values(Phases).includes(data.phase) &&
-		(tariffs === undefined || tariffs.every(isTariffInterval)) &&
+		(tariffs === undefined || isTariffSchedule(tariffs)) &&
 		(thermals === undefined || isThermalProperties(thermals)) &&
 		isDataSet(data) &&
 		data.version === 0
@@ -72,5 +73,15 @@ export function padSuperCoolServersState(
 		phase: Phases.Introduction,
 		version: 0,
 		...data,
+		tariffSchedule: data.tariffSchedule && {
+			units: data.tariffSchedule.units,
+			intervals: data.tariffSchedule.intervals.map((value) => {
+				return {
+					costPerHour: value.costPerHour,
+					startTime: new Date(value.startTime),
+					endTime: new Date(value.endTime),
+				};
+			}),
+		},
 	};
 }

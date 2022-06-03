@@ -60,10 +60,11 @@ import {
 	faInfoCircle,
 	faMoneyBill,
 	faThermometerHalf,
+	faChartLine,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-IconLibrary.add(faInfoCircle, faMoneyBill, faThermometerHalf);
+IconLibrary.add(faInfoCircle, faMoneyBill, faThermometerHalf, faChartLine);
 
 export type TabItem = {
 	icon: string;

@@ -2,7 +2,8 @@
 	<error-message v-if="error !== undefined" v-on:clear="clearError" />
 	<tool-bar
 		v-else
-		v-bind:download="stringified"
+		download-name="tariff-schedule.json"
+		v-bind:download="'data:application/json;charset=utf-8,' + stringified"
 		v-on:clear="clearData"
 		v-on:next="onNext"
 		v-on:previous="onPrevious"
@@ -33,7 +34,7 @@
 		<label for="night-start" class="section-header">Night rate begins:</label>
 		<input id="night-start" type="time" v-model="data.nightStart" />
 	</div>
-	<div class="spacer"></div>
+	<vertical-spacer />
 	<tool-bar v-on:next="onNext" />
 </template>
 
@@ -60,23 +61,24 @@
 
 <script lang="ts">
 import {
-	TariffInterval,
-	isTariffInterval,
-	padTariffScheduleState,
-	isTariffScheduleState,
-} from "./TariffSchedule.types";
-import { toTariffIntervals } from "./ToTariffIntervals.pipe";
+	padTariffSurveyState,
+	isTariffSurveyState,
+	TariffSchedule,
+	isTariffSchedule,
+} from "./TariffSurvey.types";
+import { toTariffSchedule } from "./ToTariffSchedule.pipe";
 import { defineComponent, PropType } from "vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import ToolBar from "@/components/ToolBar.vue";
 import useDataBoundary from "@/composables/useDataBoundary";
+import VerticalSpacer from "@/components/VerticalSpacer.vue";
 
 export default defineComponent({
-	components: { ErrorMessage, PageHeader, ToolBar },
+	components: { ErrorMessage, PageHeader, ToolBar, VerticalSpacer },
 	emits: {
-		update: (payload: Array<TariffInterval>) => {
-			return payload.every(isTariffInterval);
+		update: (payload: TariffSchedule) => {
+			return isTariffSchedule(payload);
 		},
 	},
 	props: {
@@ -85,11 +87,11 @@ export default defineComponent({
 	},
 	setup: function (props, context) {
 		return useDataBoundary(
-			"tariffSchedule",
-			padTariffScheduleState,
-			isTariffScheduleState,
-			toTariffIntervals,
-			(tariffIntervals) => context.emit("update", tariffIntervals)
+			"tariffSurvey",
+			padTariffSurveyState,
+			isTariffSurveyState,
+			toTariffSchedule,
+			(tariffSchedule) => context.emit("update", tariffSchedule)
 		);
 	},
 });

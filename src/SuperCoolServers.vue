@@ -7,35 +7,23 @@
 			v-on:previous="phaseShift(-1)"
 			v-on:update="setThermalProperties"
 		/>
-		<tariff-schedule
+		<tariff-survey
 			v-else-if="data.phase === 'tariff'"
+			v-on:next="phaseShift(1)"
 			v-on:previous="phaseShift(-1)"
 			v-on:update="setTariffSchedule"
 		/>
-		<template v-else>
-			<error-message v-if="error !== undefined" v-on:clear="clearError" />
-			<page-header v-else text="SuperCool Servers" />
-			<div>
-				This web application models the savings possible by proactively cooling
-				a server room during off-peak tariffs.
-			</div>
-			<div>
-				It applies some simplifying assumptions to its thermal model, which are
-				reasonable for some server rooms. Firstly, The model assumes that air
-				conditioning units perform most of the cooling. Furthermore, it assumes
-				that the servers are the primary heat source and that this is constant.
-				Finally, it assumes that heat propagation within the room is instant.
-				Further development may occur to eliminate these simplifications. You
-				are responsible for judging whether they are reasonable in your
-				situation.
-			</div>
-			<div>
-				All data is stored and processed locally, on your computer, without any
-				external data processors.
-			</div>
-			<div class="spacer"></div>
-			<tool-bar v-on:next="phaseShift(1)" />
-		</template>
+		<chart-output
+			v-else-if="
+				data.phase === 'chart' &&
+				data.tariffSchedule !== undefined &&
+				data.thermalProperties !== undefined
+			"
+			v-on:previous="phaseShift(-1)"
+			v-bind:tariff-schedule="data.tariffSchedule"
+			v-bind:thermal-properties="data.thermalProperties"
+		/>
+		<introduction v-else v-on:next="phaseShift(1)" />
 	</div>
 </template>
 
@@ -51,10 +39,10 @@
 }
 .main-pane:deep() {
 	> * {
-		padding-bottom: var(--small);
-		padding-left: var(--medium);
-		padding-right: var(--medium);
-		padding-top: var(--small);
+		margin-bottom: var(--extra-small);
+		margin-left: var(--medium);
+		margin-right: var(--medium);
+		margin-top: var(--extra-small);
 		> * {
 			margin: var(--extra-small) 0;
 			width: 100%;
@@ -67,14 +55,10 @@
 		}
 	}
 	> :first-child {
-		padding-top: var(--medium);
+		margin-top: var(--medium);
 	}
 	> :last-child {
-		padding-bottom: var(--medium);
-	}
-	> .spacer {
-		flex-grow: 1;
-		padding: 0;
+		margin-bottom: var(--medium);
 	}
 	.section-header {
 		font-size: var(--medium-large);
@@ -95,14 +79,13 @@ import {
 } from "./SuperCoolServers.types";
 import { defineComponent } from "vue";
 import TabBar, { usePhases } from "@/components/TabBar.vue";
-import TariffSchedule from "@/tariff-schedule/TariffSchedule.vue";
-import { TariffInterval } from "@/tariff-schedule/TariffSchedule.types";
+import TariffSurvey from "@/tariff-survey/TariffSurvey.vue";
+import { TariffSchedule } from "@/tariff-survey/TariffSurvey.types";
 import { ThermalProperties } from "@/thermal-survey/ThermalSurvey.types";
 import ThermalSurvey from "@/thermal-survey/ThermalSurvey.vue";
 import useDataBoundary from "@/composables/useDataBoundary";
-import ErrorMessage from "@/components/ErrorMessage.vue";
-import PageHeader from "@/components/PageHeader.vue";
-import ToolBar from "@/components/ToolBar.vue";
+import ChartOutput from "@/chart-output/ChartOutput.vue";
+import Introduction from "@/introduction/Introduction.vue";
 
 const phases = [
 	{
@@ -112,20 +95,20 @@ const phases = [
 	},
 	{
 		icon: "thermometer-half",
-		text: "Thermal Survey",
+		text: "Survey",
 		value: Phases.Survey,
 	},
-	{ icon: "money-bill", text: "Tariff Schedule", value: Phases.Tariff },
+	{ icon: "money-bill", text: "Tariffs", value: Phases.Tariff },
+	{ icon: "chart-line", text: "Chart", value: Phases.Chart },
 ];
 
 export default defineComponent({
 	components: {
-		ErrorMessage,
-		PageHeader,
 		TabBar,
-		TariffSchedule,
+		TariffSurvey,
 		ThermalSurvey,
-		ToolBar,
+		ChartOutput,
+		Introduction,
 	},
 	setup: function () {
 		const store = useDataBoundary(
@@ -137,7 +120,7 @@ export default defineComponent({
 			// Swallow value emission
 			() => null
 		);
-		const setTariffSchedule = (schedule: TariffInterval[]) => {
+		const setTariffSchedule = (schedule: TariffSchedule) => {
 			store.data.tariffSchedule = schedule;
 		};
 		const setThermalProperties = (properties: ThermalProperties) => {

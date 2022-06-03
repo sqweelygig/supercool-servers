@@ -396,7 +396,7 @@ The research into dygraphs.com demoted it from consideration without needing to 
 The presentation style is lacklustre, the band implementation uses direct manipulation of the DOM canvas element, and the data input format is a CSV string.
 In selecting between toast.com, billboard.js and plottablejs.org, three factors prevailed.
 The toast.com presentation style is more professional than plottable, the dependency tree is flatter than billboard, and its deployment options include a Vue.js wrapper.
-Therefore the initial attempts at implementing this feature will explore the toast.com library.
+Therefore the initial attempts at implementing this feature explored the toast.com library. These attempts were unsuccessful because despite initial indications that the library supported a secondary Y axis, there was no way to bind the data to this axis. The billboard.js documentation clearly showed this feature and therefore attempts were made to implement the chart using this library.
 
 ### 2.6 - Implementation
 

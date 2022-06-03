@@ -1,8 +1,8 @@
 import { ThermostatInterval } from "@/SuperCoolServers.types";
 import { ThermalProperties } from "@/thermal-survey/ThermalSurvey.types";
-import { TariffInterval } from "@/tariff-schedule/TariffSchedule.types";
+import { TariffInterval } from "@/tariff-survey/TariffSurvey.types";
 
-export default function(
+export default function (
 	tariffs: TariffInterval[],
 	thermalProperties: ThermalProperties
 ): ThermostatInterval[] {
