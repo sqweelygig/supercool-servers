@@ -34,7 +34,7 @@ As discussed, please be aware that there are some issues of corporate confidenti
 
 Thanks for that Simon, will look forwards to the introduction.
 
-## From: Simon O'Hare <simon.ohare@curveit.com>, Sent: 23 March 2022 10:40, To: Shaun Fensom <shaun@bdx.coop>, Cc: Andrew Lucas <andrew.lucas@curveit.com>, Subject: BDX Cooling project / BMS
+## From: Simon O'Hare, Sent: 23 March 2022 10:40, To: Shaun Fensom, Cc: Andrew Lucas, Subject: BDX Cooling project / BMS
 
 Hi Chaps,
 
@@ -58,7 +58,7 @@ Many thanks
 
 Simon O’Hare
 
-## From: Shaun Fensom <shaun@bdx.coop>, Sent: 30 March 2022 11:34, To: Simon O'Hare <simon.ohare@curveit.com>, Cc: Andrew Lucas <andrew.lucas@curveit.com>, Subject: Re: BDX Cooling project / BMS
+## From: Shaun Fensom, Sent: 30 March 2022 11:34, To: Simon O'Hare, Cc: Andrew Lucas, Subject: Re: BDX Cooling project / BMS
 
 Hi Simon
 Belated response (sorry) to say this is good and happy to work with Andrew.
@@ -72,12 +72,11 @@ Secretary
 Brighton Digital Exchange Co-operative
 shaun@bdx.coop
 
-07770 602850
 http://bdx.coop
 
 ______________________________
 
-## From: Andrew Lucas <andrew.lucas@curveit.com>, Sent: 06 April 2022 11:32, To: Shaun Fensom <shaun@bdx.coop>, Simon O'Hare <simon.ohare@curveit.com>, Subject: RE: BDX Cooling project / BMS
+## From: Andrew Lucas, Sent: 06 April 2022 11:32, To: Shaun Fensom, Simon O'Hare, Subject: RE: BDX Cooling project / BMS
 
 Hi,
 Thanks for the response Shaun. Is there a convenient time when we could get together, complete as many of the quick-wins as we can, and conisder the longer task of the thermal survey.
