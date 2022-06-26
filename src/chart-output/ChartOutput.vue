@@ -109,10 +109,6 @@ import "billboard.js/dist/billboard.css";
 
 export default defineComponent({
 	// TODO Explain steps required for successful chart output
-	/*
-	 TODO Try to remove initial adoption phase from the chart
-	 (the bit where it goes from normal operations to optimised operations)
-	*/
 	components: { PageHeader, ToolBar, VerticalSpacer },
 	computed: {
 		thermostatSchedule(): ThermostatInterval[] {

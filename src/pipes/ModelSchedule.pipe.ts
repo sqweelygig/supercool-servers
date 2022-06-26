@@ -4,15 +4,15 @@ import {
 	ThermalInterval,
 } from "@/thermal-survey/ThermalSurvey.types";
 
-export default function (
-	thermostatSchedule: ThermostatInterval[],
-	thermalProperties: TangibleThermalProperties
-): ThermalInterval[] {
-	const predictions: ThermalInterval[] = [];
-	thermostatSchedule.forEach((thermostatInterval) => {
+function enclosePredicter(
+	predictions: ThermalInterval[],
+	thermalProperties: TangibleThermalProperties,
+	cycleStartTemperature: number
+) {
+	return (thermostatInterval: ThermostatInterval) => {
 		const isFirst = predictions.length === 0;
 		const startTemperature = isFirst
-			? thermalProperties.normalThermostat
+			? cycleStartTemperature
 			: predictions[predictions.length - 1].endTemperature;
 		if (thermostatInterval.thermostatSetting === startTemperature) {
 			predictions.push({
@@ -63,6 +63,22 @@ export default function (
 				});
 			}
 		}
-	});
+	};
+}
+
+export default function (
+	schedule: ThermostatInterval[],
+	properties: TangibleThermalProperties
+): ThermalInterval[] {
+	let nextStart = properties.normalThermostat;
+	let predictions: ThermalInterval[];
+	do {
+		predictions = [];
+		schedule.forEach(enclosePredicter(predictions, properties, nextStart));
+		nextStart = predictions[predictions.length - 1].endTemperature;
+	} while (
+		predictions[0].startTemperature !==
+		predictions[predictions.length - 1].endTemperature
+	);
 	return predictions;
 }
