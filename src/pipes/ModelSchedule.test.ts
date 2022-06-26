@@ -32,11 +32,17 @@ test("model a room with a flat thermostat schedule", () => {
 test("model a room that will cool but not reach equilibrium", () => {
 	const startTime = new Date("2022-01-01T07:00");
 	const endTime = new Date("2022-01-01T08:00");
+	const nextTime = new Date("2022-01-02T07:00");
 	const thermostatSchedule = [
 		{
 			startTime,
 			thermostatSetting: 18,
 			endTime,
+		},
+		{
+			startTime: endTime,
+			thermostatSetting: 20,
+			endTime: nextTime,
 		},
 	];
 	const thermalProperties = {
@@ -48,7 +54,7 @@ test("model a room that will cool but not reach equilibrium", () => {
 		thermostatSchedule,
 		thermalProperties
 	);
-	expect(thermalPrediction.length).toEqual(1);
+	expect(thermalPrediction.length).toEqual(3);
 	expect(thermalPrediction[0].dutyCycle).toBeCloseTo(1.0);
 	expect(thermalPrediction[0].startTime.getTime()).toEqual(startTime.getTime());
 	expect(thermalPrediction[0].endTime.getTime()).toEqual(endTime.getTime());
@@ -60,11 +66,17 @@ test("model a room that will cool to equilibrium", () => {
 	const startTime = new Date("2022-01-01T07:00");
 	const halfTime = new Date("2022-01-01T07:30");
 	const endTime = new Date("2022-01-01T08:00");
+	const nextTime = new Date("2022-01-02T07:00");
 	const thermostatSchedule = [
 		{
 			startTime,
 			thermostatSetting: 18,
 			endTime,
+		},
+		{
+			startTime: endTime,
+			thermostatSetting: 20,
+			endTime: nextTime,
 		},
 	];
 	const thermalProperties = {
@@ -76,7 +88,7 @@ test("model a room that will cool to equilibrium", () => {
 		thermostatSchedule,
 		thermalProperties
 	);
-	expect(thermalPrediction.length).toEqual(2);
+	expect(thermalPrediction.length).toEqual(4);
 	expect(thermalPrediction[0].dutyCycle).toEqual(1.0);
 	expect(thermalPrediction[0].startTime.getTime()).toEqual(startTime.getTime());
 	expect(thermalPrediction[0].endTime.getTime()).toEqual(halfTime.getTime());
@@ -92,12 +104,18 @@ test("model a room that will cool to equilibrium", () => {
 test("model a room that will warm, but not to equilibrium", () => {
 	const startTime = new Date("2022-01-01T07:00");
 	const endTime = new Date("2022-01-01T07:30");
+	const nextTime = new Date("2022-01-02T07:00");
 	const thermostatSchedule = [
 		{
 			startTime,
 			thermostatSetting: 21,
 			endTime,
 		},
+		{
+			startTime: endTime,
+			thermostatSetting: 20,
+			endTime: nextTime,
+		}
 	];
 	const thermalProperties = {
 		baseloadDutyCycle: 0.25,
@@ -108,7 +126,7 @@ test("model a room that will warm, but not to equilibrium", () => {
 		thermostatSchedule,
 		thermalProperties
 	);
-	expect(thermalPrediction.length).toEqual(1);
+	expect(thermalPrediction.length).toEqual(3);
 	expect(thermalPrediction[0].dutyCycle).toEqual(0.0);
 	expect(thermalPrediction[0].startTime.getTime()).toEqual(startTime.getTime());
 	expect(thermalPrediction[0].endTime.getTime()).toEqual(endTime.getTime());
@@ -119,11 +137,17 @@ test("model a room that will warm, but not to equilibrium", () => {
 test("model a room that will warm to equilibrium", () => {
 	const startTime = new Date("2022-01-01T07:00");
 	const endTime = new Date("2022-01-01T13:00");
+	const nextTime = new Date("2022-01-02T07:00");
 	const thermostatSchedule = [
 		{
 			startTime,
 			thermostatSetting: 21,
 			endTime,
+		},
+		{
+			startTime: endTime,
+			thermostatSetting: 20,
+			endTime: nextTime,
 		},
 	];
 	const thermalProperties = {
@@ -136,7 +160,7 @@ test("model a room that will warm to equilibrium", () => {
 		thermostatSchedule,
 		thermalProperties
 	);
-	expect(thermalPrediction.length).toEqual(2);
+	expect(thermalPrediction.length).toEqual(4);
 	expect(thermalPrediction[0].dutyCycle).toEqual(0.0);
 	expect(thermalPrediction[0].startTime.getTime()).toEqual(startTime.getTime());
 	expect(thermalPrediction[0].endTime.getTime()).toEqual(partTime.getTime());
@@ -172,7 +196,7 @@ test("model a room with multiple scheduled thermostat intervals", () => {
 		thermalProperties
 	);
 	expect(thermalPrediction.length).toEqual(4);
-	expect(thermalPrediction[0].startTemperature).toEqual(20);
+	expect(thermalPrediction[0].startTemperature).toEqual(18);
 	expect(thermalPrediction[0].endTemperature).toEqual(21);
 	expect(thermalPrediction[1].startTemperature).toEqual(21);
 	expect(thermalPrediction[1].endTemperature).toEqual(21);
