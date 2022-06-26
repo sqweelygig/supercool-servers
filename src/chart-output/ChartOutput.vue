@@ -108,6 +108,13 @@ import { bb, line } from "billboard.js";
 import "billboard.js/dist/billboard.css";
 
 export default defineComponent({
+	// TODO Try to add duty cycle to legend
+	// TODO Explain steps required for successful chart output
+	/*
+	 TODO Try to remove initial adoption phase from the chart
+	 (the bit where it goes from normal operations to optimised operations)
+	*/
+	// TODO Round times on output to nearest quarter hour
 	components: { PageHeader, ToolBar, VerticalSpacer },
 	computed: {
 		thermostatSchedule(): ThermostatInterval[] {

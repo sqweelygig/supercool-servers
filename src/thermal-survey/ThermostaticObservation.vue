@@ -19,6 +19,7 @@ import { ThermalObservation } from "./ThermalSurvey.types";
 import ToolBar from "@/components/ToolBar.vue";
 
 export default defineComponent({
+	// TODO Tidy up initialObservation during observation progression
 	components: { DutyTable, ToolBar },
 	computed: {
 		disabledButtons() {

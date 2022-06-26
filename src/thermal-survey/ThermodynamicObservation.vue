@@ -19,6 +19,7 @@ import { ThermalObservation } from "./ThermalSurvey.types";
 import ToolBar from "@/components/ToolBar.vue";
 
 export default defineComponent({
+	// TODO Improve phrasing of thermodynamic observation stages
 	components: { DutyTable, ToolBar },
 	computed: {
 		disabledButtons() {
