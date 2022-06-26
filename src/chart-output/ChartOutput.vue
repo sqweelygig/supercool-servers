@@ -114,7 +114,6 @@ export default defineComponent({
 	 TODO Try to remove initial adoption phase from the chart
 	 (the bit where it goes from normal operations to optimised operations)
 	*/
-	// TODO Round times on output to nearest quarter hour
 	components: { PageHeader, ToolBar, VerticalSpacer },
 	computed: {
 		thermostatSchedule(): ThermostatInterval[] {
@@ -185,7 +184,10 @@ export default defineComponent({
 					localtime: true,
 					tick: {
 						autorotate: true,
-						fit: true,
+						culling: {
+							max: 5,
+						},
+						fit: false,
 						format: "%H:%M",
 						rotate: 45,
 					},
@@ -196,6 +198,12 @@ export default defineComponent({
 						position: "outer-middle",
 						text: "Temperature (°C)",
 					},
+					tick: {
+						culling: {
+							max: 5,
+						},
+						stepSize: 1,
+					}
 				},
 				y2: {
 					label: {
@@ -203,6 +211,11 @@ export default defineComponent({
 						text: `Cost (${this.tariffSchedule.units} per hour)`,
 					},
 					show: true,
+					tick: {
+						culling: {
+							max: 5,
+						},
+					},
 				},
 			},
 			bindto: this.$refs.chartArea,
