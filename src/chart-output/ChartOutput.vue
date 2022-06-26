@@ -108,7 +108,6 @@ import { bb, line } from "billboard.js";
 import "billboard.js/dist/billboard.css";
 
 export default defineComponent({
-	// TODO Try to add duty cycle to legend
 	// TODO Explain steps required for successful chart output
 	/*
 	 TODO Try to remove initial adoption phase from the chart
@@ -203,7 +202,7 @@ export default defineComponent({
 							max: 5,
 						},
 						stepSize: 1,
-					}
+					},
 				},
 				y2: {
 					label: {
@@ -224,6 +223,12 @@ export default defineComponent({
 					"Thermostat Schedule": "y",
 					"Predicted Temperature": "y",
 					"Running Cost": "y2",
+				},
+				colors: {
+					"Duty Cycle": "rgba(0,0,0,0.32)",
+					"Predicted Temperature": "rgb(0,0,255)",
+					"Running Cost": "rgb(255,0,0)",
+					"Thermostat Schedule": "rgb(0,208,0)",
 				},
 				columns: [
 					[
@@ -262,12 +267,15 @@ export default defineComponent({
 							return tariffPoint.value;
 						}),
 					],
+					["Duty Cycle", null],
+					["Duty Times", null],
 				],
 				type: line(),
 				xs: {
 					"Thermostat Schedule": "Thermostat Times",
 					"Predicted Temperature": "Prediction Times",
 					"Running Cost": "Tariff Times",
+					"Duty Cycle": "Duty Times",
 				},
 			},
 			point: {
