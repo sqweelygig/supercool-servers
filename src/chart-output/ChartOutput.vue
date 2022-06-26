@@ -15,7 +15,7 @@
 	/>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 div.chart-area {
 	aspect-ratio: 1;
 }
@@ -108,7 +108,6 @@ import { bb, line } from "billboard.js";
 import "billboard.js/dist/billboard.css";
 
 export default defineComponent({
-	// TODO Explain steps required for successful chart output
 	components: { PageHeader, ToolBar, VerticalSpacer },
 	computed: {
 		thermostatSchedule(): ThermostatInterval[] {

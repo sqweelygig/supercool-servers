@@ -23,6 +23,10 @@
 			v-bind:tariff-schedule="data.tariffSchedule"
 			v-bind:thermal-properties="data.thermalProperties"
 		/>
+		<chart-instructions
+			v-else-if="data.phase === 'chart'"
+			v-on:previous="phaseShift(-1)"
+		/>
 		<introduction v-else v-on:next="phaseShift(1)" />
 	</div>
 </template>
@@ -85,6 +89,7 @@ import { ThermalProperties } from "@/thermal-survey/ThermalSurvey.types";
 import ThermalSurvey from "@/thermal-survey/ThermalSurvey.vue";
 import useDataBoundary from "@/composables/useDataBoundary";
 import ChartOutput from "@/chart-output/ChartOutput.vue";
+import ChartInstructions from "@/chart-output/ChartInstructions.vue";
 import Introduction from "@/introduction/Introduction.vue";
 
 const phases = [
@@ -109,6 +114,7 @@ export default defineComponent({
 		ThermalSurvey,
 		ChartOutput,
 		Introduction,
+		ChartInstructions,
 	},
 	setup: function () {
 		const store = useDataBoundary(

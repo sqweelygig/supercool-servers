@@ -1,8 +1,8 @@
 <template>
 	<div class="error-message" v-on:click.prevent="onClear">
 		<div>
-			<span>Something went wrong.</span>
-			<font-awesome-icon icon="times" />
+			<span>{{ message || "Something went wrong." }}</span>
+			<font-awesome-icon icon="times" v-if="onClear" />
 		</div>
 	</div>
 </template>
@@ -37,6 +37,7 @@ IconLibrary.add(faTimes);
 export default defineComponent({
 	components: { FontAwesomeIcon },
 	props: {
+		message: String,
 		onClear: Function as PropType<() => void>,
 	},
 });
