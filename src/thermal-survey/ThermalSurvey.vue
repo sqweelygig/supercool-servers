@@ -56,7 +56,7 @@
 			v-model.number="data.minimumThermostat"
 		/>
 		<thermodynamic-observation
-			explanation="Please wait until the A/C has turned off, turn the thermostat down and time how long it takes to cool the room."
+			explanation="Please wait until the A/C has turned off, turn the thermostat down to the coldest allowed and time how long it takes to cool the room."
 			question="How fast does the room cool?"
 			v-bind:disabled="data.minimumThermostat >= data.normalThermostat"
 			v-bind:end-temperature="data.minimumThermostat"
@@ -82,7 +82,7 @@
 			v-model.number="data.maximumThermostat"
 		/>
 		<thermodynamic-observation
-			explanation="Please wait until the A/C has turned on, turn the thermostat up and time how long it takes the room to warm."
+			explanation="Please wait until the A/C has turned on, turn the thermostat up to the warmest allowed and time how long it takes the room to warm."
 			question="How fast does the room warm?"
 			v-bind:disabled="data.maximumThermostat <= data.minimumThermostat"
 			v-bind:end-temperature="data.maximumThermostat"
