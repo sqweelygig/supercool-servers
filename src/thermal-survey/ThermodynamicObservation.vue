@@ -51,7 +51,7 @@ export default defineComponent({
 			const recent = this.modelValue[this.modelValue.length - 1] || {};
 			if (recent.startTime === undefined) {
 				const newTail = {
-					initialObservation: isRisingEdge,
+					initiallyObservedRisingEdge: isRisingEdge,
 					startTemperature: this.startTemperature,
 					startTime: rightNow,
 				};
@@ -74,7 +74,7 @@ export default defineComponent({
 				const newTail = {
 					startTemperature: this.startTemperature,
 					startTime: rightNow,
-					initialObservation: isRisingEdge,
+					initiallyObservedRisingEdge: isRisingEdge,
 				};
 				this.$emit("update:modelValue", this.modelValue.concat([newTail]));
 			}

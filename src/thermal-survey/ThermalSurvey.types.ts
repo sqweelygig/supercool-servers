@@ -120,14 +120,14 @@ export function isThermalInterval(data: any): data is ThermalInterval {
 }
 
 export interface ThermalObservation extends ThermalInterval {
-	initialObservation: boolean;
+	initiallyObservedRisingEdge: boolean;
 	transitionTime?: Date;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 export function isThermalObservation(data: any): data is ThermalObservation {
 	return (
-		typeof data.initialObservation === "boolean" &&
+		typeof data.initiallyObservedRisingEdge === "boolean" &&
 		(typeof data.transitionTime === "undefined" ||
 			data.transitionTime instanceof Date) &&
 		isThermalInterval(data)

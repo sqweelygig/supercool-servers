@@ -19,7 +19,6 @@ import { ThermalObservation } from "./ThermalSurvey.types";
 import ToolBar from "@/components/ToolBar.vue";
 
 export default defineComponent({
-	// TODO Tidy up initialObservation during observation progression
 	components: { DutyTable, ToolBar },
 	computed: {
 		disabledButtons() {
@@ -28,13 +27,13 @@ export default defineComponent({
 				return [this.onRise, this.onFall];
 			} else if (recent.endTime !== undefined) {
 				return [];
-			} else if (recent.initialObservation === true) {
+			} else if (recent.initiallyObservedRisingEdge === true) {
 				if (recent.transitionTime === undefined) {
 					return [this.onRise];
 				} else {
 					return [this.onFall];
 				}
-			} else if (recent.initialObservation === false) {
+			} else if (recent.initiallyObservedRisingEdge === false) {
 				if (recent.transitionTime === undefined) {
 					return [this.onFall];
 				} else {
@@ -55,7 +54,7 @@ export default defineComponent({
 				recent.endTime === undefined
 			) {
 				const newTail = {
-					initialObservation: isRisingEdge,
+					initiallyObservedRisingEdge: isRisingEdge,
 					startTemperature: this.temperature,
 					startTime: rightNow,
 				};
@@ -83,7 +82,7 @@ export default defineComponent({
 				const initialTime = transitionTime.getTime() - startTime.getTime();
 				const totalTime = rightNow.getTime() - startTime.getTime();
 				const initialProportion = initialTime / totalTime;
-				const dutyCycle = recent.initialObservation
+				const dutyCycle = recent.initiallyObservedRisingEdge
 					? initialProportion
 					: 1 - initialProportion;
 				const newTail = {
@@ -95,7 +94,7 @@ export default defineComponent({
 				const nextTail = {
 					startTemperature: this.temperature,
 					startTime: rightNow,
-					initialObservation: isRisingEdge,
+					initiallyObservedRisingEdge: isRisingEdge,
 				};
 				this.$emit(
 					"update:modelValue",
@@ -105,7 +104,7 @@ export default defineComponent({
 				const newTail = {
 					startTemperature: this.temperature,
 					startTime: rightNow,
-					initialObservation: isRisingEdge,
+					initiallyObservedRisingEdge: isRisingEdge,
 				};
 				this.$emit("update:modelValue", this.modelValue.concat([newTail]));
 			}
