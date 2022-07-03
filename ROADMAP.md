@@ -16,7 +16,6 @@
 ## Priorities
 
 * A technician should have information on an example server room available.
-* A technician must be able to generate a business-oriented report.
 * A technician must have a good understanding of the generalisability of the simplifications.
 * A developer must be able to rely on a set of UX tests.
 
@@ -27,6 +26,7 @@
 * A technician must be able to input a baseline thermostat schedule.
 * A technician must be able to input an electricity tariff schedule.
 * A technician must be able to generate an optimised thermostat schedule.
+* A technician must be able to generate a business-oriented report.
 
 ## Qualitative
 
