@@ -456,6 +456,8 @@ Met Office (2016) '*Southern England: climate*'. Available at https://www.metoff
 
 Naver Corp. (2022) '*Region With Timeseries*'. Available at https://naver.github.io/billboard.js/demo/#Region.RegionWithTimeseries (accessed 2022-04-19).
 
+Octopus Energy (2022) '*Octopus Tracker: Britain's fairest energy tariff*'. Available at https://octopus.energy/tracker/ (accessed 2022-07-09).
+
 OpenLearn (2019) ‘*Energy in buildings*’. Available at: https://www.open.edu/openlearn/nature-environment/energy-buildings (accessed 2022-02-15).
 
 Palantir (2021) '*Background Bands*'. Available at: http://plottablejs.org/examples/bands/ (accessed 2022-04-19).
@@ -483,6 +485,8 @@ amCharts.com (2022) '*amCharts 5 Demos*'. Available at: https://www.amcharts.com
 ApexCharts.com (2022) '*JavaScript Chart Demos*'. Available at: https://apexcharts.com/javascript-chart-demos/ (accessed 2022-04-19).
 
 Au-Yeung, J. (2021) '*Vue.js 3 By Example*'. Birmingham: Packt Publishing, Limited.
+
+Bell, A. (2008) '*HVAC equations, data and rules of thumb*'. 2nd ed. McGraw Hill.
 
 Berning, D. (2020) ‘*How To Use TypeScript with Vue Single File Components*’, DigitalOcean. Available at: https://www.digitalocean.com/community/tutorials/vuejs-using-typescript-with-vue (accessed: 2022-01-30).
 
