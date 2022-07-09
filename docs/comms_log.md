@@ -1,9 +1,13 @@
 ## [16/03/2022 11:24] Andrew Lucas
 
 Hello both,
+
 As you know, for my final year university project I am modelling whether resource savings are possible by proactively cooling server rooms during cheaper tariffs. I've previously secured your permission-in-principle to use the BDX as a case study, but I now need to turn this into some specific permissions. I understand that negotiations will be required with the BDX board, so this is more of a introductory note than a polished pitch.
+
 The most controversial permission I'd like is to know how quickly the BDX reacts to a change in thermostat, which will let me know how much energy can be stored in the materials of the room. This can be either be gathered directly by adjusting the thermostat a degree or two, or it can be estimated passively by performing a detailed survey of the room and equipment. I'd also like to confirm how the air handling systems interact and to know how hard the air cooling systems work during routine operations.
+
 Any help is appreciated,
+
 Thanks, Andrew.
 
 ## [23/03/2022 09:17] Simon O'Hare
@@ -34,7 +38,7 @@ As discussed, please be aware that there are some issues of corporate confidenti
 
 Thanks for that Simon, will look forwards to the introduction.
 
-## From: Simon O'Hare <simon.ohare@curveit.com>, Sent: 23 March 2022 10:40, To: Shaun Fensom <shaun@bdx.coop>, Cc: Andrew Lucas <andrew.lucas@curveit.com>,Subject: BDX Cooling project / BMS
+## From: Simon O'Hare, Sent: 23 March 2022 10:40, To: Shaun Fensom, Andrew Lucas, Subject: BDX Cooling project / BMS
 
 Hi Chaps,
 
@@ -58,10 +62,12 @@ Many thanks
 
 Simon O’Hare
 
-## From: Shaun Fensom <shaun@bdx.coop>, Sent: 30 March 2022 11:34, To: Simon O'Hare <simon.ohare@curveit.com>, Cc: Andrew Lucas <andrew.lucas@curveit.com>,Subject: Re: BDX Cooling project / BMS
+## From: Shaun Fensom, Sent: 30 March 2022 11:34, To: Simon O'Hare, Andrew Lucas, Subject: Re: BDX Cooling project / BMS
 
 Hi Simon
+
 Belated response (sorry) to say this is good and happy to work with Andrew.
+
 Shaun
 
 _______________________________
@@ -70,10 +76,52 @@ Shaun Fensom
 Secretary
 
 Brighton Digital Exchange Co-operative
-shaun@bdx.coop
-
-07770 602850
 http://bdx.coop
 
 ______________________________
 
+## From: Andrew Lucas, Sent: 06 April 2022 11:32, To: Shaun Fensom, Simon O'Hare, Subject: RE: BDX Cooling project / BMS
+
+Hi,
+
+Thanks for the response Shaun. Is there a convenient time when we could get together, complete as many of the quick-wins as we can, and consider the longer task of the thermal survey.
+
+My calendar is fairly flexible, so I’ll let you be the first to put dates forward.
+
+Thanks, Andrew.
+
+## From: Andrew Lucas, Sent: 04 May 2022 10:31, To: Shaun Fensom, Simon O'Hare, Subject: RE: BDX Cooling project / BMS
+
+Hi Shaun,
+
+Did you get my previous email? I’m looking to get a few moments confirming how the air circulation systems interact and what the walls are made of, then permission and credentials to monitor the temperature when the thermostat is dropped by a couple of degrees.
+
+## From: Simon O'Hare, Sent: 04 May 2022 10:40, To: Andrew Lucas, Shaun Fensom, Leo Brown, James Parker, Subject: RE: BDX Cooling project / BMS
+
+Hi Andrew,
+
+Leo and James would be best placed to answer this query for you.
+
+@Leo Brown, @James Parker are you able to assist Andrew?
+
+Many thanks!
+
+Simon
+
+## From: Shaun Fensom, Sent: 04 May 2022 10:48, To: Simon O'Hare, Andrew Lucas, Leo Brown, James Parker, Subject: Re: BDX Cooling project / BMS
+
+Hi Simon, Andrew
+
+Apologies Andrew. Your email has been sitting in a vast pile.
+
+Thanks Simon, that makes much more sense.
+
+Shaun
+
+## From: Andrew Lucas, Sent: 09 Jul 2022, To: Simon O'Hare, Leo Brown, James Parker, Shaun Fensom, Subject: Re: BDX Cooling project / BMS
+
+Hi Leo, James
+
+Are either of you in a place to be able to help me get a survey done? I’m not expecting that it’ll take more than 30 minutes of your time, and after that I’ll do a small batch of more time-intensive work.
+
+Thanks, Andrew. 
