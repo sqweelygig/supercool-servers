@@ -18,75 +18,75 @@
 <style lang="scss" scoped>
 div.chart-area {
 	aspect-ratio: 1;
-}
-.bb-regions {
-	.duty-0 {
-		fill: black;
-		fill-opacity: 0;
-	}
-	.duty-1 {
-		fill: black;
-		fill-opacity: 0.02;
-	}
-	.duty-2 {
-		fill: black;
-		fill-opacity: 0.04;
-	}
-	.duty-3 {
-		fill: black;
-		fill-opacity: 0.06;
-	}
-	.duty-4 {
-		fill: black;
-		fill-opacity: 0.08;
-	}
-	.duty-5 {
-		fill: black;
-		fill-opacity: 0.1;
-	}
-	.duty-6 {
-		fill: black;
-		fill-opacity: 0.12;
-	}
-	.duty-7 {
-		fill: black;
-		fill-opacity: 0.14;
-	}
-	.duty-8 {
-		fill: black;
-		fill-opacity: 0.16;
-	}
-	.duty-9 {
-		fill: black;
-		fill-opacity: 0.18;
-	}
-	.duty-10 {
-		fill: black;
-		fill-opacity: 0.2;
-	}
-	.duty-11 {
-		fill: black;
-		fill-opacity: 0.22;
-	}
-	.duty-12 {
-		fill: black;
-		fill-opacity: 0.24;
-	}
-	.duty-13 {
-		fill: black;
-		fill-opacity: 0.26;
-	}
-	.duty-14 {
-		fill: black;
-		fill-opacity: 0.28;
-	}
-	.duty-15 {
-		fill: black;
-		fill-opacity: 0.3;
-	}
-	.duty-16 {
-		fill: black;
-		fill-opacity: 0.32;
+	:deep(.bb-regions) {
+		.duty-0 {
+			fill: black;
+			fill-opacity: 0;
+		}
+		.duty-1 {
+			fill: black;
+			fill-opacity: 0.02;
+		}
+		.duty-2 {
+			fill: black;
+			fill-opacity: 0.04;
+		}
+		.duty-3 {
+			fill: black;
+			fill-opacity: 0.06;
+		}
+		.duty-4 {
+			fill: black;
+			fill-opacity: 0.08;
+		}
+		.duty-5 {
+			fill: black;
+			fill-opacity: 0.1;
+		}
+		.duty-6 {
+			fill: black;
+			fill-opacity: 0.12;
+		}
+		.duty-7 {
+			fill: black;
+			fill-opacity: 0.14;
+		}
+		.duty-8 {
+			fill: black;
+			fill-opacity: 0.16;
+		}
+		.duty-9 {
+			fill: black;
+			fill-opacity: 0.18;
+		}
+		.duty-10 {
+			fill: black;
+			fill-opacity: 0.2;
+		}
+		.duty-11 {
+			fill: black;
+			fill-opacity: 0.22;
+		}
+		.duty-12 {
+			fill: black;
+			fill-opacity: 0.24;
+		}
+		.duty-13 {
+			fill: black;
+			fill-opacity: 0.26;
+		}
+		.duty-14 {
+			fill: black;
+			fill-opacity: 0.28;
+		}
+		.duty-15 {
+			fill: black;
+			fill-opacity: 0.3;
+		}
+		.duty-16 {
+			fill: black;
+			fill-opacity: 0.32;
+		}
 	}
 }
 </style>
@@ -278,6 +278,7 @@ export default defineComponent({
 			},
 			regions: this.thermalPredictions.map((thermalPrediction) => {
 				const roundedDuty = Math.round(thermalPrediction.dutyCycle * 16);
+				console.log(thermalPrediction, `duty-${roundedDuty}`);
 				return {
 					class: `duty-${roundedDuty}`,
 					end: thermalPrediction.endTime,
@@ -285,6 +286,7 @@ export default defineComponent({
 				};
 			}),
 		});
+		console.log(this.tariffSeries);
 		chart.export(undefined, (dataUrl) => {
 			this.$data.download = dataUrl;
 		});
