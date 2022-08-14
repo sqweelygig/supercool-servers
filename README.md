@@ -270,6 +270,7 @@ These simplifications should not be treated as final but should be justified or 
 	* All electricity consumed by the server hardware becomes heat.
 	* The server hardware generates a steady heat output.
 	* The air conditioning performs equivalently in all temperatures.
+	* The air conditioning units are either "full on" or "full off", without tiered power usage.
 	* The insulation within this space is insignificant.
 	* The propagation of heat through this space is instantaneous.
 * Passive thermodynamic effects are constant.
@@ -495,25 +496,44 @@ The top-level component in SuperCoolServers.vue then catches these emit payloads
 By implementing the workflow in this manner, each stage is responsible for its data, render and pace, on the condition that the updates it emits are typed suitably for the overall analysis.
 This architecture minimises and specifies the coupling between the analysis and survey phases while keeping each phase and the UX cohesive.
 
-## 4 - Project Reflection
+## 4 - Project Evaluation
 
 ### 4.1 - MVP Review
 
 The MVP is now complete and steps the technician through data gathering and presents a final graph.
-The most significant concern in the main success scenario is the time taken to gather thermodynamic observations ("Cooling" and "Resting" in Figure 3.7.1), mainly because this time requires active monitoring and is boring.
-Replacing this with a more proactive and time-flexible step is a priority in the next development phase.
+To evaluate this, I surveyed the BDX, and the results of this are Appendix N.
+This exercise surfaced a few options for improvement and one blocker in this context.
+However, this confirmed that the feature set and user experience suit other contexts.
+
+The blocker experienced within the BDX context is that each air conditioner unit within the data hall has two independently toggled compressor pumps.
+During the survey, there were several occasions where a single compressor was not cooling sufficiently, so the unit bought the second compressor online.
+This feature means that the simplifications regarding the duty cycle are not suitable for the BDX in their current form.
+However, this issue does not reduce the viability of this tool in situations with linked or single compressors.
+
+The time taken to gather thermodynamic observations is a concern (Step N in Figure n.n), mainly because this time requires active monitoring and is boring.
+Replacing this with a more proactive and time-flexible step would be a priority in a future development phase.
 Something like "Please return to the room after one to two hours and record the temperature" would suit the requirements of data gathering and user attentivity.
+It is worth noting that the BDX, and many digital thermometers, have a 0.1 celsius precision.
+This precision would be sufficient to assess the cooling curve accurately, which a precision of 1 celsius would not.
 
 ![Storybook of some example interactions](docs/storyboard.png)
 
 Figure 4.1.1 - A storyboard of screenshots showing the implemented MVP
 
+The stage during which a user provides tariff information is more complicated for the user than it needs to be.
+Splitting the data into usage in kilowatts and cost in kilowatt-hours will mean that the computer performs the multiplications rather than the user.
+This issue occurred because avoiding these calculations made the data model more straightforward, but this should not come at the cost of making the user's model more complicated.
+
+The final output of the survey has two areas for improvement.
+First, a small paragraph accompanying the graph could explain the proposed cycle and quantify the estimated savings.
+Secondly, the pixelation of the graph render is currently visible at any reasonable magnification, so increasing the resolution would improve the output.
+
 ![Chart showing cycle of thermostat intervals and their effects](docs/chart.png)
 
 Figure 4.1.2 - Chart output of a sample survey result
 
-Apart from this, the main success scenario of the MVP is good quality, so this should be recorded and preserved with a UX test suite.
-
+This evaluation shows the MVP at a moment where it is good but not exceptional.
+From here, the project's timeframe demanded that I implement improvements that could be delivered on time and defer improvements that ran the risk of overrun.
 ### 4.2 - General Reflection
 
 The project progress has slipped from a little ahead; it is now as per the timeline with the MVP implemented.

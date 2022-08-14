@@ -14,6 +14,7 @@
 		download-name="chart.png"
 	/>
 	<!-- TODO Add summary of potential savings and breakdown of schedule -->
+	<!-- TODO Increase the resolution of the graph render -->
 </template>
 
 <style lang="scss" scoped>

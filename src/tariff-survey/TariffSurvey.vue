@@ -36,6 +36,7 @@
 	</div>
 	<vertical-spacer />
 	<tool-bar v-on:next="onNext" />
+	<!-- TODO Observe cost-per-kwh and kw, then derive cost-per-duty-hour -->
 </template>
 
 <style scoped lang="scss">
