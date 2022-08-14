@@ -13,6 +13,7 @@
 		v-bind:download="download"
 		download-name="chart.png"
 	/>
+	<!-- TODO Add summary of potential savings and breakdown of schedule -->
 </template>
 
 <style lang="scss" scoped>
