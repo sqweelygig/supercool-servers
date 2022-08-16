@@ -6,6 +6,10 @@
 		download-name="chart.png"
 	/>
 	<page-header text="Schedule Chart" />
+	<div>
+		{{ thermostatSummary }}
+		{{ scheduleSavings }}
+	</div>
 	<div ref="chartArea" class="chart-area"></div>
 	<vertical-spacer />
 	<tool-bar
@@ -13,7 +17,6 @@
 		v-bind:download="download"
 		download-name="chart.png"
 	/>
-	<!-- TODO Add summary of potential savings and breakdown of schedule -->
 	<!-- TODO Increase the resolution of the graph render -->
 </template>
 
@@ -105,6 +108,7 @@ import {
 } from "@/thermal-survey/ThermalSurvey.types";
 import optimiseSchedule from "@/pipes/OptimiseSchedule.pipe";
 import { ThermostatInterval } from "@/SuperCoolServers.types";
+import scheduleSavings from "./ScheduleSavings.pipe";
 import modelSchedule from "@/pipes/ModelSchedule.pipe";
 import { bb, line } from "billboard.js";
 import "billboard.js/dist/billboard.css";
@@ -117,6 +121,31 @@ export default defineComponent({
 				this.tariffSchedule.intervals,
 				this.thermalProperties
 			);
+		},
+		thermostatSummary(): string {
+			const preamble = "This schedule sets the thermostat";
+			const schedule = this.thermostatSchedule.map((interval) => {
+				return (
+					"to " +
+					interval.thermostatSetting +
+					" celsius at " +
+					interval.startTime.toLocaleTimeString()
+				);
+			});
+			return preamble + " " + schedule.join(" then ") + ".";
+		},
+		scheduleSavings(): string {
+			const savings = scheduleSavings(
+				this.thermalPredictions,
+				this.thermalProperties,
+				this.tariffSchedule.intervals
+			);
+			return [
+				"This should save about",
+				parseFloat(savings.toPrecision(2)),
+				this.tariffSchedule.units,
+				"per annum.",
+			].join(" ");
 		},
 		thermalPredictions(): ThermalInterval[] {
 			return modelSchedule(this.thermostatSchedule, this.thermalProperties);
@@ -280,7 +309,6 @@ export default defineComponent({
 			},
 			regions: this.thermalPredictions.map((thermalPrediction) => {
 				const roundedDuty = Math.round(thermalPrediction.dutyCycle * 16);
-				console.log(thermalPrediction, `duty-${roundedDuty}`);
 				return {
 					class: `duty-${roundedDuty}`,
 					end: thermalPrediction.endTime,
@@ -288,7 +316,6 @@ export default defineComponent({
 				};
 			}),
 		});
-		console.log(this.tariffSeries);
 		chart.export(undefined, (dataUrl) => {
 			this.$data.download = dataUrl;
 		});
