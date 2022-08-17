@@ -12,12 +12,12 @@ export function toTariffSchedule(data: TariffSurveyState): TariffSchedule {
 		return {
 			intervals: [
 				{
-					costPerHour: data.dayCost,
+					costPerHour: data.dayCost * data.wattage,
 					endTime: nightStart,
 					startTime: dayStart,
 				},
 				{
-					costPerHour: data.nightCost,
+					costPerHour: data.nightCost * data.wattage,
 					endTime: nextDayStart,
 					startTime: nightStart,
 				},
@@ -29,12 +29,12 @@ export function toTariffSchedule(data: TariffSurveyState): TariffSchedule {
 		return {
 			intervals: [
 				{
-					costPerHour: data.nightCost,
+					costPerHour: data.nightCost * data.wattage,
 					endTime: dayStart,
 					startTime: nightStart,
 				},
 				{
-					costPerHour: data.dayCost,
+					costPerHour: data.dayCost * data.wattage,
 					endTime: nextNightStart,
 					startTime: dayStart,
 				},
@@ -46,7 +46,7 @@ export function toTariffSchedule(data: TariffSurveyState): TariffSchedule {
 		return {
 			intervals: [
 				{
-					costPerHour: data.dayCost,
+					costPerHour: data.dayCost * data.wattage,
 					endTime: nextDayStart,
 					startTime: dayStart,
 				},

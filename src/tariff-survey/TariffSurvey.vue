@@ -11,12 +11,16 @@
 	/>
 	<page-header text="Tariff Schedule" />
 	<div class="form-group">
-		<label for="units" class="section-header">Units:</label>
+		<label for="wattage" class="section-header">Power consumption:</label>
+		<input id="wattage" v-model="data.wattage" />
+	</div>
+	<div class="form-group">
+		<label for="units" class="section-header">Costing units:</label>
 		<input id="units" v-model="data.units" />
 	</div>
 	<div class="form-group">
 		<label for="day-cost" class="section-header">
-			Daytime consumption per hour:
+			Daytime {{ data.units }} per kilowatt-hour:
 		</label>
 		<input id="day-cost" type="number" v-model.number="data.dayCost" />
 	</div>
@@ -26,7 +30,7 @@
 	</div>
 	<div class="form-group">
 		<label for="night-cost" class="section-header">
-			Overnight consumption per hour:
+			Overnight {{ data.units }} per kilowatt-hour:
 		</label>
 		<input id="night-cost" type="number" v-model.number="data.nightCost" />
 	</div>
@@ -36,7 +40,6 @@
 	</div>
 	<vertical-spacer />
 	<tool-bar v-on:next="onNext" />
-	<!-- TODO Observe cost-per-kwh and kw, then derive cost-per-duty-hour -->
 </template>
 
 <style scoped lang="scss">

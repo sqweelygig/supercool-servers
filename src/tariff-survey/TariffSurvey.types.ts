@@ -25,6 +25,7 @@ export interface TariffSurveyState extends DataSet {
 	nightCost: number;
 	nightStart: string;
 	units: string;
+	wattage: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -37,6 +38,7 @@ export function isTariffSurveyState(data: any): data is TariffSurveyState {
 		typeof data.nightCost === "number" &&
 		typeof data.nightStart === "string" &&
 		typeof data.units === "string" &&
+		typeof data.wattage === "number" &&
 		isDataSet(data) &&
 		data.version === 0
 	);
@@ -51,6 +53,7 @@ export function padTariffSurveyState(
 		nightCost: 34,
 		nightStart: "00:00",
 		units: "GBP",
+		wattage: 1000,
 		version: 0,
 		...data,
 	};
