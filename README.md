@@ -679,6 +679,8 @@ We Learn Code (2020) ‘*What is a Web Framework, and Why Should I use one?*’.
 
 w3schools.com (2022) '*SVG Tutorial*'. Available at: https://www.w3schools.com/graphics/svg_intro.asp (accessed 2022-04-19).
 
+xRealNeon (2021) '*Vue to Github Pages*'. Available at: https://github.com/marketplace/actions/vue-to-github-pages (accessed 2022-08-17).
+
 ## Appendix I - Insulation calculations
 
 [BDX insulation calculations](docs/bdx_thermals.xlsx)
