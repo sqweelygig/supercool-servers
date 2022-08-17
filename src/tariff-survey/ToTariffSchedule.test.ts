@@ -9,15 +9,16 @@ test("convert a schedule with cheap rates during daylight hours", () => {
 		nightStart: "19:00",
 		units: "GBP",
 		version: 0,
+		wattage: 100,
 	});
 
 	expect(result.units).toEqual("GBP");
 
-	expect(result.intervals[0].costPerHour).toEqual(12);
+	expect(result.intervals[0].costPerHour).toEqual(1200);
 	expect(result.intervals[0].startTime.getHours()).toEqual(8);
 	expect(result.intervals[0].endTime.getHours()).toEqual(19);
 
-	expect(result.intervals[1].costPerHour).toEqual(18);
+	expect(result.intervals[1].costPerHour).toEqual(1800);
 	expect(result.intervals[1].startTime.getHours()).toEqual(19);
 	expect(result.intervals[1].endTime.getHours()).toEqual(8);
 	
@@ -34,15 +35,16 @@ test("convert a schedule with cheap overnight rates", () => {
 		nightStart: "01:00",
 		units: "USD",
 		version: 0,
+		wattage: 100,
 	});
 
 	expect(result.units).toEqual("USD");
 
-	expect(result.intervals[0].costPerHour).toEqual(17);
+	expect(result.intervals[0].costPerHour).toEqual(1700);
 	expect(result.intervals[0].startTime.getHours()).toEqual(1);
 	expect(result.intervals[0].endTime.getHours()).toEqual(6);
 
-	expect(result.intervals[1].costPerHour).toEqual(23);
+	expect(result.intervals[1].costPerHour).toEqual(2300);
 	expect(result.intervals[1].startTime.getHours()).toEqual(6);
 	expect(result.intervals[1].endTime.getHours()).toEqual(1);
 	
