@@ -17,7 +17,6 @@
 		v-bind:download="download"
 		download-name="chart.png"
 	/>
-	<!-- TODO Increase the resolution of the graph render -->
 </template>
 
 <style lang="scss" scoped>
@@ -316,7 +315,7 @@ export default defineComponent({
 				};
 			}),
 		});
-		chart.export(undefined, (dataUrl) => {
+		chart.export({ height: 5120, width: 5120 }, (dataUrl) => {
 			this.$data.download = dataUrl;
 		});
 	},
