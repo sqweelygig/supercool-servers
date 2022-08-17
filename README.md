@@ -2,6 +2,8 @@
 
 Inspired by ["Batteries aren't the only way to store power. Here's another."](https://www.youtube.com/watch?v=0f9GpMWdvWI) from Technology Connections.
 
+[https://sqweelygig.github.io/supercool-servers/](https://sqweelygig.github.io/supercool-servers/)
+
 ## Table of Contents
 
 1. Project Intent
