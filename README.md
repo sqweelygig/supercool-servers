@@ -41,9 +41,9 @@ Inspired by ["Batteries aren't the only way to store power. Here's another."](ht
 ### 1.1 - Environmentally Responsible Electricity Grids
 
 As humanity seeks to manage its impact on Earth, electricity grids must shift onto a more environmentally responsible paradigm.
-Various techniques contribute to this intent, and this project will focus on one form of load shaping.
-It will consider offsetting server room cooling through time to prioritise more environmentally responsible power scheduling.
-The project will deliver this consideration as a web application to promote scalability and adoption.
+Various techniques contribute to this intent, and this project focused on one form of load shaping.
+It modelled offsetting server room cooling through time to prioritise more environmentally responsible power scheduling.
+The project delivered this consideration as a web application to promote scalability and adoption.
 
 One fundamental property of an electrical grid is that the energy delivered during one cycle must match the energy consumed, which requires careful balancing.
 An electricity grid engineered for environmental responsibility will include several power balancing techniques due to diversity in their disadvantages.
