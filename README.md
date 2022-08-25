@@ -205,30 +205,31 @@ To mitigate the dual risks of overrun and underrun, the project delivered a viab
 
 ### 2.5 - Legal, Social, Ethical and Professional Issues
 
-The project involves data processing, so it must respect data protection principles.
-Architecting the project to distribute the interface, model and algorithms for client-side processing means it avoids data confidentiality issues.
+The product involves data processing, so it must respect data protection principles.
+Architecting the project to distribute the interface, model and algorithms for client-side processing meant it avoided most data confidentiality issues.
 This architecture also has the benefit that it eliminates the need for server-side processing, retention and maintenance.
-It does restrict the opportunity for data retention and distribution, but the advantages exceed the disadvantages.
+It does restrict the opportunity for statistical or social comparisons, but the advantages exceed the disadvantages.
 
-This project will not use browser surveys such as Google Analytics.
+This project does not use browser surveys such as Google Analytics.
 These surveys offer value to ongoing projects where they can inform development, but for the small audience of this project, their value is minimal.
 Therefore data privacy trumps usage intelligence.
 
-The initial accessibility target for this project is that the landing page must be fully accessible and that the implementation of subsequent pages should remain compatible with accessibility.
+The accessibility target chosen for this project's scope is that the landing page must be fully accessible and that the implementation of subsequent pages should remain compatible with accessibility.
 Two factors diminish the need for full accessibility; target audience and project scope.
 This project's target audience is technicians responsible for server room ambient environments.
 Since this responsibility requires interaction with visual-only indicators such as LCDs and LEDs, we can assume that the audience can see.
-It is also reasonable to assume that if this project became a product we could revisit this statement, so development must occur in a manner that does not block accessibility.
-Therefore the landing page will be explicitly tested for blind, deaf, large print, mouse-only and keyboard-only users.
-Subsequent pages should be compatible with large print, deaf, mouse-only and keyboard-only users through good development practices, although the testing regime will not intensively check this.
+It is also reasonable to assume that if this project became a commercial product we could revisit this statement, so development must occur in a manner that does not block accessibility.
+<!-- TODO: Accessibility tests -->
+Therefore the landing page was explicitly tested for blind, deaf, large print, mouse-only and keyboard-only users.
+Subsequent pages should be compatible with large print, deaf, mouse-only and keyboard-only users through good development practices, although the testing regime will not check this.
 
 Recommending potential changes to operating procedures is this project's purpose, which confers a duty of responsibility.
-The motivation for the recommendation must be explicit and clear, so any organisation can decide if it is compatible with its goals.
-In addition, the justification and calculations underpinning the recommendation should be available for scrutiny to provide an option for independent verification of trustworthiness.
-Finally, the project must never suggest damaging courses of action; it should assume a duty of care in which a technician might implement the recommendations without detailed consideration.
+By keeping the motivation for the recommendation must be explicit and clear, the application allows an organisation to decide if it is compatible with its goals.
+In addition, the justification and calculations underpinning the recommendation are available for scrutiny to provide an option for independent verification of trustworthiness.
+Finally, the project should never suggest damaging courses of action. The developer has assumed a duty of care in which a technician might implement the recommendations without detailed consideration.
 
-In seeking a case study, the project has reached out to a potential partner organisation, specifically the Brighton Digital Exchange (BDX).
-This relationship means that the project team must take care to present the BDX in a positive light and must not accidentally reveal commercially sensitive information.
+In seeking a case study, the project reached out to a potential partner organisation, specifically the Brighton Digital Exchange (BDX).
+This relationship means that the project team must took care to present the BDX in a positive light and took measures to avoid accidentally revealing commercially sensitive information.
 
 ## 3 - Project Progress
 
