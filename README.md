@@ -320,26 +320,16 @@ Unfortunately, a proper level of research rigour was beyond the scope of a devel
 
 Figure 3.3.1 - Activity diagram showing data flow for optimising a schedule and presenting a report.
 
-The user experience implements the data flow as a sequence of incremental steps, each adding data to the model.
+The user experience design implemented the data flow as a sequence of incremental steps, each adding data to the model.
 It deliberately captures the most controversial data first, using the principle of failing early rather than the psychological trick of the sunk-cost fallacy, as this is a more ethical user experience.
-The MVP prioritises a smartphone interface as this is the most restrictive expected.
+The MVP prioritised a smartphone interface as this is the most restrictive expected.
 The w3c (2015) considers progressive enhancement to generally be more effective and maintainable than graceful degradation, especially when adopted from the initialisation of the project.
-Therefore, the interface should not rely on high resolutions, easy keyboard typing, hover events or other aspects absent from a smartphone.
-To support this, I will develop at a 360x640px resolution using Chrome's low-resolution developer toolkit since statcounter.com (2022) states that this is the lowest resolution that receives frequent use.
+Therefore, the interface does not rely on high resolutions, easy keyboard typing, hover events or other aspects absent from a smartphone.
+To support this, I developed at a 360x640px resolution using Chrome's low-resolution developer toolkit since statcounter.com (2022) states that this is the lowest resolution that receives frequent use.
 
 ![Smartphone interface](docs/screenshot.png)
 
 Figure 3.3.2 - Implemented interface, captured at 360x640px.
-
-For several reasons, gathering a set of thermal observations is a vital objective, which receives priority above other concerns:
-
-* Gaining access to an example server room provides a case study, and gathering these observations proves that access.
-* These observations are more useful when gathered across as wide a range of seasons as possible.
-* Gathering these observations provides an opportunity for a user experience exercise.
-
-Several elements were required to script this set of observations.
-First, research into the thermal behaviour of rooms was conducted and supplemented by a quick survey of the BDX.
-Second, I implemented the survey interface and progressed negotiations to conduct a more detailed survey.
 
 ### 3.4 - Output
 
@@ -464,6 +454,16 @@ In conclusion, this project will use Vue.js, especially single file components, 
 Figure 3.5.2 - Feature comparison matrix of language options.
 
 ### 3.6 - Implementation
+
+For several reasons, gathering a set of thermal observations was a valuable early deliverable, which received priority above other concerns:
+
+* Gaining access to an example server room provides a case study.
+* Thermal observations are more useful when gathered across as wide a range of seasons as possible.
+* Gathering these observations provided an opportunity for a user experience review.
+
+Several elements were required to script this set of observations.
+First, research into the thermal behaviour of rooms was conducted and supplemented by a quick survey of the BDX.
+Second, I implemented the survey interface and progressed negotiations to conduct a more detailed survey.
 
 The first delivered use case will be a guided survey of a room's thermal properties.
 This use case is selected because the project runs from February to September, so collecting data as early as possible will cover a more significant seasonal variance.
