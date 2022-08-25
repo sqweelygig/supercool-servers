@@ -164,10 +164,10 @@ Figure 2.2.2 - Limiting revisits while adopting continual improvement
 
 Following the project lifecycle model adopted, this is several lists of stakeholder stories, each in the format `A (stakeholder) (must|should|could|will not) …`.
 This project adapts the core Kanban board by broadening the scope of concerns from "user stories" to "stakeholder stories" and simplifying persistent concerns to a qualitative list.
-These stories will reside in the repository and update with the code that fulfils them, so the project history is always up-to-date. For an up-to-date roadmap listing, see Appendix V.
+These stories will reside in the repository and update with the code that fulfils them, so the project requirements are always contemporary. For an up-to-date roadmap listing, see Appendix V.
 
-To compile this list, the developer will be the first user ("dogfooding").
-In selecting this requirements model, the project recognises the limited pool of potential stakeholder representatives and seeks to reap the advantages of streamlining.
+In curating this list, the developer was always the first user ("dogfooding").
+In selecting this requirements source, the project recognised the limited pool of potential stakeholder representatives and sought to reap the advantages of streamlining rather than expend effort recruiting stakeholders.
 The main risk with this is that the developer may be overly familiar with the oddities of their design, and this risk is acknowledged.
 
 ### 2.4 - Risk Management
