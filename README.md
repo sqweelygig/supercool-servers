@@ -159,11 +159,6 @@ To yoke this temptation a deliberate opportunity is given at the end of each pri
 
 Figure 2.2.2 - Limiting revisits while adopting continual improvement
 
-The first delivered use case will be a guided survey of a room's thermal properties.
-This use case is selected because the project runs from February to September, so collecting data as early as possible will cover a more significant seasonal variance.
-Therefore, this deliverable will include just enough research to ensure data relevance, just enough interface that a technician can comfortably operate the system and just enough workflow for a customer to perceive the value.
-Immediately upon completing this deliverable, there will be an opportunity to reflect on the product direction, schedule and lessons.
-
 ### 2.3 - Requirements
 
 Following the project lifecycle model adopted, this is several lists of stakeholder stories, each in the format `A (stakeholder) (must|should|could|will not) …`.
@@ -465,6 +460,11 @@ In conclusion, this project will use Vue.js, especially single file components, 
 Figure 3.5.2 - Feature comparison matrix of language options.
 
 ### 3.6 - Implementation
+
+The first delivered use case will be a guided survey of a room's thermal properties.
+This use case is selected because the project runs from February to September, so collecting data as early as possible will cover a more significant seasonal variance.
+Therefore, this deliverable will include just enough research to ensure data relevance, just enough interface that a technician can comfortably operate the system and just enough workflow for a customer to perceive the value.
+Immediately upon completing this deliverable, there will be an opportunity to reflect on the product direction, schedule and lessons.
 
 I have initiated this user interface using Vue.js single file components (SFCs) and typescript files (see Appendix IV).
 The top-level SFC in SuperCoolServers.vue provides broad stroke templating and coordination between interfaces.
