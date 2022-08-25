@@ -231,7 +231,7 @@ Finally, the project should never suggest damaging courses of action. The develo
 In seeking a case study, the project reached out to a potential partner organisation, specifically the Brighton Digital Exchange (BDX).
 This relationship means that the project team must took care to present the BDX in a positive light and took measures to avoid accidentally revealing commercially sensitive information.
 
-## 3 - Project Progress
+## 3 - Project Implementation
 
 ### 3.1 - Thermodynamic Modelling
 
@@ -246,11 +246,12 @@ Figure 3.1.1 - Building management system (BMS) interface, Airedale 2015
 
 Two 51.6kW air conditioning units cool the BDX for a total cooling power of 103.2kW.
 This infrastructure is N+1 redundant, implying a cap on server equipment at 51.6kW before upgrades.
-The BDX complements this with precision units that cool the server equipment by heating the room's environment.
+The BDX complements this with a cold aisle and precision vents that direct the air conditioning outlet more precisely to the server equipment racks.
 
-The BMS holds the room at 20 degrees celsius, and the Met Office's Southern England: climate (2016) states that the external temperature is generally between 3 and 21 degrees celsius.
-The external wall comprises a plastered concrete wall, an access corridor and a single pane glass wall of about 44 square metres.
+The BMS holds the air conditioning outflow at 20 degrees celsius, and the Met Office's Southern England: climate (2016) states that the external temperature is generally between 3 and 21 degrees celsius.
+The external wall comprises a plasterboard wall, an access corridor and a single pane glass wall of about 44 square metres.
 Therefore, an upper estimate of cooling through this wall (rounded up to 2 s.f.) is 810 watts (see Appendix I).
+<!-- TODO Update this calculation to plasterboard -->
 
 The remaining surfaces of the BDX separate the room from other offices and underground with a surface area of around 330 square metres.
 Appendix I models a 2 degrees celsius difference with the data hall to estimate these surfaces' significance. From this, an upper estimate of cooling to fixed temperature environments is 1.6 kilowatts (rounded up to 2 s.f.).
@@ -503,6 +504,8 @@ The top-level component in SuperCoolServers.vue then catches these emit payloads
 
 By implementing the workflow in this manner, each stage is responsible for its data, render and pace, on the condition that the updates it emits are typed suitably for the overall analysis.
 This architecture minimises and specifies the coupling between the analysis and survey phases while keeping each phase and the UX cohesive.
+
+<!-- TODO Survey conducted -->
 
 ## 4 - Project Evaluation
 
