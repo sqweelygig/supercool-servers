@@ -268,13 +268,14 @@ In addition, the quick survey revealed that the server room windows are north-fa
 ### 3.2 - Simplifications
 
 This section records the simplifying assumptions currently applied to the modelling process.
-These simplifications should not be treated as final but should be justified or removed if possible.
+Most of these simplifications are reasonable in the context of the BDX, and are likely to be reasonable in many server rooms.
+Further development could eliminate each and increase the proportion of modelable server rooms.
 
 * The server room comprises equipment racks, well-circulated air, air conditioning and thermal mass.
 	* All electricity consumed by the server hardware becomes heat.
 	* The server hardware generates a steady heat output.
 	* The air conditioning performs equivalently in all temperatures.
-	* The air conditioning units are either "full on" or "full off" without tiered power usage.
+	* The air conditioning does not have tiered power levels.
 	* The insulation within this space is insignificant.
 	* The propagation of heat through this space is instantaneous.
 * Passive thermodynamic effects are constant.
@@ -291,8 +292,8 @@ These simplifications should not be treated as final but should be justified or 
 	* One of these is internal and is thermostatically regulated.
 	* The server room does not affect the ambient environments.
 * Overcooling the server room environment will have a negligible effect on the internal temperature of computing equipment.
-	* The use of precision ventilation units can counter the risk of hot and cold spots.
-	* The computing equipment fans will slow since the same volume of cooler air will have an increased cooling effect.
+	* Engineered ventilation can counter the risk of hot and cold spots.
+	* The computing equipment fans will slow since a lower volume of cooler air will have the same cooling effect.
 	* There is a moderate range of acceptable temperatures at the inlet of a server
 * Thermal units, such as the coefficient of production and joules of thermal energy, can be eliminated from the model.
 	* Passive observations measure the duty cycle required to maintain temperature differences.
@@ -303,17 +304,15 @@ These simplifications should not be treated as final but should be justified or 
 	* e.g., changing the server room's temperature requires one duty hour per celsius.
 	* e.g., running the air conditioning uses 1 ton of CO2 per duty hour.
 
-These simplifications seem reasonable for the BDX and some other server rooms (see Section 3.1 - Thermodynamic Modelling) but could limit the project's generalisation to other contexts.
-Further research is warranted and scheduled to estimate the restrictiveness of each of these simplifications.
-This research includes a questionnaire offered to fellow students (see Appendix VI), but this has not received enough returns at this stage.
+The simplification notable for not being reasonable in the BDX is "The air conditioning does not have tiered power levels".
+The detailed survey of the BDX revealed that each air conditioning unit has two compressors and selectively activates any number of them.
+This observation is more fully explored in Section 4.1 - MVP Review.
 
-A quick survey of server room photographs reinforces this assumption but is not yet at reasonable rigour.
-For example, most server rooms do not have significant glazed surfaces that would conduct heat.
-In addition, the building materials used in most server rooms will provide but not prioritise insulation.
-
-![Server rooms image search](docs/server_room_quick_survey.png)
-
-Figure 3.2.1 - Quick survey of typical server room construction, DuckDuckGo 2022
+As part of the project, I did attempt to research the significance of each of these simplifications.
+This research included a questionnaire offered to fellow students (see Appendix N), but this did not receive enough returns.
+This research also reviewed publicly available server room schematives and photographs.
+These indicated that a typical server room would not passively shed significant heat.
+Unfortunately, a proper level of research rigour was beyond the scope of a development project, and the generalisability is a matter of conjecture and personal experience.
 
 ### 3.3 - User Experience
 
@@ -505,9 +504,11 @@ The top-level component in SuperCoolServers.vue then catches these emit payloads
 By implementing the workflow in this manner, each stage is responsible for its data, render and pace, on the condition that the updates it emits are typed suitably for the overall analysis.
 This architecture minimises and specifies the coupling between the analysis and survey phases while keeping each phase and the UX cohesive.
 
-<!-- TODO Survey conducted -->
+<!-- TODO Write up BDX survey -->
 
 ## 4 - Project Evaluation
+
+<!-- TODO Write up project failure and success -->
 
 ### 4.1 - MVP Review
 
