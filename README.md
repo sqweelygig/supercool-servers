@@ -113,17 +113,17 @@ The project explicitly considered this at each milestone and also sought to habi
 
 ### 2.2 - Lifecycle
 
-This project has a firm time budget, which must be respected when considering scope.
-The 32-week lifecycle budgets 7.5 hours to project work per week.
+This project had a firm time budget, which was be respected when considering scope.
+The 32-week lifecycle budgeted 7.5 hours to project work per week.
 This budget resolves to about six full-time equivalent weeks.
 
 The first consideration in choosing the software development model is positioning on the spectrum from waterfall to agile.
 This project has a small, well-bounded, useful product within a sizeable pluripotential scope for development.
-For example, the minimum viable product (MVP) could consist of a data-gathering flow, a simplified thermal model, a schedule improvement algorithm and a brief final report.
-Alongside architectural decisions and toolchain initialisation, this MVP will require an estimated 70% of the project budget.
+For example, the minimum viable product (MVP) selected was a data-gathering flow, a simplified thermal model, a schedule improvement algorithm and a brief final report.
+Alongside architectural decisions and toolchain initialisation, I estimated this MVP to require 70% of the project budget.
 The scope for improving this offering includes iteratively improving any of these functional requirements, adding integration with APIs, the internet of things (IoT), and more accurate modelling.
-It is also worth noting that it is not a critical system and the project commissioners require several milestones.
-In conclusion, this project will be organised in an agile fashion, prompted mainly by the relative scale of MVP and potential.
+It is also worth noting that it is not a critical system and the project commissioners required several milestones in the form of TMAs.
+In conclusion, this project was organised in an agile fashion, prompted mainly by the relative scale of MVP and potential.
 The MVP development will be a series of small increments, with further development being incremental or iterative as required.
 
 ![Graphical summary of the MVP from the paragraph above](docs/mvp.png)
@@ -131,27 +131,28 @@ The MVP development will be a series of small increments, with further developme
 Figure 2.2.1 - Initial project schedule, showing boundaries of MVP.
 
 Several agile software development models exist, with varying suitability for project contexts.
-For example, this project team is a single developer, so there is little value in specific roles and coordination events.
-During the lifecycle of this project, the product will be a website, which would encourage continuous improvement and continuous delivery.
+For example, this project team was a single developer, so there is little value in specific roles and coordination events.
+During the lifecycle of this project, the product is a website, which would encourage continuous improvement and continuous delivery.
 In contrast, if the product develops beyond this project, there is value to targeting an IoT context.
 This context would suggest a more discrete deployment model, but a continuous pipeline can easily adopt pinned releases.
-Based on these observations and the principle of only adding processes which add value, the project development model will be Kanban.
+Based on these observations and the principle of only adding processes which add value, the project development model selected was Kanban.
 
-Consistent with the lifecycle model chosen, the project accepts that a requirements specification is continuous, reflective and discovered.
+Consistent with the lifecycle model chosen, the project accepted that a requirements specification is continuous, reflective and discovered.
 Therefore, distant goals are recorded in an outline form to maintain agility and reduce speculative specification.
-These encapsulate improvements visible to the project but beyond the current priority's scope.
-As a priority begins and proceeds, the team will decompose these goals into more specific tasks.
-Active reflection occurs as each task is committed to the repository, considering code quality, feature completeness and transferrable learning.
-Finally, as a milestone concludes, the team must consider which goals warrant their subsequent efforts.
+These encapsulated improvements visible to the project but beyond the current priority's scope.
+The developer decomposed these goals into more specific tasks as a priority began and proceeded.
+Active reflection occurred as each task is committed to the repository, considering code quality, feature completeness and transferrable learning.
+Finally, the team considered which goals warranted their subsequent efforts as each milestone concluded.
 At the project conclusion, it is correct that the final submission includes goals for future development, captured as backlog cards.
 The product potential exceeds the project budget, but there is still value in recording these options.
 
-The reflection and self-improvement in this lifecycle model occur at two frequencies.
-The least frequent reflection opportunities occur in-between priorities; these suit consideration of the project budget, schedule and direction.
+The reflection and self-improvement in this lifecycle model occured at two frequencies.
+The least frequent reflection opportunities occurred in-between priorities; these suit consideration of the project budget, schedule and direction.
 The first happened after the initial whiteboarding of the project, and the estimates of domain research and project schedule come from this reflection.
-Another project overview will occur after the MVP.
+Another project overview occured after the MVP.
+This review found concerns about the data gathered and several quick wins.
 Secondly, the development effort is organised into commits, each a quantum of improvement.
-As each is committed to the repository, the contributor takes a deliberate moment to ensure that the code is of reasonable quality and explain what value the code delivers.
+As each was committed to the repository, the contributor took a deliberate moment to ensure that the code was of reasonable quality and rationalise what value the code delivered.
 One risk experienced with continual learning and self-improvement is the temptation to refactor existing code.
 To yoke this temptation a deliberate opportunity is given at the end of each priority to apply later learning to earlier development.
 
