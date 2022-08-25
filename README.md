@@ -15,13 +15,13 @@ Inspired by ["Batteries aren't the only way to store power. Here's another."](ht
 	1. Requirements
 	1. Risk Management
 	1. Legal, Social, Ethical and Professional Issues
-1. Project Progress
+1. Project Execution
 	1. Thermodynamic Modelling
 	1. Simplifications
 	1. Design
-	1. Output
 	1. Software Architecture
 	1. Implementation
+	1. Output
 1. Project Reflection
 	1. MVP Review
 	1. General Reflection
@@ -347,62 +347,14 @@ The common factor linking all these is the duty cycle of the air conditioning, s
 The design also shows a black line that hallway testing explored as an option to present the duty cycle of the air conditioning.
 The testing found that syntactical correctness and precision of value were advantages but not as advantageous as presenting two values in a single gaze and using the semantic association between each line and its immediate background.
 
-### 3.4 - Output
-
-The chart should be as universally embeddable as possible, with the initial set of targetted applications being Microsoft's and Google's productivity suites.
-Therefore, a shortlist of PNG and SVG was assessed against their compatibility for use in Microsoft Office and Google Drive to decide upon graphics format.
-Since they are rendering a graph, the comparison includes infinite scalability.
-
-|                         | PNG                                 | SVG                     |
-| ----------------------- | ----------------------------------- | ----------------------- |
-| Vector graphic          | No                                  | Yes                     |
-| MS Office compatible    | Yes, according to support and tests | Yes, according to tests |
-| Google Drive compatible | Yes, according to tests             | No, according to tests  |
-
-Figure 3.4.2 - Comparison matrix of graphics format compatibility
-
-Google Docs support forums (2020) indicated that SVG format is not supported, backed by primary research.
-Primary research indicates that the PNG format is insertable into a Google Doc.
-Microsoft support (2021) and primary research indicate that PNG is insertable into Microsoft Office.
-
-It is worth noting that there are routes by which each technology can fulfil the feature set of its alternative.
-Firstly, the GIMP application (2022) can convert SVG to PNG and is free; therefore, SVG can fulfil all PNG features via conversion.
-Secondly, by rendering a PNG at high resolution, one can achieve, to all practical concerns, the benefit of infinite scalability.
-Of course, neither of these are optimal workflows, but they are possible.
-This analysis of the technical capabilities of the output format does not assert a firm conclusion, and decision-makers should look to other analyses for a simple recommendation.
-
-To implement this chart, the developer reviewed the example libraries of several client-side plotting libraries (amcharts.com, apexcharts.com, chartjs.org, dygraphs.com, frappe.io, naver.github.io, nvd3.org, plottablejs.org, toast.com, vis.js) for background bands and double y-axes.
-Four of these seemed suitable, the "background bands" example published by plottable.js, the "Draws a time series with weekends highlighted" published by dygraphs.com, the "Region With Timeseries" published by Naver Corp as part of billboard.js and the "8.15 [Line Chart] Plot Bands, Line" published by toast.com.
-
-|                      | dygraphs.com   | plottablejs.org     | toast.com    | billboard.js |
-| ---------------------| -------------- | ------------------- | ------------ | ------------ |
-| Presentation         | Poor           | Simple              | Professional | Professional |
-| Bands implementation | via DOM canvas | Native              | Native       | Native       |
-| Double y-axes        | Not researched | Native              | Native       | Native       |
-| Export options       | Not researched | via DOM SVG element | Native PNG   | Native       |
-| Vue.js wrapper       | Not researched | No                  | Yes          | No           |
-| Extra dependencies   | Not researched | None                | None         | d3js.org     |
-| License              | Not researched | MIT                 | MIT          | MIT          |
-
-Figure 3.4.3 - Feature comparison of chart libraries
-
-The research into dygraphs.com demoted it from consideration without needing to complete the comparison.
-The presentation style is lacklustre, the band implementation uses direct manipulation of the DOM canvas element, and the data input format is a CSV string.
-In selecting between toast.com, billboard.js and plottablejs.org, three factors prevailed.
-The toast.com presentation style is more professional than the others, the dependency tree is flatter, and its deployment options include a Vue.js wrapper.
-Therefore the initial attempts at implementing this feature explored the toast.com library.
-These attempts failed because the toast.com secondary y-axis is merely visual and does not support the plotting of y-values without first scaling them onto the primary y-axis.
-Rather than coupling a cost scaling to the temperature axis implementation, the project explored billboard.js.
-This library required a vue.js wrapper and some special handling to put the zones into the legend, but this should be a more maintainable solution than y-scaling.
-
-### 3.5 - Software Architecture
+### 3.4 - Software Architecture
 
 The core workflow of this system suits a hybrid of notification and data flow architecture.
 The workflow has several independent data-gathering stages that favour compartmentalisation as UI panes that gather the underlying data.
 Each stage requires no intervention from other panes, should control its own pace and emits strongly typed updates.
 Implementing these as components allows each stage to encapsulate its user interface and bound its complexity.
 The workflow also has several data-processing stages that use the data gathered to model and recommend thermal schedules.
-These will be piped together and are pure functions, which provides the advantage of divorcing all complicated mathematics from state and easing unit testing.
+These are piped together and are pure functions, which provides the advantage of divorcing all complicated mathematics from state and easing unit testing.
 Where these require input from several data gathering phases and therefore rely on coordination, they reside in the coordinating class.
 
 ![Overview of how the classes and types interact](docs/class_diagram.png)
@@ -419,17 +371,17 @@ In deciding the deployment artefacts, there are several pertinent aspects:
 These requirements suit deployment as a stand-alone website using client-side data retention and processing.
 
 The main issue with this deployment style is migrating data from previous versions, as the data is not under the system's control.
-To offset this issue, the inputted data objects will have version numbers, and a data loading procedure will be architected to step a dataset up the version numbers.
+To offset this issue, the inputted data objects have version numbers, and space for a data loading procedure is architected to step a dataset up the version numbers.
 
-Due to the project time constraints, the language and framework must be familiar to the developer.
+Due to the project time constraints, the language and framework had to be familiar to the developer.
 In addition, the project is quite data-centric, so it favours strong typing.
 Furthermore, the immediate context for deployment is the web, so the language choice must support this.
 Finally, there is also potential for IoT and mobile deployments, which should steer consideration.
-Within these criteria, TypeScript seems the best choice for language.
+Within these criteria, TypeScript seemed the best choice for language.
 It has a modern type system, is compilable to ECMAScript for web deployment, can be executed in Node.js for IoT deployment and is familiar to the developer.
 Of course, the entire product might derive value from a mobile-app deployment, but this is beyond this project's scope and resolvable using the *-native projects.
 
-The user interface framework selection is more balanced than language but has several early eliminations. 
+The user interface framework selection is more balanced than language but had several early eliminations. 
 First, direct DOM manipulation is not sustainable or manageable.
 Secondly, server-side calculation of the HTML adds unnecessary components, specifically server-side processing.
 Therefore client-side reactive web frameworks were favoured, simplifying the deployment and maintenance, with both Vue.js and React being familiar.
@@ -453,7 +405,7 @@ In conclusion, this project will use Vue.js, especially single file components, 
 
 Figure 3.5.2 - Feature comparison matrix of language options.
 
-### 3.6 - Implementation
+### 3.5 - Implementation
 
 For several reasons, gathering a set of thermal observations was a valuable early deliverable, which received priority above other concerns:
 
@@ -503,6 +455,54 @@ The top-level component in SuperCoolServers.vue then catches these emit payloads
 
 By implementing the workflow in this manner, each stage is responsible for its data, render and pace, on the condition that the updates it emits are typed suitably for the overall analysis.
 This architecture minimises and specifies the coupling between the analysis and survey phases while keeping each phase and the UX cohesive.
+
+### 3.4 - Output
+
+The chart should be as universally embeddable as possible, with the initial set of targetted applications being Microsoft's and Google's productivity suites.
+Therefore, a shortlist of PNG and SVG was assessed against their compatibility for use in Microsoft Office and Google Drive to decide upon graphics format.
+Since they are rendering a graph, the comparison includes infinite scalability.
+
+|                         | PNG                                 | SVG                     |
+| ----------------------- | ----------------------------------- | ----------------------- |
+| Vector graphic          | No                                  | Yes                     |
+| MS Office compatible    | Yes, according to support and tests | Yes, according to tests |
+| Google Drive compatible | Yes, according to tests             | No, according to tests  |
+
+Figure 3.4.2 - Comparison matrix of graphics format compatibility
+
+Google Docs support forums (2020) indicated that SVG format is not supported, backed by primary research.
+Primary research indicates that the PNG format is insertable into a Google Doc.
+Microsoft support (2021) and primary research indicate that PNG is insertable into Microsoft Office.
+
+It is worth noting that there are routes by which each technology can fulfil the feature set of its alternative.
+Firstly, the GIMP application (2022) can convert SVG to PNG and is free; therefore, SVG can fulfil all PNG features via conversion.
+Secondly, by rendering a PNG at high resolution, one can achieve, to all practical concerns, the benefit of infinite scalability.
+Of course, neither of these are optimal workflows, but they are possible.
+This analysis of the technical capabilities of the output format does not assert a firm conclusion, and decision-makers should look to other analyses for a simple recommendation.
+
+To implement this chart, the developer reviewed the example libraries of several client-side plotting libraries (amcharts.com, apexcharts.com, chartjs.org, dygraphs.com, frappe.io, naver.github.io, nvd3.org, plottablejs.org, toast.com, vis.js) for background bands and double y-axes.
+Four of these seemed suitable, the "background bands" example published by plottable.js, the "Draws a time series with weekends highlighted" published by dygraphs.com, the "Region With Timeseries" published by Naver Corp as part of billboard.js and the "8.15 [Line Chart] Plot Bands, Line" published by toast.com.
+
+|                      | dygraphs.com   | plottablejs.org     | toast.com    | billboard.js |
+| ---------------------| -------------- | ------------------- | ------------ | ------------ |
+| Presentation         | Poor           | Simple              | Professional | Professional |
+| Bands implementation | via DOM canvas | Native              | Native       | Native       |
+| Double y-axes        | Not researched | Native              | Native       | Native       |
+| Export options       | Not researched | via DOM SVG element | Native PNG   | Native       |
+| Vue.js wrapper       | Not researched | No                  | Yes          | No           |
+| Extra dependencies   | Not researched | None                | None         | d3js.org     |
+| License              | Not researched | MIT                 | MIT          | MIT          |
+
+Figure 3.4.3 - Feature comparison of chart libraries
+
+The research into dygraphs.com demoted it from consideration without needing to complete the comparison.
+The presentation style is lacklustre, the band implementation uses direct manipulation of the DOM canvas element, and the data input format is a CSV string.
+In selecting between toast.com, billboard.js and plottablejs.org, three factors prevailed.
+The toast.com presentation style is more professional than the others, the dependency tree is flatter, and its deployment options include a Vue.js wrapper.
+Therefore the initial attempts at implementing this feature explored the toast.com library.
+These attempts failed because the toast.com secondary y-axis is merely visual and does not support the plotting of y-values without first scaling them onto the primary y-axis.
+Rather than coupling a cost scaling to the temperature axis implementation, the project explored billboard.js.
+This library required a vue.js wrapper and some special handling to put the zones into the legend, but this should be a more maintainable solution than y-scaling.
 
 <!-- TODO Write up BDX survey -->
 
