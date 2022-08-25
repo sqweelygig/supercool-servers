@@ -182,25 +182,26 @@ The main risk with this is that the developer may be overly familiar with the od
 
 Figure 2.4.1 - Risk assessment grid for the project
 
-To achieve the task, "A technician should have information on an example server room available." the project requires permission to observe and adjust the thermostat of a server room.
-This permission is critical as the risk has a moderate likelihood and impact.
-This likelihood is "possible" because the temperature is a tightly controlled aspect of a server room, offset by the corporate relationships and philosophy.
-Furthermore, the impact is "moderate" because this example provides feedback about the user experience and gives the project a case study. 
+To achieve the task, "A technician should have information on an example server room available." the project required permission to observe and adjust the thermostat of a server room.
+This permission was critical as the risk had a moderate likelihood and impact.
+This likelihood was "possible" because the temperature is a tightly controlled aspect of a server room, offset by corporate relationships and philosophy.
+Furthermore, the impact could have been "moderate" because this example provides feedback about the user experience and gives the project a case study.
 
-Therefore, negotiation-in-principle started immediately upon beginning the project to bring any related decision point forwards.
-Now that we have outlined a survey workflow, the developer is negotiating access to perform the required tasks.
-If this negotiation fails, the project may continue without a case study or transition to modelling a more available example of thermodynamics and power offsetting, such as domestic refrigerators.
+Therefore, negotiation-in-principle started immediately upon beginning the project to bring any related decision point forward.
+As soon as I had conducted enough research to ensure the relevance of the data gathered, I began specific negotiations to perform the survey.
+In the event of this negotiation failing, plans were in place to continue the project without a case study or transition to modelling a more available example of thermodynamics and power offsetting, such as domestic refrigerators.
 
-To achieve or defer the task, "A technician should be able to model a room with significant passive cooling." the project must incorporate learning into the mathematics of thermodynamic cooling.
-Failing in this learning is "unlikely" as the science is sure to be public domain but is also likely to be intermediate level.
-In addition, this research is of "catastrophic" impact as it underwrites the model and prioritises simplifications.
-Therefore, achieving a basic understanding of this field is second only to finding an engaging case study, and is the target of early research efforts.
+To achieve or defer the task, "A technician should be able to model a room with significant passive cooling." the project needed to incorporate learning into the mathematics of thermodynamic cooling.
+Failing in this learning was "unlikely" as the science was assumed to be public domain but intermediate level.
+In addition, this research was of "catastrophic" impact as it underwrote the model, the simplifications and prioritised the improvements.
+Therefore, achieving a basic understanding of this field was second only to finding an engaging case study, and was the target of early research efforts.
 A raw analysis of the risk assessment would prioritise this above thermostat permission.
-However, the schedule placed this second because it relies on fewer factors external to the project and therefore experiences a lower latency.
+However, the schedule overrode this and placed this second because it relied on fewer factors external to the project and therefore experienced a lower latency.
+In retrospect, this was a wise decision and exemplifies limitations in reducing prioritisation to a two-dimensional matrix.
 
-As with any project, there is a risk that the scope will not match the budget.
-In addition, since this project includes research and discovery aspects, it is challenging to reconcile these two ledgers in advance.
-To mitigate the dual risks of overrun and underrun, the project will deliver a viable product before the deadline, providing an opportunity to reflect, re-scope and improve.
+As with any project, there was a risk that the scope would not match the budget.
+In addition, since this project included research and discovery aspects, it is challenging to reconcile these two ledgers in advance.
+To mitigate the dual risks of overrun and underrun, the project delivered a viable product before the deadline, which provided an opportunity to reflect, re-scope and improve.
 
 ### 2.5 - Legal, Social, Ethical and Professional Issues
 
