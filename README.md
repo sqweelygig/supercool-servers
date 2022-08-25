@@ -93,22 +93,23 @@ This offsetting of work through time is equivalent to storing energy when power 
 
 ### 2.1 - Deliverables
 
-This project will create an application to steer a server room technician towards more efficient air conditioner scheduling.
-It will gather the data required via a survey, model the thermal characteristics of the room, compute an improved thermostat schedule, and present the forecasted savings.
+This project created a web application to steer a server room technician towards more efficient air conditioner scheduling.
+It gathers the data required via a survey, models the thermal characteristics of the room, computes an improved thermostat schedule, and presents the forecasted savings.
 The project assumes that its audience is technical, consistent with having some responsibility for a server room's environmental controls.
 
 The system cannot assume that the server room has a smart thermostat since its output might be part of justifying such an expense.
-Therefore, to gather the dataset, a technician might observe the thermal properties of the server room.
-The dataset required to compute the desired report is not trivial, so a guided survey will improve accuracy, reliability, and uptake.
-Furthermore, the technician will likely use a portable device, so interface development should target small screen resolutions.
+Therefore, to gather the dataset, a technician must observe the thermal properties of the server room.
+The dataset required to compute the desired report is not trivial, so a guided survey improves accuracy, reliability, and uptake.
+Furthermore, the technician will likely use a portable device, so interface development should targetted small screen resolutions.
 
-The system will mathematically model the thermal properties of the server room through time in different configurations.
-This modelling will allow the comparison of configurations in a printable, business-oriented report.
-One of these configurations will be computed algorithmically, with this algorithm being developed and implemented during the project.
-The developer will use test-driven development and automated testing for all modelling aspects of this product.
-This philosophy will ensure that solid mathematical foundations underpin the model.
-Any deliverable subset of the product, especially each project milestone, should be evaluated against the dual criteria of improving the features delivered and supporting the development of features imagined.
-The project will explicitly document this at each milestone and also adopt this implicitly as a healthy part of commit hygiene.
+The system will mathematically models the thermal properties of the server room through time in different configurations.
+This modelling allows the comparison of configurations in a printable, business-oriented report.
+One of these configurations is be computed algorithmically, with this algorithm developed and implemented during the project.
+The developer used test-driven development and automated testing for all modelling aspects of this product.
+This philosophy helped ensure that solid mathematical foundations underpin the model.
+Any deliverable subset of a product, especially each project milestone, should be evaluated against the dual criteria of improving the features delivered and supporting the development of features imagined.
+The project explicitly considered this at each milestone and also sought to habituate this implicitly as a healthy part of commit hygiene.
+<!-- TODO Evalaution of code quality after MVP -->
 
 ### 2.2 - Lifecycle
 
