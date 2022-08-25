@@ -18,7 +18,7 @@ Inspired by ["Batteries aren't the only way to store power. Here's another."](ht
 1. Project Progress
 	1. Thermodynamic Modelling
 	1. Simplifications
-	1. User Experience
+	1. Design
 	1. Output
 	1. Software Architecture
 	1. Implementation
@@ -314,13 +314,13 @@ This research also reviewed publicly available server room schematives and photo
 These indicated that a typical server room would not passively shed significant heat.
 Unfortunately, a proper level of research rigour was beyond the scope of a development project, and the generalisability is a matter of conjecture and personal experience.
 
-### 3.3 - User Experience
+### 3.3 - Design
 
 ![Overview of gathering data](docs/thermal_observation_sequence.png)
 
 Figure 3.3.1 - Activity diagram showing data flow for optimising a schedule and presenting a report.
 
-The user experience design implemented the data flow as a sequence of incremental steps, each adding data to the model.
+The user experience design implemented the workflow as a sequence of incremental steps, each adding data to the model.
 It deliberately captures the most controversial data first, using the principle of failing early rather than the psychological trick of the sunk-cost fallacy, as this is a more ethical user experience.
 The MVP prioritised a smartphone interface as this is the most restrictive expected.
 The w3c (2015) considers progressive enhancement to generally be more effective and maintainable than graceful degradation, especially when adopted from the initialisation of the project.
@@ -331,16 +331,14 @@ To support this, I developed at a 360x640px resolution using Chrome's low-resolu
 
 Figure 3.3.2 - Implemented interface, captured at 360x640px.
 
-### 3.4 - Output
-
 The final output of this workflow is a recommendation for an alternative thermostat schedule that would reduce the resource consumption of a server room.
 This output must be presentable in a business report and suit a technical, but not specialist, business audience.
 In addition, the project assumes that the technician compiling the output will author a proposal or business proforma around the recommendations.
-Therefore, this project should support them by providing comparison figures, a graphic and the version number of the underlying thermal model.
+Therefore, this project should support them by providing comparison figures and an embeddable graphic.
 
 ![Chart showing thermostat setting, A/C response and thermal response](docs/chart_sketch.jpeg)
 
-Figure 3.4.1 - Initial design of the chart.
+Figure 3.3.3 - Initial design of the chart.
 
 The scan shown above captures the chart design immediately after hallway testing and in a state suitable for implementation.
 Firstly, it shows the electrical tariff intervals inputted by the technician.
@@ -348,6 +346,8 @@ Over the same period, it shows the recommended thermostat schedule and predicted
 The common factor linking all these is the duty cycle of the air conditioning, so the design renders this as shading to build upon that association.
 The design also shows a black line that hallway testing explored as an option to present the duty cycle of the air conditioning.
 The testing found that syntactical correctness and precision of value were advantages but not as advantageous as presenting two values in a single gaze and using the semantic association between each line and its immediate background.
+
+### 3.4 - Output
 
 The chart should be as universally embeddable as possible, with the initial set of targetted applications being Microsoft's and Google's productivity suites.
 Therefore, a shortlist of PNG and SVG was assessed against their compatibility for use in Microsoft Office and Google Drive to decide upon graphics format.
