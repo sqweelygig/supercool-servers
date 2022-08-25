@@ -58,7 +58,7 @@ These techniques are individually valuable and can receive independent considera
 ### 1.2 - Server Room Load Shaping
 
 Load shaping refers to techniques that seek to balance a grid by influencing the usage of electricity rather than the supply.
-Electricity companies use load shaping tariffs to align customer usage patterns with power generation.
+Electricity companies use load-shaping tariffs to align customer usage patterns with power generation.
 The electrical load of a server room usually includes cooling, which good practice states should exceed requirements.
 Therefore, this cooling can be exaggerated during cheaper electrical tariffs, removing heat earlier so the system can rest during more expensive tariffs.
 This project modelled rescheduling the air conditioning of a server room as a load shaping technique.
@@ -245,7 +245,7 @@ This cooling is all set against the heat a room generates from the servers it co
 Figure 3.1.1 - Building management system (BMS) interface, Airedale 2015
 
 Two 51.6kW air conditioning units cool the BDX for a total cooling power of 103.2kW.
-This infrastructure is N+1 redundant, implying a cap upon server equipment at 51.6kW before upgrades.
+This infrastructure is N+1 redundant, implying a cap on server equipment at 51.6kW before upgrades.
 The BDX complements this with precision units that cool the server equipment by heating the room's environment.
 
 The BMS holds the room at 20 degrees celsius, and the Met Office's Southern England: climate (2016) states that the external temperature is generally between 3 and 21 degrees celsius.
@@ -262,6 +262,7 @@ Figure 3.1.2 - Plan of the server room surveyed
 Compared to the active components of the room, these are insignificant; therefore, modelling passive cooling as a function of temperature difference and weather is of low priority.
 However, passive cooling calculations are more straightforward when the temperature difference is constant and are more significant since the active components are scaled back.
 Therefore, modelling passive cooling for a fixed temperature difference is of medium priority.
+In addition, the quick survey revealed that the server room windows are north-facing and boarded over, so the initial model can ignore solar thermal radiation.
 
 ### 3.2 - Simplifications
 
@@ -272,7 +273,7 @@ These simplifications should not be treated as final but should be justified or 
 	* All electricity consumed by the server hardware becomes heat.
 	* The server hardware generates a steady heat output.
 	* The air conditioning performs equivalently in all temperatures.
-	* The air conditioning units are either "full on" or "full off", without tiered power usage.
+	* The air conditioning units are either "full on" or "full off" without tiered power usage.
 	* The insulation within this space is insignificant.
 	* The propagation of heat through this space is instantaneous.
 * Passive thermodynamic effects are constant.
@@ -292,7 +293,7 @@ These simplifications should not be treated as final but should be justified or 
 	* The use of precision ventilation units can counter the risk of hot and cold spots.
 	* The computing equipment fans will slow since the same volume of cooler air will have an increased cooling effect.
 	* There is a moderate range of acceptable temperatures at the inlet of a server
-* Thermal units, such as coefficient of production and joules of thermal energy, can be eliminated from the model.
+* Thermal units, such as the coefficient of production and joules of thermal energy, can be eliminated from the model.
 	* Passive observations measure the duty cycle required to maintain temperature differences.
 	* Active observations measure the duty time required to enact temperature changes.
 	* The duty cycle is directly proportional to the resource cost required without needing thermal units.
@@ -324,7 +325,7 @@ It deliberately captures the most controversial data first, using the principle 
 The MVP prioritises a smartphone interface as this is the most restrictive expected.
 The w3c (2015) considers progressive enhancement to generally be more effective and maintainable than graceful degradation, especially when adopted from the initialisation of the project.
 Therefore, the interface should not rely on high resolutions, easy keyboard typing, hover events or other aspects absent from a smartphone.
-To support this, I will develop at a 360x640px resolution using Chrome's low-resolution developer toolkit as statcounter.com (2022) states that this is the lowest resolution that receives frequent use.
+To support this, I will develop at a 360x640px resolution using Chrome's low-resolution developer toolkit since statcounter.com (2022) states that this is the lowest resolution that receives frequent use.
 
 ![Smartphone interface](docs/screenshot.png)
 
@@ -544,7 +545,7 @@ From here, the project's timeframe demanded that I implement improvements that c
 ### 4.2 - General Reflection
 
 The project progress has slipped from a little ahead; it is now as per the timeline with the MVP implemented.
-This slippage is due to a change in employment patterns to full-time during term-time with a six-week summer vacation before the EMA deadline.
+This slippage is due to a change in employment patterns to full-time during term time with a six-week summer vacation before the EMA deadline.
 At this stage, the main concern is acquiring a case study, as this negotiation has quietened.
 
 During the project, there were learning experiences.
@@ -581,7 +582,7 @@ This hygiene is something that reminders and time would habitualise.
 | Technician    | Stakeholder        | An individual who maintains the environmental conditions of a server room; they usually surface usability concerns.                |
 | Customer      | Stakeholder        | An organisation that may decide to adopt thermostat recommendations based on the report; they usually surfaces utility concerns.   |
 | `<<type>>`    | Software term      | An abstract data structure, like an interface, except it asserts that objects shall possess certain data types instead of methods. |
-| Project       | Project management | The subset of the *product* scheduled within the budgetary constraints.                                                            |
+| Project       | Project management | The subset of the *product* scheduled within the timeframe constraints.                                                            |
 | Product       | Project management | The set of features that deliver value when measured against the mission statement.                                                |
 
 ## Literature
