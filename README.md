@@ -128,7 +128,7 @@ The MVP development will be a series of small increments, with further developme
 
 ![Graphical summary of the MVP from the paragraph above](docs/mvp.png)
 
-Figure 2.2.1 - Initial project schedule, showing boundaries of MVP.
+Figure 2.2.1 - Project schedule, showing boundaries of MVP.
 
 Several agile software development models exist, with varying suitability for project contexts.
 For example, this project team was a single developer, so there is little value in specific roles and coordination events.
@@ -149,7 +149,7 @@ The product potential exceeds the project budget, but there is still value in re
 The reflection and self-improvement in this lifecycle model occured at two frequencies.
 The least frequent reflection opportunities occurred in-between priorities; these suit consideration of the project budget, schedule and direction.
 The first happened after the initial whiteboarding of the project, and the estimates of domain research and project schedule come from this reflection.
-Another project overview occured after the MVP.
+Another project overview occured after the MVP and informed the incremental development phase.
 This review found concerns about the data gathered and several quick wins.
 Secondly, the development effort is organised into commits, each a quantum of improvement.
 As each was committed to the repository, the contributor took a deliberate moment to ensure that the code was of reasonable quality and rationalise what value the code delivered.
@@ -554,23 +554,24 @@ Figure 4.1.2 - Chart output of a sample survey result
 This evaluation shows the MVP at a moment where it is good but not exceptional.
 From here, the project's timeframe demanded that I implement improvements that could be delivered on time and defer improvements that ran the risk of overrun.
 
-### 4.2 - General Reflection
+### 4.2 - Timeline Reflection
 
-The project progress has slipped from a little ahead; it is now as per the timeline with the MVP implemented.
-This slippage is due to a change in employment patterns to full-time during term time with a six-week summer vacation before the EMA deadline.
-At this stage, the main concern is acquiring a case study, as this negotiation has quietened.
+Figure n.n (reprise of Figure n.n) - Project schedule, showing boundaries of MVP.
 
+The implementation endeavours at TMA 01 and TMA 02 were ahead of schedule, but retrospectively the negotiation was behind schedule.
+By TMA 03, the MVP implementation was complete on schedule, and I had realised the negotiations were behind schedule.
+This final submission includes the negotiated survey, an evaluation of the MVP and a set of improvements to the MVP.
 During the project, there were learning experiences.
 
-The most impactful learning experience was neglecting to chase the survey organisation, which caused a two-month gap where communication paused.
+The most impactful learning experience was neglecting to chase the survey negotiation, which caused a two-month gap where communication paused.
 The broader circumstances of accepting a new job caused this gap, but do not excuse it.
-Going forward, I have calendared a weekly reminder about this communication.
+I also made the mistake of not incorporating any time for negotiation alongside the 70% MVP budget.
+To remedy this, I calendared a weekly reminder about the communication and reprioritised my efforts.
+In future projects, I can include such time in their schedules and trackers.
 
 One challenge faced was the verification of the UX and data accuracy, especially regression bugs and JSON parsing and serialisation.
-As a result, the final delivery will include a front-end test suite.
 When scoping the project, I had not expected these tests to require automation.
 With the benefit of hindsight, this reinforces the TDD adage, "If you cannot work out what you want clearly enough to write a test, you should not be writing any code yet".
-However, the project plan has time and agility enough to incorporate this unexpected requirement.
 
 Another significant challenge was structuring code reuse.
 Vue.js (2022) favours composition and mixin reuse in a facade pattern.
@@ -580,12 +581,17 @@ Whilst this has not always been easy, it has increased my flexibility as a devel
 
 The reconsideration of the graphing library was a vexing moment but not easily avoidable.
 For something as generic as graphing data, projects should always consider libraries, which will always contain the risk that features may not work as expected.
-This failed library exploration cost one day.
-Expressed as 1/30 of the project, this seems a lot.
+This failed library exploration cost one day. Expressed as 1/30 of the project, this seems a lot.
 However, this is tiny compared to the effort of implementing a graphing solution from scratch.
 
 I also acknowledge that test and roadmap hygiene, maintained as part of the repository, has not always been kept in step with the codebase.
 This hygiene is something that reminders and time would habitualise.
+
+Overall, the schedule has remained flexible enough to deliver a viable product, and I acknowledge lessons to carry forward.
+
+<!-- TODO Write conclusion -->
+
+<!-- TODO Numbering and TOC -->
 
 ### Glossary
 
