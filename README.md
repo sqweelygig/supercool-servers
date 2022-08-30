@@ -16,8 +16,8 @@ Inspired by ["Batteries aren't the only way to store power. Here's another."](ht
 	1. Risk Management
 	1. Legal, Social, Ethical and Professional Issues
 1. Project Execution
-	1. Thermodynamic Modelling
-	1. Simplifications
+	1. Thermodynamic Research
+	1. Modelling Simplifications
 	1. Design
 	1. Software Architecture
 	1. Implementation
@@ -233,7 +233,7 @@ This relationship means that the project team must took care to present the BDX 
 
 ## 3 - Project Implementation
 
-### 3.1 - Thermodynamic Modelling
+### 3.1 - Thermodynamic Research
 
 There are multiple routes by which a server room sheds heat.
 Principally will be the air conditioning systems which good practice states will exceed the cooling requirements using at least N+1 redundant infrastructure.
@@ -265,7 +265,7 @@ However, passive cooling calculations are more straightforward when the temperat
 Therefore, modelling passive cooling for a fixed temperature difference is of medium priority.
 In addition, the quick survey revealed that the server room windows are north-facing and boarded over, so the initial model can ignore solar thermal radiation.
 
-### 3.2 - Simplifications
+### 3.2 - Modelling Simplifications
 
 This section records the simplifying assumptions currently applied to the modelling process.
 Most of these simplifications are reasonable in the context of the BDX, and are likely to be reasonable in many server rooms.
