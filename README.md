@@ -22,6 +22,7 @@ Inspired by ["Batteries aren't the only way to store power. Here's another."](ht
 	1. Software Architecture
 	1. General Implementation
 	1. Graph Output
+	1. BDX Survey
 1. Project Reflection
 	1. Product Review
 	1. General Reflection
@@ -248,13 +249,13 @@ Two 51.6kW air conditioning units cool the BDX for a total cooling power of 103.
 This infrastructure is N+1 redundant, implying a cap on server equipment at 51.6kW before upgrades.
 The BDX complements this with a cold aisle and precision vents that direct the air conditioning outlet more precisely to the server equipment racks.
 
-The BMS holds the air conditioning outflow at 20 degrees celsius, and the Met Office's Southern England: climate (2016) states that the external temperature is generally between 3 and 21 degrees celsius.
+The BMS holds the air conditioning outflow at 20 degrees Celsius, and the Met Office's Southern England: climate (2016) states that the external temperature is generally between 3 and 21 degrees Celsius.
 The external wall comprises a plasterboard wall, an access corridor and a single pane glass wall of about 44 square metres.
 Therefore, an upper estimate of cooling through this wall (rounded up to 2 s.f.) is 810 watts (see Appendix I).
 <!-- TODO Update this calculation to plasterboard -->
 
 The remaining surfaces of the BDX separate the room from other offices and underground with a surface area of around 330 square metres.
-Appendix I models a 2 degrees celsius difference with the data hall to estimate these surfaces' significance. From this, an upper estimate of cooling to fixed temperature environments is 1.6 kilowatts (rounded up to 2 s.f.).
+Appendix I models a 2 degrees Celsius difference with the data hall to estimate these surfaces' significance. From this, an upper estimate of cooling to fixed temperature environments is 1.6 kilowatts (rounded up to 2 s.f.).
 
 ![Plan showing a server room 9m x 12m x 4m](docs/bdx_plan.png)
 
@@ -299,9 +300,9 @@ Further development could eliminate each and increase the proportion of modelabl
 	* Passive observations measure the duty cycle required to maintain temperature differences.
 	* Active observations measure the duty time required to enact temperature changes.
 	* The duty cycle is directly proportional to the resource cost required without needing thermal units.
-	* The basic units become `duty`, `celsius` and `hour`.
-	* e.g., passive cooling reduces the duty cycle of the air conditioning by 3% per celsius difference.
-	* e.g., changing the server room's temperature requires one duty hour per celsius.
+	* The basic units become `duty`, `degrees Celsius` and `hour`.
+	* e.g., passive cooling reduces the duty cycle of the air conditioning by 3% per degree Celsius difference.
+	* e.g., changing the server room's temperature requires one duty hour per degree Celsius.
 	* e.g., running the air conditioning uses 1 ton of CO2 per duty hour.
 
 The simplification notable for not being reasonable in the BDX is "The air conditioning does not have tiered power levels".
@@ -505,8 +506,6 @@ These attempts failed because the toast.com secondary y-axis is merely visual an
 Rather than coupling a cost scaling to the temperature axis implementation, the project explored billboard.js.
 This library required a vue.js wrapper and some special handling to put the zones into the legend, but this should be a more maintainable solution than custom y-scaling.
 
-<!-- TODO Write up BDX survey -->
-
 ## 4 - Project Evaluation
 
 <!-- TODO Write up project failure and success -->
@@ -532,8 +531,8 @@ However, this issue does not reduce the viability of this tool in situations wit
 The time taken to gather thermodynamic observations is a concern (Step N in Figure n.n), mainly because this time requires active monitoring and is boring.
 Replacing this with a more proactive and time-flexible step would be a priority in a future development phase.
 Something like "Please return to the room after one to two hours and record the temperature" would suit the requirements of data gathering and user attentivity.
-It is worth noting that the BDX, and many digital thermometers, have a 0.1 celsius precision.
-This precision would be sufficient to assess the cooling curve accurately, while a precision of 1 celsius would not.
+It is worth noting that the BDX, and many digital thermometers, have a 0.1 degree Celsius precision.
+This precision would be sufficient to assess the cooling curve accurately, while 1 degree Celsius would not be precise enough.
 
 ![Storybook of some example interactions](docs/storyboard.png)
 
