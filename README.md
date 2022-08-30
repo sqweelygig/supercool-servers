@@ -23,7 +23,7 @@ Inspired by ["Batteries aren't the only way to store power. Here's another."](ht
 	1. General Implementation
 	1. Graph Output
 1. Project Reflection
-	1. MVP Review
+	1. Product Review
 	1. General Reflection
 * Glossary
 * Literature
@@ -513,35 +513,39 @@ This library required a vue.js wrapper and some special handling to put the zone
 
 <!-- Add key oversight (dual compressors) missed during quick survey -->
 
-### 4.1 - MVP Review
+### 4.1 - Product Review
 
 The MVP is now complete and steps the technician through data gathering and presents a final graph.
-To evaluate this, I surveyed the BDX, and the results of this are Appendix N.
-This exercise surfaced a few options for improvement and one blocker in this context.
+To evaluate this, I surveyed the BDX (section n.n).
+This exercise surfaced a few options for improvement and one context-specific blocker.
 However, this confirmed that the feature set and user experience suit other contexts.
 
 The blocker experienced within the BDX context is that each air conditioner unit within the data hall has two independently toggled compressor pumps.
 During the survey, there were several occasions where a single compressor was not cooling sufficiently, so the unit bought the second compressor online.
-This feature means that the simplifications regarding the duty cycle are not suitable for the BDX in their current form.
+This feature means that the thermal survey simplifications regarding the duty cycle are unsuitable for the BDX in their current form.
+Correcting this issue would require improving the thermal survey to track the number of active compressors and improving the modelling to include this data.
+I estimate this would require 1 FTE week.
+Given the project time available after the survey, the required improvements to this stage are not part of this project.
+This issue could have been realised earlier by thorough initial survey or an earlier detailed survey.
 However, this issue does not reduce the viability of this tool in situations with linked or single compressors.
 
 The time taken to gather thermodynamic observations is a concern (Step N in Figure n.n), mainly because this time requires active monitoring and is boring.
 Replacing this with a more proactive and time-flexible step would be a priority in a future development phase.
 Something like "Please return to the room after one to two hours and record the temperature" would suit the requirements of data gathering and user attentivity.
 It is worth noting that the BDX, and many digital thermometers, have a 0.1 celsius precision.
-This precision would be sufficient to assess the cooling curve accurately, which a precision of 1 celsius would not.
+This precision would be sufficient to assess the cooling curve accurately, while a precision of 1 celsius would not.
 
 ![Storybook of some example interactions](docs/storyboard.png)
 
 Figure 4.1.1 - A storyboard of screenshots showing the implemented MVP
 
-The stage during which a user provides tariff information is more complicated for the user than it needs to be.
-Splitting the data into usage in kilowatts and cost in kilowatt-hours will mean that the computer performs the multiplications rather than the user.
+The stage during which a user provides tariff information was more complicated for the user than it needed to be and has been improved.
+Splitting the data into usage in kilowatts and cost in kilowatt-hours means that the computer performs the multiplications rather than the user.
 This issue occurred because avoiding these calculations made the data model more straightforward, but this should not come at the cost of making the user's model more complicated.
 
-The final output of the survey has two areas for improvement.
-First, a small paragraph accompanying the graph could explain the proposed cycle and quantify the estimated savings.
-Secondly, the pixelation of the graph render is currently visible at any reasonable magnification, so increasing the resolution would improve the output.
+The final output of the survey had two areas for improvement, both easily implemented.
+First, a small paragraph accompanying the graph could explains the proposed cycle and quantifies the estimated savings.
+Secondly, the pixelation of the graph render was visible at any reasonable magnification, so increasing the resolution improved the output.
 
 ![Chart showing cycle of thermostat intervals and their effects](docs/chart.png)
 
@@ -549,6 +553,7 @@ Figure 4.1.2 - Chart output of a sample survey result
 
 This evaluation shows the MVP at a moment where it is good but not exceptional.
 From here, the project's timeframe demanded that I implement improvements that could be delivered on time and defer improvements that ran the risk of overrun.
+
 ### 4.2 - General Reflection
 
 The project progress has slipped from a little ahead; it is now as per the timeline with the MVP implemented.
