@@ -26,16 +26,19 @@ Inspired by ["Batteries aren't the only way to store power. Here's another."](ht
 1. Project Reflection
 	1. Product Review
 	1. General Reflection
+	1. Conclusion
 * Glossary
 * Literature
 	1. References
 	1. Bibliography
-* Appendix I, Insulation calculations
-* Appendix II, Access negotiations
-* Appendix III, Project log
+* Appendix I, Insulation Calculations
+* Appendix II, Access Negotiations
+* Appendix III, Project Log
 * Appendix IV, Code
 * Appendix V, Roadmap
 * Appendix VI, Questionnaire
+* Appendix VII, BDX Equipment
+* Appendix VIII, BDX Survey
 
 ## 1 - Project Intent
 
@@ -506,11 +509,15 @@ These attempts failed because the toast.com secondary y-axis is merely visual an
 Rather than coupling a cost scaling to the temperature axis implementation, the project explored billboard.js.
 This library required a vue.js wrapper and some special handling to put the zones into the legend, but this should be a more maintainable solution than custom y-scaling.
 
+### 3.n - BDX Survey
+
+<!-- TODO Write BDX Survey section -->
+
 ## 4 - Project Evaluation
 
 <!-- TODO Write up project failure and success -->
 
-<!-- Add key oversight (dual compressors) missed during quick survey -->
+<!-- TODO Add key oversight (dual compressors) missed during quick survey -->
 
 ### 4.1 - Product Review
 
@@ -543,7 +550,7 @@ Splitting the data into usage in kilowatts and cost in kilowatt-hours means that
 This issue occurred because avoiding these calculations made the data model more straightforward, but this should not come at the cost of making the user's model more complicated.
 
 The final output of the survey had two areas for improvement, both easily implemented.
-First, a small paragraph accompanying the graph could explains the proposed cycle and quantifies the estimated savings.
+First, a small paragraph accompanying the graph explains the proposed cycle and quantifies the estimated savings.
 Secondly, the pixelation of the graph render was visible at any reasonable magnification, so increasing the resolution improved the output.
 
 ![Chart showing cycle of thermostat intervals and their effects](docs/chart.png)
@@ -587,6 +594,8 @@ I also acknowledge that test and roadmap hygiene, maintained as part of the repo
 This hygiene is something that reminders and time would habitualise.
 
 Overall, the schedule has remained flexible enough to deliver a viable product, and I acknowledge lessons to carry forward.
+
+### 4.n - Conclusion
 
 <!-- TODO Write conclusion -->
 
@@ -706,15 +715,15 @@ w3schools.com (2022) '*SVG Tutorial*'. Available at: https://www.w3schools.com/g
 
 xRealNeon (2021) '*Vue to Github Pages*'. Available at: https://github.com/marketplace/actions/vue-to-github-pages (accessed 2022-08-17).
 
-## Appendix I - Insulation calculations
+## Appendix I - Insulation Calculations
 
 [BDX insulation calculations](docs/bdx_thermals.xlsx)
 
-## Appendix II - Access negotiations
+## Appendix II - Access Negotiations
 
 [Communications log](docs/comms_log.md)
 
-## Appendix III - Project log
+## Appendix III - Project Log
 
 [Git](.git/)
 
@@ -727,3 +736,7 @@ xRealNeon (2021) '*Vue to Github Pages*'. Available at: https://github.com/marke
 [Roadmap](roadmap.md)
 
 ## Appendix VI - Questionnaire
+
+## Appendix VII - BDX Equipment
+
+## Appendix VIII - BDX Survey
