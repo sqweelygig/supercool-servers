@@ -407,32 +407,26 @@ Figure 3.5.2 - Feature comparison matrix of language options.
 
 ### 3.5 - Implementation
 
-For several reasons, gathering a set of thermal observations was a valuable early deliverable, which received priority above other concerns:
+<!-- TODO Provide a overview of the implementation here -->
 
-* Gaining access to an example server room provides a case study.
-* Thermal observations are more useful when gathered across as wide a range of seasons as possible.
-* Gathering these observations provided an opportunity for a user experience review.
+The first priority selected was a guided survey of a room's thermal properties.
+This use case was selected because the project ran from February to September, so collecting data as early as possible could cover cover a more significant seasonal variance.
+Also, gaining access to an example server room provided a case study and an opportunity for a user experience review.
+Therefore, this deliverable was planned to include just enough research to ensure data relevance, just enough interface that a technician could comfortably operate the system and just enough design for a customer to perceive the value.
+Negotiations for this detailed survey began on the 6th of April but did not conclude until the 22nd of July (see Appendix N).
+Immediately upon completing this deliverable, there was a reflection on the product direction, schedule and lessons.
 
-Several elements were required to script this set of observations.
-First, research into the thermal behaviour of rooms was conducted and supplemented by a quick survey of the BDX.
-Second, I implemented the survey interface and progressed negotiations to conduct a more detailed survey.
-
-The first delivered use case will be a guided survey of a room's thermal properties.
-This use case is selected because the project runs from February to September, so collecting data as early as possible will cover a more significant seasonal variance.
-Therefore, this deliverable will include just enough research to ensure data relevance, just enough interface that a technician can comfortably operate the system and just enough workflow for a customer to perceive the value.
-Immediately upon completing this deliverable, there will be an opportunity to reflect on the product direction, schedule and lessons.
-
-I have initiated this user interface using Vue.js single file components (SFCs) and typescript files (see Appendix IV).
-The top-level SFC in SuperCoolServers.vue provides broad stroke templating and coordination between interfaces.
-This imports interfaces and registers to listen to their update, next and previous events.
+I implemented this user interface using Vue.js single file components (SFCs) and typescript files (see Appendix IV).
+The top-level SFC in SuperCoolServers.vue provides broad stroke templating and coordination between components.
+This imports components and registers to listen to their `update`, `next`, and `previous` events.
 Since each interface uses similar features, they mixin these from /src/composables.
-The pipes, stored alongside each SFC, support the SFC by encapsulating all the mathematical modelling as pure functions and bundling these as .ts files for testing and other contexts.
+The pipes, stored in the same folder as each SFC, support the SFC by encapsulating all the mathematical modelling as pure functions and bundling these as .ts files for testing and other contexts.
 
 The first layer in the system is SuperCoolServers.vue.
 Depending on the active phase, this file's `<template>` section brings in the relevant sub-component.
-Next, the `<style>` section applies reused sub-component style rules.
-This reuse asserts specific characteristics of each sub-component, meaning that a sub-component should be importable into a different top-level frame.
-The main assertion is that the sub-component renders a sequence of block-level elements, which is not very restrictive.
+Next, the `<style>` section applies reused sub-component style rules which do create a coupling to specific characteristics of each sub-component.
+However, this means a sub-component should be importable into a different presentation, which the top-level frame provides.
+The main coupling is that the sub-component renders a sequence of block-level elements, which is not very restrictive.
 Finally, the `<script>` section defines data factories and emit handlers before passing these to some of the shared composables.
 
 ![Class diagram showing useLocalStorage and usePhases encapsulated in useDataBoundary](docs/use_data_boundary.png)
@@ -509,6 +503,8 @@ This library required a vue.js wrapper and some special handling to put the zone
 ## 4 - Project Evaluation
 
 <!-- TODO Write up project failure and success -->
+
+<!-- Add key oversight (dual compressors) missed during quick survey -->
 
 ### 4.1 - MVP Review
 
