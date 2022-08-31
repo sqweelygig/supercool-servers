@@ -416,9 +416,7 @@ Figure 3.5.2 - Feature comparison matrix of language options.
 
 ### 3.5 - General Implementation
 
-<!-- TODO Provide a overview of the implementation here -->
-
-The first priority selected was a guided survey of a room's thermal properties.
+The first priority selected was a script for a guided survey of a room's thermal properties.
 This use case was selected because the project ran from February to September, so collecting data as early as possible could cover cover a more significant seasonal variance.
 Also, gaining access to an example server room provided a case study and an opportunity for a user experience review.
 Therefore, this deliverable was planned to include just enough research to ensure data relevance, just enough interface that a technician could comfortably operate the system and just enough design for a customer to perceive the value.
