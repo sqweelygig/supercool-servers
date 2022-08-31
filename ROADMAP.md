@@ -1,7 +1,5 @@
 # Roadmap
 
-<!-- TODO Update roadmap for EMA -->
-
 ## Backlog
 
 * A customer should benefit from a sophisticated schedule optimisation algorithm.
@@ -17,12 +15,12 @@
 
 ## Priorities
 
-* A technician should have information on an example server room available.
 * A technician must have a good understanding of the generalisability of the simplifications.
 * A developer must be able to rely on a set of UX tests.
 
 ## Done
 
+* A technician should have information on an example server room available.
 * A customer must receive the predicted thermal changes of a room.
 * A technician must be able to gather thermal observations of a server room.
 * A technician must be able to input a baseline thermostat schedule.

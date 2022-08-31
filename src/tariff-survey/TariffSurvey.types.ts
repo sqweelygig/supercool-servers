@@ -53,7 +53,7 @@ export function padTariffSurveyState(
 		nightCost: 34,
 		nightStart: "00:00",
 		units: "GBP",
-		wattage: 1000,
+		wattage: 15,
 		version: 0,
 		...data,
 	};

@@ -1,0 +1,26 @@
+{
+	"externalTemperature": 27,
+	"maximumThermostat": 22,
+	"minimumThermostat": 18,
+	"normalThermostat": 21,
+	"phase": "finish",
+	"version": 0,
+	"observations": [
+		{
+			"initiallyObservedRisingEdge": true,
+			"startTemperature": 21,
+			"startTime": "2022-08-11T12:00:00.000Z",
+			"dutyCycle": 0.76119402985,
+			"endTemperature": 21,
+			"endTime": "2022-08-11T13:00:00.000Z"
+		},
+		{
+			"startTemperature": 21,
+			"startTime": "2022-08-11T13:00:00.000Z",
+			"initiallyObservedRisingEdge": true,
+			"dutyCycle": 1,
+			"endTemperature": 18,
+			"endTime": "2022-08-11T15:36:15.000Z"
+		}
+	]
+}

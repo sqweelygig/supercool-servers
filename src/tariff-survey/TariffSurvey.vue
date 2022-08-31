@@ -11,8 +11,10 @@
 	/>
 	<page-header text="Tariff Schedule" />
 	<div class="form-group">
-		<label for="wattage" class="section-header">Power consumption:</label>
-		<input id="wattage" v-model="data.wattage" />
+		<label for="wattage" class="section-header">
+			Power consumed in kilowatts:
+		</label>
+		<input id="wattage" type="number" v-model="data.wattage" />
 	</div>
 	<div class="form-group">
 		<label for="units" class="section-header">Costing units:</label>

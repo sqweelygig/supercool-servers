@@ -143,7 +143,7 @@ export default defineComponent({
 				"This should save about",
 				parseFloat(savings.toPrecision(2)),
 				this.tariffSchedule.units,
-				"per annum.",
+				"per year.",
 			].join(" ");
 		},
 		thermalPredictions(): ThermalInterval[] {

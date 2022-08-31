@@ -255,7 +255,6 @@ The BDX complements this with a cold aisle and precision vents that direct the a
 The BMS holds the air conditioning outflow at 20 degrees Celsius, and the Met Office's Southern England: climate (2016) states that the external temperature is generally between 3 and 21 degrees Celsius.
 The external wall comprises a plasterboard wall, an access corridor and a single pane glass wall of about 44 square metres.
 Therefore, an upper estimate of cooling through this wall (rounded up to 2 s.f.) is 810 watts (see Appendix I).
-<!-- TODO Update this calculation to plasterboard -->
 
 The remaining surfaces of the BDX separate the room from other offices and underground with a surface area of around 330 square metres.
 Appendix I models a 2 degrees Celsius difference with the data hall to estimate these surfaces' significance. From this, an upper estimate of cooling to fixed temperature environments is 1.6 kilowatts (rounded up to 2 s.f.).
@@ -531,7 +530,7 @@ Each delivers 54.31 kW of cooling using 15.17 kW of electricity, with the abilit
 
 The observations of the thermodynamic properties of the server room, Appendix N, revealed that the equipment ran with multiple capacity steps where the interface assumed one capacity step.
 This issue is explored more fully in section n.n.
-However, since the purpose of the thermal survey is to derive thermal properties, it can be circumvented by alternative sources for linear regression.
+However, since the purpose of the thermal survey is to derive thermal properties, it can be circumvented by alternative mechanisms for linear regression.
 This regression estimated that the server room creates 0.00102 degrees Celsius per second, and each compressor extracts 0.00134 degrees Celsius per second.
 The r-squared on this fit was low, 0.623, but this is high enough to inform a thermal model.
 
@@ -539,7 +538,15 @@ The r-squared on this fit was low, 0.623, but this is high enough to inform a th
 
 Figure n.n - Scatter plot of each minute observing the server room
 
-<!-- TODO BDX Thermal schedule -->
+To model an improved schedule, I used Octopus Energy's "12M Fixed August 2022 v1" tariff, which was their cheapest Eco 7 tariff at the time of research.
+This tariff had a day rate of 75.01 p/kWh and a night rate of 50.04 p/kWh.
+Based on this survey, the application suggested a cycle that ran a compressor for three hours between 00:00 and 03:00 but could then rest for about 40 minutes from 07:00.
+Initial scrutiny of these figures does not indicate a saving until one remembers that the neutral duty of the compressor is 0.00102 / 0.00134.
+In conclusion, this schedule could save about 1100 GBP per year.
+
+![Line chart showing a cyclical thermostat schedule](docs/bdx_suggestion.png)
+
+Figure n.n - Outputted suggested schedule
 
 ## 4 - Project Evaluation
 
