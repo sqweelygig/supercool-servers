@@ -5,6 +5,7 @@
 			type="button"
 			v-bind:disabled="disabled?.includes(onPrevious)"
 			v-on:click.prevent="onPrevious"
+			aria-label="Previous"
 		>
 			<font-awesome-icon icon="chevron-left" />
 		</button>
@@ -39,6 +40,7 @@
 			type="button"
 			v-bind:disabled="disabled?.includes(onRise)"
 			v-on:click.prevent="onRise"
+			aria-label="Power Up"
 		>
 			<font-awesome-icon icon="level-up-alt" />
 		</button>
@@ -47,6 +49,7 @@
 			type="button"
 			v-bind:disabled="disabled?.includes(onFall)"
 			v-on:click.prevent="onFall"
+			aria-label="Power Down"
 		>
 			<font-awesome-icon icon="level-down-alt" />
 		</button>
@@ -55,6 +58,7 @@
 			type="button"
 			v-bind:disabled="disabled?.includes(onUndo)"
 			v-on:click.prevent="onUndo"
+			aria-label="Undo"
 		>
 			<font-awesome-icon icon="undo-alt" />
 		</button>
@@ -63,6 +67,7 @@
 			type="button"
 			v-bind:disabled="disabled?.includes(onClear)"
 			v-on:click.prevent="onClear"
+			aria-label="Clear"
 		>
 			<font-awesome-icon icon="trash" />
 		</button>
@@ -71,6 +76,7 @@
 			type="button"
 			v-bind:disabled="disabled?.includes(onNext)"
 			v-on:click.prevent="onNext"
+			aria-label="Next"
 		>
 			<font-awesome-icon icon="chevron-right" />
 		</button>

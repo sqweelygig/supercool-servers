@@ -223,7 +223,6 @@ Two factors diminish the need for full accessibility; target audience and projec
 This project's target audience is technicians responsible for server room ambient environments.
 Since this responsibility requires interaction with visual-only indicators such as LCDs and LEDs, we can assume that the audience can see.
 It is also reasonable to assume that if this project became a commercial product we could revisit this statement, so development must occur in a manner that does not block accessibility.
-<!-- TODO: Accessibility tests -->
 Therefore the landing page was explicitly tested for blind, deaf, large print, mouse-only and keyboard-only users.
 Subsequent pages should be compatible with large print, deaf, mouse-only and keyboard-only users through good development practices, although the testing regime will not check this.
 
