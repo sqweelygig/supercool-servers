@@ -546,10 +546,6 @@ Figure n.n - Outputted suggested schedule
 
 ## 4 - Project Evaluation
 
-<!-- TODO Write up project failure and success -->
-
-<!-- TODO Add key oversight (dual compressors) missed during quick survey -->
-
 ### 4.1 - Product Review
 
 The MVP is now complete and steps the technician through data gathering and presents a final graph.
@@ -633,7 +629,10 @@ Overall, the schedule has remained flexible enough to deliver a viable product, 
 
 ### 4.n - Conclusion
 
-<!-- TODO Write conclusion -->
+This project has been a partial success.
+The project has delivered an MVP that is valuable in some contexts.
+In addition, there is an established architecture that would support future improvements.
+The immediate improvements I would select for this project would be to survey more server rooms and improve the thermal survey to support capacity stepping.
 
 <!-- TODO Numbering and TOC -->
 
