@@ -113,7 +113,6 @@ The developer used test-driven development and automated testing for all modelli
 This philosophy helped ensure that solid mathematical foundations underpin the model.
 Any deliverable subset of a product, especially each project milestone, should be evaluated against the dual criteria of improving the features delivered and supporting the development of features imagined.
 The project explicitly considered this at each milestone and also sought to habituate this implicitly as a healthy part of commit hygiene.
-<!-- TODO Evalaution of code quality after MVP -->
 
 ### 2.2 - Lifecycle
 
@@ -590,6 +589,11 @@ Secondly, the pixelation of the graph render was visible at any reasonable magni
 ![Chart showing cycle of thermostat intervals and their effects](docs/chart.png)
 
 Figure 4.1.2 - Chart output of a sample survey result
+
+The code quality at this stage is good.
+The components are cohesive, each associated with types, view, state and emission boundary.
+The code base sensibly reuses functionality via imports.
+The final few improvements to the code base were clear as to where they belonged and did not cascade.
 
 This evaluation shows the MVP at a moment where it is good but not exceptional.
 From here, the project's timeframe demanded that I implement improvements that could be delivered on time and defer improvements that ran the risk of overrun.
