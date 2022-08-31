@@ -511,7 +511,35 @@ This library required a vue.js wrapper and some special handling to put the zone
 
 ### 3.n - BDX Survey
 
-<!-- TODO Write BDX Survey section -->
+On the 11th of August, I visited the BDX to conduct a more detailed survey of the materials, equipment and thermodynamic observations.
+
+![Photograph of data hall showing cold aisle and air conditioner](docs/bdx_room.jpeg)
+
+Figure n.n - Data hall showing cold aisle and air conditioning unit
+
+This second survey of the building materials and ventilation found insulating and cooling factors not accounted for in the initial calculations.
+Most significantly, the air outlet by the servers mixes with a large volume of air in the data hall. 
+This return flow is distinct from the cold air that the air conditioner units actively provide to the inlets of the servers.
+The initial calculations assumed an airflow consistent with a gentle breeze, but this survey suggests the more insulating figures for still air would be more accurate.
+Secondly, the floor is raised, which provides a second layer of insulation between the data hall and the ambient environments.
+The calculations in Appendix N deliberately erred toward underestimating the insulation, and the improved observations further diminish the significance of thermodynamic cooling.
+Since the project has already adopted this simplification, updating the calculations is redundant in this situation.
+
+The cooling equipment active in the data hall is two SmartCool SC15D040-X200-0 / CR65H-0 units.
+They deliver the cooled air to the servers in sub-floor ducting and accept the ambient air of the data hall at their inlets.
+Each delivers 54.31 kW of cooling using 15.17 kW of electricity, with the ability to run at half capacity (see Appendix N).
+
+The observations of the thermodynamic properties of the server room, Appendix N, revealed that the equipment ran with multiple capacity steps where the interface assumed one capacity step.
+This issue is explored more fully in section n.n.
+However, since the purpose of the thermal survey is to derive thermal properties, it can be circumvented by alternative sources for linear regression.
+This regression estimated that the server room creates 0.00102 degrees Celsius per second, and each compressor extracts 0.00134 degrees Celsius per second.
+The r-squared on this fit was low, 0.623, but this is high enough to inform a thermal model.
+
+![Scatter plot showing a negative relation between the compressors active and the temperature change velocity](docs/bdx_chart.png)
+
+Figure n.n - Scatter plot of each minute observing the server room
+
+<!-- TODO BDX Thermal schedule -->
 
 ## 4 - Project Evaluation
 
