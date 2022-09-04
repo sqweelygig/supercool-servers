@@ -20,7 +20,7 @@ Inspired by ["Batteries aren't the only way to store power. Here's another."](ht
 	1. Modelling Simplifications
 	1. Design
 	1. Software Architecture
-	1. General Implementation
+	1. Implementation Overview
 	1. Graph Output
 	1. BDX Survey
 1. Project Reflection
@@ -307,10 +307,10 @@ Further development could eliminate each and increase the proportion of modelabl
 
 The simplification notable for not being reasonable in the BDX is "The air conditioning does not have tiered power levels".
 The detailed survey of the BDX revealed that each air conditioning unit has two compressors and selectively activates any number of them.
-This observation is more fully explored in Section 4.1 - MVP Review.
+This observation is more fully explored in Section 4.1 - Product Review.
 
 As part of the project, I did attempt to research the significance of each of these simplifications.
-This research included a questionnaire offered to fellow students (see Appendix N), but this did not receive enough returns.
+This research included a questionnaire offered to fellow students (see Appendix VI), but this did not receive enough returns.
 This research also reviewed publicly available server room schematives and photographs.
 These indicated that a typical server room would not passively shed significant heat.
 Unfortunately, a proper level of research rigour was beyond the scope of a development project, and the generalisability is a matter of conjecture and personal experience.
@@ -368,7 +368,7 @@ This architecture minimises and specifies the coupling between the analysis and 
 
 ![Overview of how the classes and types interact](docs/class_diagram.png)
 
-Figure 3.5.1 - Class diagram showing data relations and inheritance
+Figure 3.4.1 - Class diagram showing data relations and inheritance
 
 In deciding the deployment artefacts, there are several pertinent aspects:
 
@@ -412,15 +412,15 @@ In conclusion, this project will use Vue.js, especially single file components, 
 | React             | Low           | High          | 182k          |
 | Vue               | Low           | High          | 193k          |
 
-Figure 3.5.2 - Feature comparison matrix of language options.
+Figure 3.4.2 - Feature comparison matrix of language options.
 
-### 3.5 - General Implementation
+### 3.5 - Implementation Overview
 
 The first priority selected was a script for a guided survey of a room's thermal properties.
 This use case was selected because the project ran from February to September, so collecting data as early as possible could cover cover a more significant seasonal variance.
 Also, gaining access to an example server room provided a case study and an opportunity for a user experience review.
 Therefore, this deliverable was planned to include just enough research to ensure data relevance, just enough interface that a technician could comfortably operate the system and just enough design for a customer to perceive the value.
-Negotiations for this detailed survey began on the 6th of April but did not conclude until the 22nd of July (see Appendix N).
+Negotiations for this detailed survey began on the 6th of April but did not conclude until the 22nd of July (see Appendix II).
 Immediately upon completing this deliverable, there was a reflection on the product direction, schedule and lessons.
 
 I implemented this user interface using Vue.js single file components (SFCs) and typescript files (see Appendix IV).
@@ -438,7 +438,7 @@ Finally, the `<script>` section defines data factories and emit handlers before 
 
 ![Class diagram showing useLocalStorage and usePhases encapsulated in useDataBoundary](docs/use_data_boundary.png)
 
-Figure 3.6.1 - The useDataBoundary reused architecture.
+Figure 3.5.1 - The useDataBoundary reused architecture.
 
 The useDataBoundary is a facade of two other utilities that can be constructed together and are frequently together in this codebase.
 It first defines a set of properties and methods to capture errors.
@@ -454,7 +454,7 @@ Each provides a pure function adapter to transform emissions from the data the p
 In addition, these each use specific subcomponents and project-level subcomponents to handle recyclable elements.
 The top-level component in SuperCoolServers.vue then catches these emit payloads and stores them for the decision stages of the workflow.
 
-### 3.4 - Graph Output
+### 3.6 - Graph Output
 
 In my reckoning, the most complicated single stage is the graph output.
 The graph should combine the data and interpretation from all previous stages into a cohesive graphic understandable by stakeholders who are not domain experts.
@@ -472,7 +472,7 @@ Microsoft support (2021) and primary research indicate that PNG is insertable in
 | MS Office compatible   | Yes, according to support and tests | Yes, according to tests |
 | Google Docs compatible | Yes, according to tests             | No, according to tests  |
 
-Figure 3.4.2 - Comparison matrix of graphics format compatibility
+Figure 3.6.1 - Comparison matrix of graphics format compatibility
 
 It is worth noting that there are routes by which each technology can fulfil the feature set of its alternative.
 Firstly, the GIMP application (2022) can convert SVG to PNG and is free; therefore, SVG can fulfil all PNG features via conversion.
@@ -493,7 +493,7 @@ Four of these seemed suitable, the "background bands" example published by plott
 | Extra dependencies   | Not researched | None                | None         | d3js.org     |
 | License              | Not researched | MIT                 | MIT          | MIT          |
 
-Figure 3.4.3 - Feature comparison of chart libraries
+Figure 3.6.2 - Feature comparison of chart libraries
 
 The research into dygraphs.com demoted it from consideration without needing to complete the comparison.
 The presentation style is lacklustre, the band implementation uses direct manipulation of the DOM canvas element, and the data input format is a CSV string.
@@ -504,65 +504,65 @@ These attempts failed because the toast.com secondary y-axis is merely visual an
 Rather than coupling a cost scaling to the temperature axis implementation, the project explored billboard.js.
 This library required a vue.js wrapper and some special handling to put the zones into the legend, but this should be a more maintainable solution than custom y-scaling.
 
-### 3.n - BDX Survey
+### 3.7 - BDX Survey
 
 On the 11th of August, I visited the BDX to conduct a more detailed survey of the materials, equipment and thermodynamic observations.
 
 ![Photograph of data hall showing cold aisle and air conditioner](docs/bdx_room.jpeg)
 
-Figure n.n - Data hall showing cold aisle and air conditioning unit
+Figure 3.7.1 - Data hall showing cold aisle and air conditioning unit
 
 This second survey of the building materials and ventilation found insulating and cooling factors not accounted for in the initial calculations.
 Most significantly, the air outlet by the servers mixes with a large volume of air in the data hall. 
 This return flow is distinct from the cold air that the air conditioner units actively provide to the inlets of the servers.
 The initial calculations assumed an airflow consistent with a gentle breeze, but this survey suggests the more insulating figures for still air would be more accurate.
 Secondly, the floor is raised, which provides a second layer of insulation between the data hall and the ambient environments.
-The calculations in Appendix N deliberately erred toward underestimating the insulation, and the improved observations further diminish the significance of thermodynamic cooling.
+The calculations in Appendix I deliberately erred toward underestimating the insulation, and the improved observations further diminish the significance of thermodynamic cooling.
 Since the project has already adopted this simplification, updating the calculations is redundant in this situation.
 
 The cooling equipment active in the data hall is two SmartCool SC15D040-X200-0 / CR65H-0 units.
 They deliver the cooled air to the servers in sub-floor ducting and accept the ambient air of the data hall at their inlets.
-Each delivers 54.31 kW of cooling using 15.17 kW of electricity, with the ability to run at half capacity (see Appendix N).
+Each delivers 54.31 kW of cooling using 15.17 kW of electricity, with the ability to run at half capacity (see Appendix VII).
 
-The observations of the thermodynamic properties of the server room, Appendix N, revealed that the equipment ran with multiple capacity steps where the interface assumed one capacity step.
-This issue is explored more fully in section n.n.
+The observations of the thermodynamic properties of the server room, Appendix VIII, revealed that the equipment ran with multiple capacity steps where the interface assumed one capacity step.
+This issue is explored more fully in section 4.1.
 However, since the purpose of the thermal survey is to derive thermal properties, it can be circumvented by alternative mechanisms for linear regression.
 This regression estimated that the server room creates 0.00102 degrees Celsius per second, and each compressor extracts 0.00134 degrees Celsius per second.
 The r-squared on this fit was low, 0.623, but this is high enough to inform a thermal model.
 
 ![Scatter plot showing a negative relation between the compressors active and the temperature change velocity](docs/bdx_chart.png)
 
-Figure n.n - Scatter plot of each minute observing the server room
+Figure 3.7.2 - Scatter plot of each minute observing the server room
 
 To model an improved schedule, I used Octopus Energy's "12M Fixed August 2022 v1" tariff, which was their cheapest Eco 7 tariff at the time of research.
 This tariff had a day rate of 75.01 p/kWh and a night rate of 50.04 p/kWh.
 Based on this survey, the application suggested a cycle that ran a compressor for three hours between 00:00 and 03:00 but could then rest for about 40 minutes from 07:00.
-Initial scrutiny of these figures does not indicate a saving until one remembers that the neutral duty of the compressor is 0.00102 / 0.00134.
+Initial scrutiny of these figures does not indicate a saving until one remembers that the neutral duty of the compressor is 76% (0.00102 / 0.00134).
 In conclusion, this schedule could save about 1100 GBP per year.
 
 ![Line chart showing a cyclical thermostat schedule](docs/bdx_suggestion.png)
 
-Figure n.n - Outputted suggested schedule
+Figure 3.7.3 - Outputted suggested schedule
 
 ## 4 - Project Evaluation
 
 ### 4.1 - Product Review
 
 The MVP is now complete and steps the technician through data gathering and presents a final graph.
-To evaluate this, I surveyed the BDX (section n.n).
+To evaluate this, I surveyed the BDX (section 3.7).
 This exercise surfaced a few options for improvement and one context-specific blocker.
 However, this confirmed that the feature set and user experience suit other contexts.
 
 The blocker experienced within the BDX context is that each air conditioner unit within the data hall has two independently toggled compressor pumps.
 During the survey, there were several occasions where a single compressor was not cooling sufficiently, so the unit bought the second compressor online.
 This feature means that the thermal survey simplifications regarding the duty cycle are unsuitable for the BDX in their current form.
-Correcting this issue would require improving the thermal survey to track the number of active compressors and improving the modelling to include this data.
-I estimate this would require 1 FTE week.
+Correcting this issue would require improving the thermal survey to track the number of active compressors and checking the that modelling supports this data.
+I estimate this would require 0.5 FTE weeks.
 Given the project time available after the survey, the required improvements to this stage are not part of this project.
 This issue could have been realised earlier by thorough initial survey or an earlier detailed survey.
 However, this issue does not reduce the viability of this tool in situations with linked or single compressors.
 
-The time taken to gather thermodynamic observations is a concern (Step N in Figure n.n), mainly because this time requires active monitoring and is boring.
+The time taken to gather thermodynamic observations is a concern (Step 5 in Figure 4.1.1), mainly because this time requires active monitoring and is boring.
 Replacing this with a more proactive and time-flexible step would be a priority in a future development phase.
 Something like "Please return to the room after one to two hours and record the temperature" would suit the requirements of data gathering and user attentivity.
 It is worth noting that the BDX, and many digital thermometers, have a 0.1 degree Celsius precision.
@@ -594,7 +594,7 @@ From here, the project's timeframe demanded that I implement improvements that c
 
 ### 4.2 - Timeline Reflection
 
-Figure n.n (reprise of Figure n.n) - Project schedule, showing boundaries of MVP.
+Figure 4.2.1 (reprise of Figure 2.2.1) - Project schedule, showing boundaries of MVP.
 
 The implementation endeavours at TMA 01 and TMA 02 were ahead of schedule, but retrospectively the negotiation was behind schedule.
 By TMA 03, the MVP implementation was complete on schedule, and I had realised the negotiations were behind schedule.
@@ -627,14 +627,12 @@ This hygiene is something that reminders and time would habitualise.
 
 Overall, the schedule has remained flexible enough to deliver a viable product, and I acknowledge lessons to carry forward.
 
-### 4.n - Conclusion
+### 4.3 - Conclusion
 
 This project has been a partial success.
 The project has delivered an MVP that is valuable in some contexts.
 In addition, there is an established architecture that would support future improvements.
 The immediate improvements I would select for this project would be to survey more server rooms and improve the thermal survey to support capacity stepping.
-
-<!-- TODO Numbering and TOC -->
 
 ### Glossary
 
@@ -772,6 +770,12 @@ xRealNeon (2021) '*Vue to Github Pages*'. Available at: https://github.com/marke
 
 ## Appendix VI - Questionnaire
 
+[Questionnaire](docs/questionnaire.md)
+
 ## Appendix VII - BDX Equipment
 
+[Equipment Specification](docs/bdx_air_con.jpeg)
+
 ## Appendix VIII - BDX Survey
+
+[Survey](docs/bdx_survey.xlsx)
