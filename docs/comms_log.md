@@ -125,3 +125,113 @@ Hi Leo, James
 Are either of you in a place to be able to help me get a survey done? I’m not expecting that it’ll take more than 30 minutes of your time, and after that I’ll do a small batch of more time-intensive work.
 
 Thanks, Andrew. 
+
+## From: Leo Brown, Sent: 09 Jul 2022, To: Andrew Lucas, James Parker, Shaun Fensom, Simon O’Hare
+
+Hi
+
+That’s fine – Monday OK?
+
+## From: Andrew Lucas, Sent: 09 Jul 2022, To: Leo Brown
+
+Since starting this project my calendar has actually become a lot more restrictive because I’ve taken a part-time job in a school. I can either be available Fridays, or on other days by arrangement.
+
+Sorry, forgot to update the thread.
+
+## From: Leo Brown, Sent: 09 Jul 2022, To: Andrew Lucas
+
+Hi
+
+Friday a also fine
+
+## From: Andrew Lucas, Sent: 11 Jul 2022, To: Leo Brown
+
+Excellent. I shall head into the office on Friday. Is there any time that is better for you? I’d like early (but not too early) because there’s a decent chance I’ll be able to get a chunk of work done after our meeting.
+
+## From: Leo Brown, Sent 11 Jul 2022, To: Andrew Lucas
+
+Hi
+
+9am would be ideal.
+
+## From: Andrew Lucas, Sent: 11 Jul 2022, To: Leo Brown
+
+Excellent, see you then.
+
+My hopes for the meeting are to check my understanding of the air handling systems in the BDX and then get the credentials required to lower the thermostat by a degree or two.
+
+## From: Leo Brown, Sent: 11 Jul 2022, To: Andrew Lucas
+
+Hi
+
+The A/C password is ------, you can change the setpoint on the LCD.
+
+But I’ll let you in and if I have time stay and chat.
+
+I think possibly one of them is set to 20 and one to 19.
+
+Freecooling may be in action and I may not be able to disable. I’ll try to get someone else over too.
+
+## From: Leo Brown, Sent: 11 Jul 2022, To: Andrew Lucas
+
+Hi Andrew,
+
+Are you at New England House?
+
+## From: Andrew Lucas, Sent 15 Jul 2022, To: Leo Brown
+
+I am, yes. Currently sat at my desk in the Curve IT office.
+
+## From: Leo Brown, Sent: 15 Jul 2022, To: Andrew Lucas
+
+Understood, well I’ll meet you outside the BDX at 09:45 then…
+
+## From: Andrew Lucas, Sent: 15 Jul 2022, To: Leo Brown
+
+Sounds good, see you soon.
+
+## Survey Meeting, Date: 15 Jul 2022, Present: Andrew Lucas, Leo Brown
+
+Confirmed access to BDX and limits of survey permissions.
+
+Discussed limitations imposed by equipment under maintenance.
+
+Agreed to delay survey.
+
+## From: Andrew Lucas, Sent: 22 Jul 2022, To: Leo Brown
+
+Hi Leo,
+
+Did the room integrity tests and maintenance on the FreeCool vents on Monday go well?
+
+If they did then I’ll visit to perform the survey, although this shouldn’t require your presence if you don’t want to. I’ll keep you updated so it can be linked with the security logs, etc.
+
+## From: Leo Brown, Sent: 22 Jul 2022, To: Andrew Lucas
+
+Hi
+
+Yes, the vents are now closed and integrity test passed.
+
+There is a logic problem where freecooling would never work.
+
+Knock yourself out.
+
+## From: Andrew Lucas, Sent: 22 Jul 2022, To: Leo Brown
+
+Interesting use of the present tense “is” regarding the freecooling, for what could be a fairly simple logic statement. I think the logic resolves to “if the desired temperature and the outside temperature are the same side of the inside temperature then the vents should be open”. This covers “we want it cooler and the outside is cooler” as well as the unlikely event of “we want it warmer and the outside is warmer”.
+
+Did you have a chance to double-check whether cold aisle racks should be blanked off where there aren’t servers? I think they should be, as evidenced by the sealed-air door to the walkway.
+
+Thanks for the go-ahead.
+
+## From: Leo Brown, Sent: 22 Jul 2022, To: Andrew Lucas
+
+Hi
+
+The problem is the temperature sensor is inside the unit, so while running believes outside is 17deg.
+
+The racks should have blanking plates. We failed to source them I think.
+
+## From: Andrew Lucas, Sent: 11 Aug 2022, To: Leo Brown
+
+On my way in to do the survey now. As discussed, I don’t need anyone else there I’m just letting you know in case activity logs need lining up.
