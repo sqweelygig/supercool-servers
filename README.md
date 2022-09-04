@@ -276,7 +276,7 @@ Further development could eliminate each and increase the proportion of modelabl
 	* All electricity consumed by the server hardware becomes heat.
 	* The server hardware generates a steady heat output.
 	* The air conditioning performs equivalently in all temperatures.
-	* The air conditioning does not have tiered power levels.
+	* The air conditioning does not have tiered capacity levels.
 	* The insulation within this space is insignificant.
 	* The propagation of heat through this space is instantaneous.
 * Passive thermodynamic effects are constant.
@@ -314,6 +314,10 @@ This research included a questionnaire offered to fellow students (see Appendix 
 This research also reviewed publicly available server room schematives and photographs.
 These indicated that a typical server room would not passively shed significant heat.
 Unfortunately, a proper level of research rigour was beyond the scope of a development project, and the generalisability is a matter of conjecture and personal experience.
+
+![Typical server rooms are well insulated basements](docs/server_room_quick_survey.png)
+
+Figure 3.2.1 - Quick survey of typical server room construction, DuckDuckGo 2022.
 
 ### 3.3 - Design
 
@@ -375,7 +379,7 @@ In deciding the deployment artefacts, there are several pertinent aspects:
 * This model's data comes from the technician's primary observations or third-party APIs.
 * The modelling expected is not intensive, so calculation performance is a minor factor.
 * There is value to data communication and sharing, but this is not an essential feature.
-* This product should be available without installation as many users are likely to be single-use.
+* This product should be available without installation as many users are likely to be single use.
 
 These requirements suit deployment as a stand-alone website using client-side data retention and processing.
 
@@ -394,7 +398,7 @@ The user interface framework selection is more balanced than language but had se
 First, direct DOM manipulation is not sustainable or manageable.
 Secondly, server-side calculation of the HTML adds unnecessary components, specifically server-side processing.
 Therefore client-side reactive web frameworks were favoured, simplifying the deployment and maintenance, with both Vue.js and React being familiar.
-As tie-breakers, the Vue.js experience was more developer-friendly and had a higher quantity of GitHub stars. 
+As tiebreakers, the Vue.js experience was more developer-friendly and had a higher quantity of GitHub stars. 
 In conclusion, this project will use Vue.js, especially single file components, but this was a close decision.
 
 | Language      | Types     | Deployability | Familiarity   |
@@ -504,6 +508,10 @@ These attempts failed because the toast.com secondary y-axis is merely visual an
 Rather than coupling a cost scaling to the temperature axis implementation, the project explored billboard.js.
 This library required a vue.js wrapper and some special handling to put the zones into the legend, but this should be a more maintainable solution than custom y-scaling.
 
+![Graph of cyclical temperature changes](docs/chart.png)
+
+Figure 3.6.3 - Example of the graph output
+
 ### 3.7 - BDX Survey
 
 On the 11th of August, I visited the BDX to conduct a more detailed survey of the materials, equipment and thermodynamic observations.
@@ -517,7 +525,7 @@ Most significantly, the air outlet by the servers mixes with a large volume of a
 This return flow is distinct from the cold air that the air conditioner units actively provide to the inlets of the servers.
 The initial calculations assumed an airflow consistent with a gentle breeze, but this survey suggests the more insulating figures for still air would be more accurate.
 Secondly, the floor is raised, which provides a second layer of insulation between the data hall and the ambient environments.
-The calculations in Appendix I deliberately erred toward underestimating the insulation, and the improved observations further diminish the significance of thermodynamic cooling.
+The calculations in Appendix I deliberately erred toward underestimating the insulation, and the improved observations further diminish the significance of passive cooling.
 Since the project has already adopted this simplification, updating the calculations is redundant in this situation.
 
 The cooling equipment active in the data hall is two SmartCool SC15D040-X200-0 / CR65H-0 units.
@@ -528,11 +536,11 @@ The observations of the thermodynamic properties of the server room, Appendix VI
 This issue is explored more fully in section 4.1.
 However, since the purpose of the thermal survey is to derive thermal properties, it can be circumvented by alternative mechanisms for linear regression.
 This regression estimated that the server room creates 0.00102 degrees Celsius per second, and each compressor extracts 0.00134 degrees Celsius per second.
-The r-squared on this fit was low, 0.623, but this is high enough to inform a thermal model.
+The r-squared on this fit was low, 0.623, but this is high enough to inform an example thermal model.
 
-![Scatter plot showing a negative relation between the compressors active and the temperature change velocity](docs/bdx_chart.png)
+![Scatter plot showing a negative relation between the compressors active and the temperature change velocity](docs/bdx_survey.png)
 
-Figure 3.7.2 - Scatter plot of each minute observing the server room
+Figure 3.7.2 - Scatter plot of minutes in the server room
 
 To model an improved schedule, I used Octopus Energy's "12M Fixed August 2022 v1" tariff, which was their cheapest Eco 7 tariff at the time of research.
 This tariff had a day rate of 75.01 p/kWh and a night rate of 50.04 p/kWh.
