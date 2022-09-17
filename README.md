@@ -637,10 +637,16 @@ Overall, the schedule has remained flexible enough to deliver a viable product, 
 
 ### 4.3 - Conclusion
 
-This project has been a partial success.
-The project has delivered an MVP that is valuable in some contexts.
+This project has delivered a partial success.
+The MVP is valuable in some contexts and initialises a good user experience.
 In addition, there is an established architecture that would support future improvements.
 The immediate improvements I would select for this project would be to survey more server rooms and improve the thermal survey to support capacity stepping.
+
+My learning from this project has been considerable.
+First, I have gained a basic understanding of insulation and thermodynamic calculations.
+Second, I have developed my skill in a popular framework from basic to intermediate levels.
+Third, perhaps most importantly, I have practised project management within an agile model.
+In conclusion, my skill and value as a software engineer have increased during this project.
 
 ### Glossary
 
